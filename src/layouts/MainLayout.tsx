@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/NavBar"; // Assuming Navbar.tsx is in the same directory
+import Navbar from "../components/NavBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const MainLayout: React.FC = () => {
 	return (
-		<div className="min-h-full bg-black flex-col">
+		<div className="min-h-screen flex-col items-center justify-center">
 			<Navbar />
 			<Outlet />
 			<ToastContainer />
