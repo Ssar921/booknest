@@ -22,9 +22,20 @@ const Navbar: React.FC = () => {
 	return (
 		<>
 			{/* Navbar */}
-			<nav className="flex items-center justify-between p-4 shadow-lg">
+			<nav
+				className={`flex items-center justify-between p-4 shadow-lg transition-all ${
+					isToggled
+						? "bg-gray-900 text-white"
+						: "bg-white text-gray-900"
+				}`}
+			>
 				<div className="flex items-center space-x-4">
-					<Link to="/" className="text-xl font-bold">
+					<Link
+						to="/"
+						className={`text-xl font-bold transition-all ${
+							isToggled ? "text-white" : "text-gray-900"
+						}`}
+					>
 						BookBrowse
 					</Link>
 				</div>
@@ -32,7 +43,9 @@ const Navbar: React.FC = () => {
 				{/* Mobile menu button */}
 				<button
 					onClick={toggleMobileMenu}
-					className="sm:hidden text-2xl text-gray-600"
+					className={`sm:hidden text-2xl transition-all ${
+						isToggled ? "text-white" : "text-gray-600"
+					}`}
 				>
 					{isMobileMenuOpen ? <FaTimes /> : <FaBars />}
 				</button>
@@ -44,13 +57,21 @@ const Navbar: React.FC = () => {
 						<>
 							<Link
 								to="/register"
-								className="px-4 py-2 text-white bg-blue-500 rounded"
+								className={`px-4 py-2 rounded transition-all ${
+									isToggled
+										? "bg-blue-500 text-white"
+										: "bg-blue-600 text-white"
+								}`}
 							>
 								Sign Up
 							</Link>
 							<Link
 								to="/login"
-								className="px-4 py-2 text-white bg-blue-500 rounded"
+								className={`px-4 py-2 rounded transition-all ${
+									isToggled
+										? "bg-blue-500 text-white"
+										: "bg-blue-600 text-white"
+								}`}
 							>
 								Login
 							</Link>
@@ -60,12 +81,23 @@ const Navbar: React.FC = () => {
 							{/* Show this part if user is logged in */}
 							<button
 								onClick={logout}
-								className="px-4 py-2 text-white bg-red-500 rounded"
+								className={`px-4 py-2 rounded transition-all ${
+									isToggled
+										? "bg-red-500 text-white"
+										: "bg-red-600 text-white"
+								}`}
 							>
 								Logout
 							</button>
 							<div className="relative">
-								<Link to="/profile" className="text-lg">
+								<Link
+									to="/profile"
+									className={`text-lg transition-all ${
+										isToggled
+											? "text-white"
+											: "text-gray-900"
+									}`}
+								>
 									<FaUser />
 								</Link>
 							</div>
@@ -80,19 +112,33 @@ const Navbar: React.FC = () => {
 
 			{/* Mobile Menu (for Mobile Screens) */}
 			{isMobileMenuOpen && (
-				<div className="sm:hidden flex flex-col items-center space-y-4 bg-gray-800 text-white p-6">
+				<div
+					className={`sm:hidden flex flex-col items-center space-y-4 p-6 transition-all ${
+						isToggled
+							? "bg-gray-800 text-white"
+							: "bg-gray-100 text-gray-900"
+					}`}
+				>
 					{/* Show mobile buttons based on user's login status */}
 					{!user ? (
 						<>
 							<Link
 								to="/register"
-								className="w-full px-4 py-2 text-center bg-blue-500 rounded"
+								className={`w-full px-4 py-2 text-center rounded transition-all ${
+									isToggled
+										? "bg-blue-500 text-white"
+										: "bg-blue-600 text-white"
+								}`}
 							>
 								Sign Up
 							</Link>
 							<Link
 								to="/login"
-								className="w-full px-4 py-2 text-center bg-blue-500 rounded"
+								className={`w-full px-4 py-2 text-center rounded transition-all ${
+									isToggled
+										? "bg-blue-500 text-white"
+										: "bg-blue-600 text-white"
+								}`}
 							>
 								Login
 							</Link>
@@ -101,7 +147,11 @@ const Navbar: React.FC = () => {
 						<>
 							<button
 								onClick={logout}
-								className="w-full px-4 py-2 text-center bg-red-500 rounded"
+								className={`w-full px-4 py-2 text-center rounded transition-all ${
+									isToggled
+										? "bg-red-500 text-white"
+										: "bg-red-600 text-white"
+								}`}
 							>
 								Logout
 							</button>
@@ -109,7 +159,9 @@ const Navbar: React.FC = () => {
 					)}
 					<button
 						onClick={toggleHandler}
-						className="w-full text-center text-xl"
+						className={`w-full text-center text-xl transition-all ${
+							isToggled ? "text-white" : "text-gray-900"
+						}`}
 					>
 						{isToggled ? <FaSun /> : <FaMoon />}
 					</button>

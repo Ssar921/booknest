@@ -72,7 +72,7 @@ const Books: React.FC = () => {
 				<h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
 					Featured Books
 				</h2>
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+				<div className="flex justify-center flex-wrap">
 					{books.length > 0 ? (
 						books.map((book) => <Book key={book.id} book={book} />)
 					) : (
