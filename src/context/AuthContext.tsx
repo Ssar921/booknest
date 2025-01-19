@@ -70,7 +70,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 	const logout = async () => {
 		try {
 			await signOut(auth);
-			navigate("/login"); // Redirect after logout
+			navigate("/"); // Redirect after logout
 		} catch (error: any) {
 			throw new Error(error.message);
 		}
