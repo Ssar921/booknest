@@ -27,7 +27,7 @@ interface ToggleProviderProps {
 
 // ToggleProvider component
 export const ToggleProvider: React.FC<ToggleProviderProps> = ({ children }) => {
-	const [isToggled, setIsToggled] = useState<boolean>(false);
+	const [isToggled, setIsToggled] = useState<boolean>(true);
 
 	return (
 		<ToggleContext.Provider value={{ isToggled, setIsToggled }}>

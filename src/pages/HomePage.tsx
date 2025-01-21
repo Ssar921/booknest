@@ -1,6 +1,5 @@
-import Hero from "./Hero";
-import SearchBar from "./SearchBar";
-import Books from "./Books";
+import SearchBar from "../components/SearchBar";
+import Books from "../components/Books";
 import { useToggleContext } from "../context/ToggleContext";
 
 const HomePage2: React.FC = () => {
@@ -12,7 +11,6 @@ const HomePage2: React.FC = () => {
 				isToggled ? "bg-gray-900 text-white" : "bg-white text-gray-900"
 			}
 		>
-			<Hero />
 			<SearchBar />
 			<Books />
 		</div>

@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext"; // Import the useAuth hook
 
 const Navbar: React.FC = () => {
 	const { isToggled, setIsToggled } = useToggleContext();
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
 	// Access the user and logout function from AuthContext
 	const { user, logout } = useAuth();
@@ -32,11 +32,11 @@ const Navbar: React.FC = () => {
 				<div className="flex items-center space-x-4">
 					<Link
 						to="/"
-						className={`text-xl font-bold transition-all ${
+						className={`text-xl font-medium transition-all ${
 							isToggled ? "text-white" : "text-gray-900"
 						}`}
 					>
-						BookBrowse
+						BookNest
 					</Link>
 				</div>
 
@@ -120,6 +120,15 @@ const Navbar: React.FC = () => {
 					}`}
 				>
 					{/* Show mobile buttons based on user's login status */}
+					<button
+						onClick={toggleHandler}
+						className={`w-full text-center text-xl transition-all ${
+							isToggled ? "text-white" : "text-gray-900"
+						}`}
+					>
+						{isToggled ? <FaSun /> : <FaMoon />}
+					</button>
+
 					{!user ? (
 						<>
 							<Link
@@ -157,14 +166,6 @@ const Navbar: React.FC = () => {
 							</button>
 						</>
 					)}
-					<button
-						onClick={toggleHandler}
-						className={`w-full text-center text-xl transition-all ${
-							isToggled ? "text-white" : "text-gray-900"
-						}`}
-					>
-						{isToggled ? <FaSun /> : <FaMoon />}
-					</button>
 				</div>
 			)}
 		</>

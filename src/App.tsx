@@ -1,13 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ToggleProvider } from "./context/ToggleContext";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import HomePage from "./components/HomePage";
+import HomePage from "./pages/HomePage";
 import MainLayout from "./layouts/MainLayout";
 import NotFoundPage from "./pages/NotFoundPage";
-import BookDetails from "./components/BookDetails";
-
+import BookPage from "./pages/BookPage";
+import AuthPage from "./pages/AuthPage";
 const App: React.FC = () => {
 	return (
 		<ToggleProvider>
@@ -16,9 +14,9 @@ const App: React.FC = () => {
 					<Routes>
 						<Route path="/" element={<MainLayout />}>
 							<Route index element={<HomePage />} />
-							<Route path="/book/:id" element={<BookDetails />} />
-							<Route path="/register" element={<Register />} />
-							<Route path="/login" element={<Login />} />
+							<Route path="/book/:id" element={<BookPage />} />
+							<Route path="/register" element={<AuthPage />} />
+							<Route path="/login" element={<AuthPage />} />
 							<Route path="*" element={<NotFoundPage />} />
 						</Route>
 					</Routes>

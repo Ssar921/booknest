@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Book from "./Book";
+import { ClipLoader } from "react-spinners";
 
 // Define the interface for a book object from Google Books API
 interface GoogleBooksAPIResponse {
@@ -51,8 +52,8 @@ const Books: React.FC = () => {
 	// Display loading text or error message
 	if (loading) {
 		return (
-			<div className="text-center py-4">
-				<p>Loading books...</p>
+			<div className="flex justify-center items-center h-screen">
+				<ClipLoader color="#3498db" loading={loading} size={50} />
 			</div>
 		);
 	}

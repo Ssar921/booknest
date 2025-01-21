@@ -1,29 +1,47 @@
-// src/components/Register.tsx
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase"; // Import Firebase
 import { toast } from "react-toastify";
+import { setDoc, doc } from "firebase/firestore"; // Firestore
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Register: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [username, setUsername] = useState(""); // Username input
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 
+	const navigate = useNavigate(); // Initialize the navigate function
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setLoading(true);
+		setLoading(true); // Set loading to true when the request starts
 
 		try {
-			await createUserWithEmailAndPassword(auth, email, password);
-			toast.success("Registered successful!");
-			// Redirect or do something else on success
+			// Create the user with email and password
+			const userCredential = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			const user = userCredential.user;
+
+			// Save user data to Firestore with the username
+			await setDoc(doc(db, "users", user.uid), {
+				username, // Store the username in Firestore
+			});
+
+			toast.success("Registered successfully!");
+
+			// Redirect to home page after successful registration
+			navigate("/"); // You can change the path if needed
 		} catch (err: any) {
-			toast.error(`Error: ${err.message}`); // Error toast
+			toast.error(`Error: ${err.message}`);
 			setError(err.message);
 		}
 
-		setLoading(false);
+		setLoading(false); // Set loading to false after the process is finished
 	};
 
 	return (
@@ -70,29 +88,51 @@ const Register: React.FC = () => {
 						/>
 					</div>
 
+					{/* Username Input */}
+					<div>
+						<label
+							htmlFor="username"
+							className="block text-sm font-medium text-gray-700"
+						>
+							Username
+						</label>
+						<input
+							id="username"
+							type="text"
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+							required
+							className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+						/>
+					</div>
+
 					{/* Error Message */}
 					{error && (
 						<p className="text-sm text-red-500 mt-2">{error}</p>
 					)}
 
-					{/* Submit Button */}
+					{/* Submit Button with Loading Indicator */}
 					<button
 						type="submit"
-						disabled={loading}
-						className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 disabled:opacity-50"
+						disabled={loading} // Disable button during loading
+						className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md"
 					>
-						{loading ? "Registering..." : "Register"}
+						{loading ? (
+							<span className="spinner-border animate-spin w-5 h-5 border-4 border-white border-t-transparent rounded-full"></span> // Simple loading spinner
+						) : (
+							"Register"
+						)}
 					</button>
 				</form>
 
 				<p className="mt-4 text-center text-sm text-gray-600">
 					Already have an account?{" "}
-					<a
-						href="/login"
+					<Link
+						to="/login"
 						className="text-indigo-600 hover:text-indigo-500"
 					>
 						Log in
-					</a>
+					</Link>
 				</p>
 			</div>
 		</div>

@@ -5,8 +5,8 @@ import {
 	createUserWithEmailAndPassword,
 	signOut,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"; // Firestore
 
-// Your Firebase config (use environment variables)
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
 	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -20,9 +20,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app); // Firestore instance
 
 export {
 	auth,
+	db, // Export Firestore for use in your app
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	signOut,

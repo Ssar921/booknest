@@ -1,11 +1,15 @@
+// src/components/Auth.tsx
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+	signInWithEmailAndPassword,
+	createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
-const Login: React.FC = () => {
+const AuthPage: React.FC = () => {
+	const [authMode, setAuthMode] = useState<"login" | "register">("login");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string | null>(null);
@@ -15,7 +19,7 @@ const Login: React.FC = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setLoading(true);
-		setError(null); // Clear any previous errors
+		setError(null);
 
 		if (!email || !password) {
 			setError("Please fill in both fields.");
@@ -24,12 +28,18 @@ const Login: React.FC = () => {
 		}
 
 		try {
-			await signInWithEmailAndPassword(auth, email, password);
-			toast.success("Login successful!");
-			navigate("/"); // Navigate to the homepage after successful login
+			if (authMode === "login") {
+				await signInWithEmailAndPassword(auth, email, password);
+				toast.success("Login successful!");
+				navigate("/"); // Redirect to the homepage after successful login
+			} else {
+				await createUserWithEmailAndPassword(auth, email, password);
+				toast.success("Registration successful!");
+				navigate("/"); // Redirect after successful registration
+			}
 		} catch (err: any) {
 			toast.error(`Error: ${err.message}`);
-			setError(err.message); // Set error message
+			setError(err.message);
 		} finally {
 			setLoading(false);
 		}
@@ -39,7 +49,7 @@ const Login: React.FC = () => {
 		<div className="flex items-center justify-center min-h-screen bg-gray-100">
 			<div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
 				<h2 className="text-3xl font-bold text-center text-gray-900">
-					Login
+					{authMode === "login" ? "Login" : "Register"}
 				</h2>
 				<form className="space-y-4" onSubmit={handleSubmit}>
 					{/* Email Input */}
@@ -89,22 +99,44 @@ const Login: React.FC = () => {
 						disabled={loading}
 						className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 disabled:opacity-50 hover:bg-indigo-700 transition-colors duration-300"
 					>
-						{loading ? "Logging in..." : "Login"}
+						{loading
+							? authMode === "login"
+								? "Logging in..."
+								: "Registering..."
+							: authMode === "login"
+							? "Login"
+							: "Register"}
 					</button>
 				</form>
 
 				<p className="mt-4 text-center text-sm text-gray-600">
-					Don't have an account?{" "}
-					<Link
-						to="/register"
-						className="text-indigo-600 hover:text-indigo-500"
-					>
-						Register here
-					</Link>
+					{authMode === "login" ? (
+						<>
+							Don't have an account?{" "}
+							<a
+								href="#"
+								onClick={() => setAuthMode("register")}
+								className="text-indigo-600 hover:text-indigo-500"
+							>
+								Register here
+							</a>
+						</>
+					) : (
+						<>
+							Already have an account?{" "}
+							<a
+								href="#"
+								onClick={() => setAuthMode("login")}
+								className="text-indigo-600 hover:text-indigo-500"
+							>
+								Login here
+							</a>
+						</>
+					)}
 				</p>
 			</div>
 		</div>
 	);
 };
 
-export default Login;
+export default AuthPage;
