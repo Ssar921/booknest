@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-
+import placeholder from "../assets/images/book-placeholder.png";
 // Interface to type the book data.
 interface BookData {
 	id: string;
@@ -38,10 +38,19 @@ const BookDetails: React.FC = () => {
 						`https://www.googleapis.com/books/v1/volumes/${id}`
 					);
 					const data = await response.json();
-					setBook(data);
+
+					if (data.error || !data.volumeInfo) {
+						throw new Error(
+							"Invalid Book ID or missing book information"
+						);
+					}
+
+					setBook(data); // Set the book state only if data is valid
 				}
 			} catch (err) {
 				console.error("Failed to fetch book details", err);
+				// Handle the error properly (e.g., show "Book not found" message)
+				setBook(null);
 			} finally {
 				setLoading(false);
 			}
@@ -51,7 +60,6 @@ const BookDetails: React.FC = () => {
 			fetchBookDetails();
 		}
 	}, [id]);
-
 	// Loader if data is still being fetched.
 	if (loading) {
 		return (
@@ -95,15 +103,22 @@ const BookDetails: React.FC = () => {
 	return (
 		<div className="w-full bg-gradient-to-r from-blue-50 to-blue-100 py-16">
 			<div className="max-w-5xl mx-auto px-6 sm:px-8">
+				{/* Back to Home Link */}
+				<div className="mb-4">
+					<Link
+						to="/"
+						className="text-blue-600 hover:text-blue-800 text-lg font-semibold"
+					>
+						&larr; Back to Home
+					</Link>
+				</div>
+
 				<div className="bg-white rounded-xl shadow-xl overflow-hidden">
 					<div className="flex flex-col sm:flex-row gap-6 sm:gap-12 p-8 sm:p-10">
 						{/* Image */}
 						<div className="flex-shrink-0 sm:w-48 w-full mx-auto sm:mx-0 h-full">
 							<img
-								src={
-									imageLinks?.thumbnail ||
-									"https://via.placeholder.com/200x300"
-								}
+								src={imageLinks?.thumbnail || placeholder}
 								alt={title}
 								className="w-full h-full object-cover rounded-lg shadow-md"
 							/>

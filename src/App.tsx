@@ -6,6 +6,8 @@ import MainLayout from "./layouts/MainLayout";
 import NotFoundPage from "./pages/NotFoundPage";
 import BookPage from "./pages/BookPage";
 import AuthPage from "./pages/AuthPage";
+import CategoryPage from "./pages/CategoryPage";
+
 const App: React.FC = () => {
 	return (
 		<ToggleProvider>
@@ -17,6 +19,10 @@ const App: React.FC = () => {
 							<Route path="/book/:id" element={<BookPage />} />
 							<Route path="/register" element={<AuthPage />} />
 							<Route path="/login" element={<AuthPage />} />
+							<Route
+								path="/category/:categoryId"
+								element={<CategoryPage />}
+							/>
 							<Route path="*" element={<NotFoundPage />} />
 						</Route>
 					</Routes>

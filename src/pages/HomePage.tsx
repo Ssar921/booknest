@@ -1,8 +1,7 @@
 import SearchBar from "../components/SearchBar";
-import Books from "../components/Books";
 import { useToggleContext } from "../context/ToggleContext";
-
-const HomePage2: React.FC = () => {
+import CategoryCarousel from "../components/CategoryCarousel";
+const HomePage: React.FC = () => {
 	const { isToggled } = useToggleContext();
 
 	return (
@@ -12,9 +11,14 @@ const HomePage2: React.FC = () => {
 			}
 		>
 			<SearchBar />
-			<Books />
+			{/* Popular Books Carousel */}
+			<CategoryCarousel
+				categoryTitle="Popular Books"
+				query="book"
+				categoryLink="/category/book"
+			/>
 		</div>
 	);
 };
 
-export default HomePage2;
+export default HomePage;
