@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import placeholder from "../assets/images/book-placeholder.png";
+
+import { useToggleContext } from "../context/ToggleContext";
 // Interface to type the book data.
 interface BookData {
 	id: string;
@@ -21,6 +23,7 @@ interface BookData {
 }
 
 const BookDetails: React.FC = () => {
+	const { isToggled } = useToggleContext();
 	const { id } = useParams();
 	const [book, setBook] = useState<BookData | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -101,19 +104,34 @@ const BookDetails: React.FC = () => {
 			: cleanDescription;
 
 	return (
-		<div className="w-full bg-gradient-to-r from-blue-50 to-blue-100 py-16">
+		<div
+			className={`w-full py-16 ${
+				isToggled
+					? "bg-gray-900 text-white"
+					: "bg-gradient-to-r from-blue-50 to-blue-100"
+			}`}
+		>
 			<div className="max-w-5xl mx-auto px-6 sm:px-8">
 				{/* Back to Home Link */}
 				<div className="mb-4">
 					<Link
 						to="/"
-						className="text-blue-600 hover:text-blue-800 text-lg font-semibold"
+						className={`${
+							isToggled
+								? "text-blue-300 hover:text-blue-400"
+								: "text-blue-600 hover:text-blue-800"
+						} text-lg font-semibold`}
 					>
 						&larr; Back to Home
 					</Link>
 				</div>
 
-				<div className="bg-white rounded-xl shadow-xl overflow-hidden">
+				{/* Book Details Container */}
+				<div
+					className={`rounded-xl shadow-xl overflow-hidden ${
+						isToggled ? "bg-gray-800" : "bg-white"
+					}`}
+				>
 					<div className="flex flex-col sm:flex-row gap-6 sm:gap-12 p-8 sm:p-10">
 						{/* Image */}
 						<div className="flex-shrink-0 sm:w-48 w-full mx-auto sm:mx-0 h-full">
@@ -126,21 +144,31 @@ const BookDetails: React.FC = () => {
 
 						{/* Book Details */}
 						<div className="flex-1 space-y-4">
-							<h1 className="text-5xl font-md text-gray-800 mb-2">
-								{title}
-							</h1>
+							<h1 className="text-5xl font-md mb-2">{title}</h1>
 
 							{/* Author */}
-							<p className="text-lg text-gray-700 mb-2">
+							<p className="text-lg mb-2">
 								{authors?.join(", ")}
 							</p>
 
 							{/* Description */}
 							<div>
-								<strong className="block text-lg text-gray-800">
+								<strong
+									className={`block text-lg ${
+										isToggled
+											? "text-gray-300"
+											: "text-gray-800"
+									}`}
+								>
 									Description:
 								</strong>
-								<p className="text-sm text-gray-800">
+								<p
+									className={`text-sm ${
+										isToggled
+											? "text-gray-300"
+											: "text-gray-800"
+									}`}
+								>
 									{showFullDescription
 										? cleanDescription
 										: truncatedDescription}
@@ -152,7 +180,11 @@ const BookDetails: React.FC = () => {
 												!showFullDescription
 											)
 										}
-										className="text-blue-500 mt-2 text-sm font-semibold"
+										className={`${
+											isToggled
+												? "text-blue-400"
+												: "text-blue-500"
+										} mt-2 text-sm font-semibold`}
 									>
 										{showFullDescription
 											? "Show Less"
@@ -163,7 +195,13 @@ const BookDetails: React.FC = () => {
 
 							{/* Info Table */}
 							<div className="mt-4">
-								<table className="w-full text-sm text-gray-700">
+								<table
+									className={`w-full text-sm ${
+										isToggled
+											? "text-gray-300"
+											: "text-gray-700"
+									}`}
+								>
 									<tbody>
 										<tr>
 											<td className="py-2 font-semibold">
@@ -204,7 +242,11 @@ const BookDetails: React.FC = () => {
 									href={previewLink}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="inline-block mt-4 py-2 px-6 rounded-full text-lg shadow-md border border-black font-semibold text-center hover:bg-gray-200 transition duration-300"
+									className={`inline-block mt-4 py-2 px-6 rounded-full text-lg shadow-md border font-semibold text-center transition duration-300 ${
+										isToggled
+											? "bg-gray-700 text-gray-100 border-gray-600 hover:bg-gray-600"
+											: "bg-gray-200 text-gray-700 border-gray-400 hover:bg-gray-300"
+									}`}
 								>
 									Preview this Book
 								</a>

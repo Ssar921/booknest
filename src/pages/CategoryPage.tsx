@@ -4,8 +4,13 @@ import { Book } from "../types"; // Assuming you have the Book type defined
 import Pagination from "../components/Pagination"; // A separate Pagination component
 import CarouselBook from "../components/CarouselBook";
 import Skeleton from "react-loading-skeleton";
+import { categoryConfig } from "../utils/categories";
+import { Link } from "react-router-dom";
+import { useToggleContext } from "../context/ToggleContext";
 
 const CategoryPage: React.FC = () => {
+	const { isToggled } = useToggleContext();
+
 	const { categoryId } = useParams<{ categoryId: string }>(); // Get categoryId from URL
 	const [books, setBooks] = useState<Book[]>([]);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +45,8 @@ const CategoryPage: React.FC = () => {
 
 	// Calculate the total number of pages based on total books and books per page
 	const totalPages = Math.ceil(totalBooks / booksPerPage);
-
+	const category = categoryConfig.find((cat) => cat.query === categoryId);
+	const categoryTitle = category ? category.title : categoryId;
 	const renderSkeletons = () => {
 		return (
 			<div className="carousel-item p-4">
@@ -53,8 +59,30 @@ const CategoryPage: React.FC = () => {
 	};
 
 	return (
-		<div className="category-page w-[90%] mx-auto my-8">
-			<h1 className="text-3xl font-bold mb-4">Books in {categoryId}</h1>
+		<div
+			className={`category-page w-full px-6 mx-auto py-8 ${
+				isToggled ? "bg-gray-900 text-white" : "bg-white"
+			}`}
+		>
+			<div className="mb-4">
+				<Link
+					to="/"
+					className={`${
+						isToggled
+							? "text-blue-300 hover:text-blue-400"
+							: "text-blue-600 hover:text-blue-800"
+					} text-lg font-semibold`}
+				>
+					&larr; Back to Home
+				</Link>
+			</div>
+			<h1
+				className={`text-3xl font-bold mb-4 ${
+					isToggled ? "text-gray-300" : "text-gray-900"
+				}`}
+			>
+				{categoryTitle} Books
+			</h1>
 
 			{loading ? (
 				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -63,13 +91,12 @@ const CategoryPage: React.FC = () => {
 						.map((_, index) => renderSkeletons())}
 				</div>
 			) : (
-				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+				<div className="flex justify-between flex-wrap">
 					{books.map((book) => (
-						<CarouselBook book={book} />
+						<CarouselBook book={book} key={book.id} />
 					))}
 				</div>
 			)}
-
 			{/* Pagination */}
 			<Pagination
 				currentPage={currentPage}

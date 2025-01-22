@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Book } from "../types";
 import Carousel from "./Carousel";
+import { toast } from "react-toastify"; // Import toast from react-toastify
 
 interface CategoryCarouselProps {
 	categoryTitle: string;
@@ -15,11 +16,11 @@ const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
 }) => {
 	const [books, setBooks] = useState<Book[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchBooks = async () => {
 			try {
-				// Make a GET request using the fetch API
 				const response = await fetch(
 					`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=relevance&fields=items(id,volumeInfo(title,imageLinks/thumbnail))`
 				);
@@ -33,7 +34,12 @@ const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
 				setLoading(false);
 			} catch (error) {
 				console.error("Error fetching books:", error);
+				setError(
+					"Something went wrong while fetching books. Please try again later."
+				);
 				setLoading(false);
+				// Show a toast notification for the error
+				toast.error("Failed to fetch books. Please try again later.");
 			}
 		};
 
@@ -48,6 +54,15 @@ const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
 				categoryLink={categoryLink}
 				isLoading={loading}
 			/>
+		);
+	}
+
+	if (error) {
+		return (
+			<div className="error-message">
+				<h2>{categoryTitle}</h2>
+				<p>{error}</p>
+			</div>
 		);
 	}
 
