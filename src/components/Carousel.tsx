@@ -18,7 +18,7 @@ const Carousel: React.FC<CarouselProps> = ({
 	isLoading,
 }) => {
 	const settings = {
-		dots: false, // Disable dots for a more streamlined look (like Netflix)
+		dots: false, // Disable dots for a more streamlined look
 		infinite: true,
 		speed: 500,
 		slidesToShow: 6, // Show 6 books at once, adjust as needed
@@ -53,7 +53,7 @@ const Carousel: React.FC<CarouselProps> = ({
 	};
 
 	return (
-		<div className="carousel-container mt-8 w-[90%] mx-auto">
+		<div className="carousel-container mt-8 w-[90%] mx-auto py-4">
 			{/* Title and View All Button */}
 			<div className="flex justify-between items-center mb-4">
 				<h2 className="text-2xl font-bold">{title}</h2>
@@ -70,7 +70,7 @@ const Carousel: React.FC<CarouselProps> = ({
 			{/* Carousel with books */}
 			<Slider {...settings}>
 				{isLoading
-					? Array(10)
+					? Array(6)
 							.fill(null)
 							.map((_, index) => renderSkeletons()) // Show skeleton for each book
 					: books?.map((book) => (

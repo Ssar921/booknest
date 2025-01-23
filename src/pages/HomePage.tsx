@@ -1,27 +1,31 @@
 import SearchBar from "../components/SearchBar";
 import { useToggleContext } from "../context/ToggleContext";
 import CategoryCarousel from "../components/CategoryCarousel";
-import { categoryConfig } from "../utils/categories";
+import { categoryConfig, Category } from "../utils/categories";
+import ButtonCarousel from "../components/ButtonCarousel";
+import { useState } from "react";
 
 const HomePage: React.FC = () => {
 	const { isToggled } = useToggleContext();
+	const [bookCategory, setBookCategory] = useState<Category>(
+		categoryConfig[0]
+	);
 
 	return (
 		<div
-			className={`min-h-full flex-col ${
+			className={`min-h-screen flex-col ${
 				isToggled ? "bg-gray-900 text-white" : "bg-white text-gray-900"
 			}`}
 		>
 			<SearchBar />
-			{/* Popular Books Carousel */}
-			{categoryConfig.map((category, index) => (
-				<CategoryCarousel
-					key={index}
-					categoryTitle={`${category.title} Books`}
-					query={category.query}
-					categoryLink={`/category/${category.query}`}
-				/>
-			))}
+
+			<ButtonCarousel setBookCategory={setBookCategory} />
+
+			<CategoryCarousel
+				categoryTitle={`${bookCategory.title} Books`}
+				query={bookCategory.query}
+				categoryLink={`/category/${bookCategory.query}`}
+			/>
 		</div>
 	);
 };

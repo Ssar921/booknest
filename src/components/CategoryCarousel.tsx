@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import { Book } from "../types";
 import Carousel from "./Carousel";
-import { toast } from "react-toastify"; // Import toast from react-toastify
+import useFetchBooks from "../hooks/useFetchBooks";
 
 interface CategoryCarouselProps {
 	categoryTitle: string;
@@ -14,54 +12,21 @@ const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
 	query,
 	categoryLink,
 }) => {
-	const [books, setBooks] = useState<Book[]>([]);
-	const [loading, setLoading] = useState<boolean>(true);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		const fetchBooks = async () => {
-			try {
-				const response = await fetch(
-					`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=relevance&fields=items(id,volumeInfo(title,imageLinks/thumbnail))`
-				);
-
-				if (!response.ok) {
-					throw new Error("Network response was not ok");
-				}
-
-				const data = await response.json();
-				setBooks(data.items);
-				setLoading(false);
-			} catch (error) {
-				console.error("Error fetching books:", error);
-				setError(
-					"Something went wrong while fetching books. Please try again later."
-				);
-				setLoading(false);
-				// Show a toast notification for the error
-				toast.error("Failed to fetch books. Please try again later.");
-			}
-		};
-
-		fetchBooks();
-	}, [query]);
-
-	if (loading) {
-		return (
-			<Carousel
-				title={categoryTitle}
-				books={Array(10).fill(null)} // Render 10 skeletons as placeholders
-				categoryLink={categoryLink}
-				isLoading={loading}
-			/>
-		);
-	}
+	const { books, loading, error, retryFetch } = useFetchBooks(query);
 
 	if (error) {
 		return (
-			<div className="error-message">
-				<h2>{categoryTitle}</h2>
-				<p>{error}</p>
+			<div className="error-message text-center p-4 flex-col">
+				<h2 className="text-xl font-semibold text-red-600">
+					{categoryTitle}
+				</h2>
+				<p className="text-gray-600 mt-2">{error}</p>
+				<button
+					onClick={retryFetch}
+					className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-all"
+				>
+					Retry
+				</button>
 			</div>
 		);
 	}

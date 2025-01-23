@@ -1,6 +1,12 @@
-// categories.ts (new config file)
-export const categoryConfig = [
+export interface Category {
+	title: string;
+	query: string;
+}
+export const categoryConfig: Category[] = [
 	{ title: "Popular", query: "book" },
+	{ title: "Award-Winning", query: "award+winning" },
+	{ title: "Top Rated", query: "top+rated" },
+	{ title: "Must Read", query: "must+read" },
 	{ title: "Fiction", query: "fiction" },
 	{ title: "Fantasy", query: "fantasy" },
 	{ title: "Mystery", query: "mystery" },
@@ -15,7 +21,4 @@ export const categoryConfig = [
 	{ title: "Non Fiction", query: "non+fiction" },
 	{ title: "Poetry", query: "poetry" },
 	{ title: "Adventure", query: "adventure" },
-	{ title: "Award-Winning", query: "award+winning" },
-	{ title: "Top Rated", query: "top+rated" },
-	{ title: "Must Read", query: "must+read" },
 ];
