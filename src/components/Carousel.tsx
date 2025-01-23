@@ -75,7 +75,7 @@ const Carousel: React.FC<CarouselProps> = ({
 				{isLoading
 					? Array(6)
 							.fill(null)
-							.map((_, index) => renderSkeletons()) // Show skeleton for each book
+							.map((_) => renderSkeletons()) // Show skeleton for each book
 					: books?.map((book) => (
 							<CarouselBook key={book.id} book={book} />
 					  ))}

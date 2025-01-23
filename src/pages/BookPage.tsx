@@ -105,7 +105,7 @@ const BookDetails: React.FC = () => {
 
 	return (
 		<div
-			className={`w-full py-16 ${
+			className={`w-full py-4 ${
 				isToggled
 					? "bg-gray-900 text-white"
 					: "bg-gradient-to-r from-blue-50 to-blue-100"

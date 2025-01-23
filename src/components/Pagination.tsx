@@ -14,7 +14,7 @@ const Pagination: React.FC<PaginationProps> = ({
 	const pages = [...Array(totalPages).keys()].map((x) => x + 1);
 
 	return (
-		<div className="pagination flex justify-center gap-2 mt-4">
+		<div className="pagination flex flex-wrap justify-center gap-2 mt-4 w-[90%]">
 			{pages.map((page) => (
 				<button
 					key={page}

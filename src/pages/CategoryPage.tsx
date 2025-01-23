@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Book } from "../types"; // Assuming you have the Book type defined
 import Pagination from "../components/Pagination"; // A separate Pagination component
-import CarouselBook from "../components/CarouselBook";
 import Skeleton from "react-loading-skeleton";
 import { categoryConfig } from "../utils/categories";
 import { Link } from "react-router-dom";
 import { useToggleContext } from "../context/ToggleContext";
 
+import BookResult from "../components/BookResult";
 const CategoryPage: React.FC = () => {
 	const { isToggled } = useToggleContext();
 
@@ -88,12 +88,12 @@ const CategoryPage: React.FC = () => {
 				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
 					{Array(booksPerPage)
 						.fill(null)
-						.map((_, index) => renderSkeletons())}
+						.map((_) => renderSkeletons())}
 				</div>
 			) : (
-				<div className="flex justify-between flex-wrap">
+				<div className="flex justify-center flex-wrap">
 					{books.map((book) => (
-						<CarouselBook book={book} key={book.id} />
+						<BookResult book={book} key={book.id} />
 					))}
 				</div>
 			)}

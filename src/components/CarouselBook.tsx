@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Book } from "../types";
-import placeholder from "../assets/images/book-placeholder.png";
+import placeholder from "../assets/images/book-placeholder.jpg";
 import { useToggleContext } from "../context/ToggleContext";
 interface CarouselBookProps {
 	book: Book;
@@ -52,7 +52,7 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 					{/* <!-- CTA Button --> */}
 					<Link
 						to={`/book/${book.id}`}
-						className="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-all duration-300"
+						className="mt-4 inline-block px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300"
 					>
 						View Details
 					</Link>
