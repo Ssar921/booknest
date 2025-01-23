@@ -14,7 +14,7 @@ const useFetchBooks = (query: string) => {
 		setError(null);
 		try {
 			const response = await fetch(
-				`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=relevance&fields=items(id,volumeInfo(title,imageLinks/thumbnail))`
+				`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=relevance&fields=items(id,volumeInfo(title,authors,imageLinks/thumbnail))`
 			);
 
 			if (!response.ok) {

@@ -49,15 +49,15 @@ const ButtonCarousel: React.FC<ChildComponentProps> = ({ setBookCategory }) => {
 									}}
 									key={index}
 									className={`
-                                        py-2 rounded-md w-full
-                                        transition-all
-                                        focus:outline-none
-                                        ${
+										py-2 rounded-md w-full
+										transition-all
+										focus:outline-none
+										${
 											isToggled
-												? "bg-gray-800 text-white hover:bg-gray-700"
-												: "bg-white text-gray-800 hover:bg-gray-200 hover:text-gray-900"
+												? "bg-gray-800 text-white hover:bg-gray-700 hover:text-gray-200 "
+												: "bg-gray-300 text-gray-800 hover:bg-gray-200 hover:text-gray-900"
 										}
-                                      `}
+									  `}
 								>
 									{category.title}
 								</button>
