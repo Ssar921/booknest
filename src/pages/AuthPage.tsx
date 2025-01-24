@@ -1,41 +1,53 @@
-// src/components/Auth.tsx
+// src/components/AuthPage.tsx
 import React, { useState } from "react";
-import {
-	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext"; // Your Auth context
 
-const AuthPage: React.FC = () => {
-	const [authMode, setAuthMode] = useState<"login" | "register">("login");
+interface AuthPageProps {
+	mode: "login" | "register";
+}
+
+const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [username, setUsername] = useState("");
+	const [firstname, setFirstname] = useState("");
+	const [lastname, setLastname] = useState("");
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const { login, signup } = useAuth(); // Using auth context
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setLoading(true);
 		setError(null);
 
-		if (!email || !password) {
+		if (mode === "login" && (!email || !password)) {
 			setError("Please fill in both fields.");
 			setLoading(false);
 			return;
 		}
 
+		if (
+			mode === "register" &&
+			(!email || !password || !username || !firstname || !lastname)
+		) {
+			setError("Please fill in all fields.");
+			setLoading(false);
+			return;
+		}
+
 		try {
-			if (authMode === "login") {
-				await signInWithEmailAndPassword(auth, email, password);
+			if (mode === "login") {
+				await login(email, password);
 				toast.success("Login successful!");
-				navigate("/"); // Redirect to the homepage after successful login
+				navigate("/"); // Redirect after login
 			} else {
-				await createUserWithEmailAndPassword(auth, email, password);
+				await signup(email, password, username, firstname, lastname);
 				toast.success("Registration successful!");
-				navigate("/"); // Redirect after successful registration
+				navigate("/"); // Redirect after registration
 			}
 		} catch (err: any) {
 			toast.error(`Error: ${err.message}`);
@@ -49,7 +61,7 @@ const AuthPage: React.FC = () => {
 		<div className="flex items-center justify-center min-h-screen bg-gray-100">
 			<div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
 				<h2 className="text-3xl font-bold text-center text-gray-900">
-					{authMode === "login" ? "Login" : "Register"}
+					{mode === "login" ? "Login" : "Register"}
 				</h2>
 				<form className="space-y-4" onSubmit={handleSubmit}>
 					{/* Email Input */}
@@ -88,6 +100,68 @@ const AuthPage: React.FC = () => {
 						/>
 					</div>
 
+					{/* Conditional fields for Register */}
+					{mode === "register" && (
+						<>
+							<div>
+								<label
+									htmlFor="username"
+									className="block text-sm font-medium text-gray-700"
+								>
+									Username
+								</label>
+								<input
+									id="username"
+									type="text"
+									value={username}
+									onChange={(e) =>
+										setUsername(e.target.value)
+									}
+									required
+									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+								/>
+							</div>
+
+							<div>
+								<label
+									htmlFor="firstname"
+									className="block text-sm font-medium text-gray-700"
+								>
+									First Name
+								</label>
+								<input
+									id="firstname"
+									type="text"
+									value={firstname}
+									onChange={(e) =>
+										setFirstname(e.target.value)
+									}
+									required
+									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+								/>
+							</div>
+
+							<div>
+								<label
+									htmlFor="lastname"
+									className="block text-sm font-medium text-gray-700"
+								>
+									Last Name
+								</label>
+								<input
+									id="lastname"
+									type="text"
+									value={lastname}
+									onChange={(e) =>
+										setLastname(e.target.value)
+									}
+									required
+									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+								/>
+							</div>
+						</>
+					)}
+
 					{/* Error Message */}
 					{error && (
 						<p className="text-sm text-red-500 mt-2">{error}</p>
@@ -100,40 +174,14 @@ const AuthPage: React.FC = () => {
 						className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 disabled:opacity-50 hover:bg-indigo-700 transition-colors duration-300"
 					>
 						{loading
-							? authMode === "login"
+							? mode === "login"
 								? "Logging in..."
 								: "Registering..."
-							: authMode === "login"
+							: mode === "login"
 							? "Login"
 							: "Register"}
 					</button>
 				</form>
-
-				<p className="mt-4 text-center text-sm text-gray-600">
-					{authMode === "login" ? (
-						<>
-							Don't have an account?{" "}
-							<a
-								href="#"
-								onClick={() => setAuthMode("register")}
-								className="text-indigo-600 hover:text-indigo-500"
-							>
-								Register here
-							</a>
-						</>
-					) : (
-						<>
-							Already have an account?{" "}
-							<a
-								href="#"
-								onClick={() => setAuthMode("login")}
-								className="text-indigo-600 hover:text-indigo-500"
-							>
-								Login here
-							</a>
-						</>
-					)}
-				</p>
 			</div>
 		</div>
 	);

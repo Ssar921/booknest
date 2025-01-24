@@ -1,3 +1,4 @@
+// src/context/AuthContext.tsx
 import {
 	createContext,
 	useState,
@@ -5,14 +6,11 @@ import {
 	ReactNode,
 	useContext,
 } from "react";
-import {
-	auth,
-	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
-	signOut,
-} from "../firebase"; // Importing auth functions
+import { auth, createUserWithEmailAndPassword, signOut } from "../firebase"; // <-- Add signOut import here
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { db } from "../firebase"; // Firestore instance
 
 // Define the type for the context
 interface AuthContextType {
@@ -20,7 +18,13 @@ interface AuthContextType {
 	isLoading: boolean;
 	login: (email: string, password: string) => Promise<void>;
 	logout: () => Promise<void>;
-	signup: (email: string, password: string) => Promise<void>;
+	signup: (
+		email: string,
+		password: string,
+		username: string,
+		firstname: string,
+		lastname: string
+	) => Promise<void>;
 }
 
 // Create the context
@@ -49,17 +53,39 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 	// Handle login
 	const login = async (email: string, password: string) => {
 		try {
-			await signInWithEmailAndPassword(auth, email, password);
+			await createUserWithEmailAndPassword(auth, email, password);
 			navigate("/"); // Redirect after successful login
 		} catch (error: any) {
 			throw new Error(error.message);
 		}
 	};
 
-	// Handle signup
-	const signup = async (email: string, password: string) => {
+	// Handle signup with additional fields
+	const signup = async (
+		email: string,
+		password: string,
+		username: string,
+		firstname: string,
+		lastname: string
+	) => {
 		try {
-			await createUserWithEmailAndPassword(auth, email, password);
+			const userCredential = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			const user = userCredential.user;
+
+			// Add additional user information to Firestore
+			await setDoc(doc(db, "users", user.uid), {
+				email: user.email,
+				username,
+				firstname,
+				lastname,
+				likedcategories: [],
+				joined: Timestamp.now(), // Automatically add the timestamp for when the user joined
+			});
+
 			navigate("/"); // Redirect after successful signup
 		} catch (error: any) {
 			throw new Error(error.message);
@@ -69,7 +95,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 	// Handle logout
 	const logout = async () => {
 		try {
-			await signOut(auth);
+			await signOut(auth); // This is where the signOut function is used
 			navigate("/"); // Redirect after logout
 		} catch (error: any) {
 			throw new Error(error.message);
