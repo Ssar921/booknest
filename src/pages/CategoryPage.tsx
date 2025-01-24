@@ -26,7 +26,7 @@ const CategoryPage: React.FC = () => {
 			try {
 				const startIndex = (currentPage - 1) * booksPerPage; // Calculate the startIndex for pagination
 				const response = await fetch(
-					`https://www.googleapis.com/books/v1/volumes?q=subject:${categoryId}&startIndex=${startIndex}&maxResults=${booksPerPage}&fields=items(id,volumeInfo(title,imageLinks/thumbnail)),totalItems`
+					`https://www.googleapis.com/books/v1/volumes?q=subject:${categoryId}&startIndex=${startIndex}&maxResults=${booksPerPage}&fields=items(id,volumeInfo(title,authors,imageLinks/thumbnail)),totalItems`
 				);
 				const data = await response.json();
 

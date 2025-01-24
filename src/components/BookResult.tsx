@@ -15,25 +15,41 @@ const BookResult: React.FC<BookProps> = ({ book }) => {
 
 	return (
 		<div
-			className={`flex flex-col sm:w-[22%] w-[45%] items-center rounded-lg justify-center text-center mx-1 my-3 border border-black ${
-				isToggled ? "text-white" : "text-gray-900"
+			className={`flex flex-col sm:w-[22%] w-[45%] items-start rounded-lg justify-between text-center mx-2 my-4 border border-gray-300 shadow-lg overflow-hidden transform group transition-transform duration-300 ${
+				isToggled ? "bg-gray-800 text-white" : "bg-white text-gray-900"
 			}`}
 		>
-			<img
-				src={book.volumeInfo.imageLinks?.thumbnail || placeholder}
-				alt={book.volumeInfo.title}
-				className="w-[120px] h-[180px] mr-1 object-cover rounded-lg transition-all duration-300 transform group-hover:scale-105"
-			/>
+			{/* Book Image */}
+			<div className="relative w-full h-[220px]">
+				<img
+					src={book.volumeInfo.imageLinks?.thumbnail || placeholder}
+					alt={book.volumeInfo.title}
+					className="w-full h-full object-cover rounded-t-lg transition-all duration-300 transform group-hover:scale-105"
+				/>
+			</div>
 
-			<h4 className="text-lg font-semibold mt-1 w-[calc(100% - 140px)]">
-				{truncateTitle(book.volumeInfo.title)}
-			</h4>
+			{/* Book Information (Title & Author) */}
+			<div className="px-4 py-3 w-full flex flex-col justify-between">
+				{/* Title */}
+				<h4 className="text-lg font-semibold text-left mb-2 truncate">
+					{truncateTitle(book.volumeInfo.title)}
+				</h4>
+
+				{/* Author(s) */}
+				<p className="text-sm text-gray-600 text-left truncate">
+					{book.volumeInfo.authors
+						? book.volumeInfo.authors.join(", ")
+						: "Unknown Author"}
+				</p>
+			</div>
+
+			{/* View Details Button */}
 			<Link
 				to={`/book/${book.id}`}
-				className={`text-blue-800 px-3 rounded-md py-1 text-xs font-semibold cursor-pointer hover:bg-gray-500 transition ease-in-out duration-300 w-full ${
+				className={`text-xs font-semibold rounded-md py-2 px-4 mt-3 block w-full text-center transition ease-in-out duration-300 ${
 					isToggled
-						? "bg-gray-800 text-white"
-						: "bg-gray-300 text-black"
+						? "bg-blue-300 hover:bg-blue-400 text-white"
+						: "bg-gray-300 hover:bg-gray-400 text-gray-800"
 				}`}
 			>
 				View Details
