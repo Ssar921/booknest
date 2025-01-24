@@ -18,23 +18,31 @@ const Carousel: React.FC<CarouselProps> = ({
 	isLoading,
 }) => {
 	const settings = {
-		dots: false, // Disable dots for a more streamlined look
+		dots: false,
 		infinite: true,
+		rows: 1,
 		speed: 500,
-		slidesToShow: 3, // Show 6 books at once, adjust as needed
+		slidesToShow: 4,
 		slidesToScroll: 1,
 		responsive: [
 			{
+				breakpoint: 1800,
+				settings: {
+					slidesToShow: 5,
+					slidesToScroll: 1,
+				},
+			},
+			{
 				breakpoint: 1024,
 				settings: {
-					slidesToShow: 2, // Show 3 books on tablet screens
+					slidesToShow: 2,
 					slidesToScroll: 1,
 				},
 			},
 			{
 				breakpoint: 600,
 				settings: {
-					slidesToShow: 1, // Show 1 book on smaller screens
+					slidesToShow: 1,
 					slidesToScroll: 1,
 				},
 			},

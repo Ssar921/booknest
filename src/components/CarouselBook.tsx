@@ -7,21 +7,26 @@ interface CarouselBookProps {
 }
 const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 	const { isToggled } = useToggleContext();
+	const truncateTitle = (title: string) => {
+		const words = title.split(" ");
+		return words.slice(0, 3).join(" ") + (words.length > 3 ? "..." : "");
+	};
+
 	return (
-		<div
-			key={book.id}
-			className={`carousel-item p-2 m-2 rounded-lg transition-all duration-300
+		<Link to={`/book/${book.id}`} className="w-full sm:w-[21vw] m-1">
+			<div
+				key={book.id}
+				className={`carousel-item w-full sm:w-[21vw] m-1 p-2 rounded-lg transition-all duration-300
 				${
 					isToggled
-						? "border-gray-700 bg-gray-800 text-white shadow-md shadow-gray-600"
+						? "border-gray-700 bg-gray-800 text-white shadow-md shadow-black"
 						: "border-gray-300 bg-white text-gray-900 shadow-md shadow-gray-400"
 				} 
 				hover:shadow-none`}
-		>
-			<div className="flex">
-				{/* <!-- Image Section --> */}
-				<div className="flex-shrink-0 w-[120px] h-[180px] mr-4">
-					<Link to={`/book/${book.id}`}>
+			>
+				<div className="flex">
+					{/* <!-- Image Section --> */}
+					<div className="flex-shrink-0 w-[120px] h-[180px] mr-4">
 						<img
 							src={
 								book.volumeInfo.imageLinks?.thumbnail ||
@@ -30,35 +35,32 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 							alt={book.volumeInfo.title}
 							className="w-full h-full object-cover rounded-lg transition-all duration-300 transform group-hover:scale-105"
 						/>
-					</Link>
-				</div>
+					</div>
 
-				{/* <!-- Info Section --> */}
-				<div className="flex flex-col justify-between items-start">
-					{/* <!-- Title --> */}
-					<h4 className="text-lg w-full font-semibold mt-1">
-						{book.volumeInfo.title}
-					</h4>
+					{/* <!-- Info Section --> */}
+					<div className="flex flex-col justify-between items-start">
+						{/* <!-- Title --> */}
+						<h4 className="text-lg w-full font-semibold mt-1">
+							{truncateTitle(book.volumeInfo.title)}
+						</h4>
 
-					{/* <!-- Author and Year --> */}
-					<p
-						className={`text-sm mt-1 ${
-							isToggled ? "text-gray-400" : "text-gray-700"
-						}`}
-					>
-						{book.volumeInfo.authors?.join(", ") || ""}
-					</p>
-
-					{/* <!-- CTA Button --> */}
-					<Link
-						to={`/book/${book.id}`}
-						className="mt-4 inline-block px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300"
-					>
-						View Details
-					</Link>
+						{/* <!-- Author and Year --> */}
+						<p
+							className={`text-sm mt-1 ${
+								isToggled ? "text-gray-400" : "text-gray-700"
+							}`}
+						>
+							{book.volumeInfo.authors &&
+							book.volumeInfo.authors.length > 1
+								? `${book.volumeInfo.authors[0]} + ${
+										book.volumeInfo.authors.length - 1
+								  } more`
+								: book.volumeInfo.authors?.[0] || ""}
+						</p>
+					</div>
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
 export default CarouselBook;

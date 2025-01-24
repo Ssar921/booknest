@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useToggleContext } from "../context/ToggleContext";
 
 import BookResult from "../components/BookResult";
+import CarouselBook from "../components/CarouselBook";
 const CategoryPage: React.FC = () => {
 	const { isToggled } = useToggleContext();
 
@@ -94,6 +95,7 @@ const CategoryPage: React.FC = () => {
 				<div className="flex justify-center flex-wrap">
 					{books.map((book) => (
 						<BookResult book={book} key={book.id} />
+						// <CarouselBook book={book} />
 					))}
 				</div>
 			)}
