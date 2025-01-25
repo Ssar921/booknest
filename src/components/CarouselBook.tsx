@@ -16,7 +16,7 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 		<Link to={`/book/${book.id}`} className="w-full sm:w-[21vw] m-1">
 			<div
 				key={book.id}
-				className={`carousel-item w-full sm:w-[21vw] m-1 p-2 rounded-lg transition-all duration-300
+				className={`carousel-item w-full sm:w-[21vw] min-w-[220px] m-1 p-2 rounded-lg transition-all duration-300
 				${
 					isToggled
 						? "border-gray-700 bg-gray-800 text-white shadow-md shadow-black"
@@ -26,7 +26,7 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 			>
 				<div className="flex">
 					{/* <!-- Image Section --> */}
-					<div className="flex-shrink-0 w-[120px] h-[180px] mr-4">
+					<div className="flex-shrink-0 w-[75px] h-[90px] mr-4">
 						<img
 							src={
 								book.volumeInfo.imageLinks?.thumbnail ||
@@ -39,8 +39,12 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 
 					{/* <!-- Info Section --> */}
 					<div className="flex flex-col justify-between items-start">
+						<small className="text-gray-700 font-semibold">
+							{book.volumeInfo.publishedDate &&
+								book.volumeInfo.publishedDate.split("-")[0]}
+						</small>
 						{/* <!-- Title --> */}
-						<h4 className="text-lg w-full font-semibold mt-1">
+						<h4 className="text-lg w-full font-semibold mt-1 font-serif">
 							{truncateTitle(book.volumeInfo.title)}
 						</h4>
 

@@ -26,17 +26,11 @@ const Carousel: React.FC<CarouselProps> = ({
 		slidesToScroll: 1,
 		responsive: [
 			{
-				breakpoint: 1800,
-				settings: {
-					slidesToShow: 5,
-					slidesToScroll: 1,
-				},
-			},
-			{
 				breakpoint: 1024,
 				settings: {
 					slidesToShow: 2,
 					slidesToScroll: 1,
+					rows: 2,
 				},
 			},
 			{
@@ -44,14 +38,15 @@ const Carousel: React.FC<CarouselProps> = ({
 				settings: {
 					slidesToShow: 1,
 					slidesToScroll: 1,
+					rows: 4,
 				},
 			},
 		],
 	};
 
-	const renderSkeletons = () => {
+	const renderSkeletons = (index: number) => {
 		return (
-			<div className="carousel-item p-4">
+			<div className="carousel-item p-4" key={index}>
 				<div className="flex">
 					<Skeleton width={120} height={180} />
 					<div className="flex flex-col ml-4">
@@ -83,7 +78,7 @@ const Carousel: React.FC<CarouselProps> = ({
 				{isLoading
 					? Array(6)
 							.fill(null)
-							.map((_) => renderSkeletons()) // Show skeleton for each book
+							.map((_, index) => renderSkeletons(index)) // Show skeleton for each book
 					: books?.map((book) => (
 							<CarouselBook key={book.id} book={book} />
 					  ))}

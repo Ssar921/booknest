@@ -6,5 +6,6 @@ export interface Book {
 		imageLinks?: {
 			thumbnail: string;
 		};
+		publishedDate: string;
 	};
 }

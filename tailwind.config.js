@@ -5,6 +5,7 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ["Poppins", "sans-serif"],
+				serif: ["Bodoni Moda", "serif"],
 			},
 		},
 	},

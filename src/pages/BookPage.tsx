@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import placeholder from "../assets/images/book-placeholder.png";
-
 import { useToggleContext } from "../context/ToggleContext";
 // Interface to type the book data.
 interface BookData {

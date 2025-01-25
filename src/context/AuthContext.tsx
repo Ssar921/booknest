@@ -6,7 +6,12 @@ import {
 	ReactNode,
 	useContext,
 } from "react";
-import { auth, createUserWithEmailAndPassword, signOut } from "../firebase"; // <-- Add signOut import here
+import {
+	auth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	signOut,
+} from "../firebase"; // <-- Add signOut import here
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
@@ -53,7 +58,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 	// Handle login
 	const login = async (email: string, password: string) => {
 		try {
-			await createUserWithEmailAndPassword(auth, email, password);
+			await signInWithEmailAndPassword(auth, email, password);
 			navigate("/"); // Redirect after successful login
 		} catch (error: any) {
 			throw new Error(error.message);

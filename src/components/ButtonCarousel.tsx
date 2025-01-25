@@ -42,7 +42,7 @@ const ButtonCarousel: React.FC<ChildComponentProps> = ({ setBookCategory }) => {
 				<Slider {...settings}>
 					{categoryConfig.map((category, index) => {
 						return (
-							<div className="text-center p-2">
+							<div className="text-center p-2" key={index}>
 								<button
 									onClick={() => {
 										handleCategoryChange(category);
