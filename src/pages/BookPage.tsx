@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import placeholder from "../assets/images/book-placeholder.png";
 import { useToggleContext } from "../context/ToggleContext";
+import FavoriteButton from "../components/FavoriteButton";
 // Interface to type the book data.
 interface BookData {
 	id: string;
@@ -250,6 +251,8 @@ const BookDetails: React.FC = () => {
 									Preview this Book
 								</a>
 							)}
+
+							<FavoriteButton bookId={book?.id} />
 						</div>
 					</div>
 				</div>

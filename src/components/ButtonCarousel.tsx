@@ -1,13 +1,19 @@
 import { categoryConfig, Category } from "../utils/categories";
 import Slider from "react-slick";
 import { useToggleContext } from "../context/ToggleContext";
+import { useState } from "react";
 
 interface ChildComponentProps {
 	setBookCategory: React.Dispatch<React.SetStateAction<Category>>; // Expect setBookCategory function
 }
 const ButtonCarousel: React.FC<ChildComponentProps> = ({ setBookCategory }) => {
 	const { isToggled } = useToggleContext();
+	const defaultCategory =
+		categoryConfig.find((category) => category.title === "Popular") ||
+		categoryConfig[0]; // Fallback to the first category if not found
 
+	const [selectedCategory, setSelectedCategory] =
+		useState<Category>(defaultCategory);
 	const settings = {
 		dots: false, // Disable dots for a more streamlined look
 		infinite: true,
@@ -33,6 +39,7 @@ const ButtonCarousel: React.FC<ChildComponentProps> = ({ setBookCategory }) => {
 	};
 
 	const handleCategoryChange = (newCategory: Category) => {
+		setSelectedCategory(newCategory);
 		setBookCategory(newCategory); // Call setBookCategory to update the state
 	};
 
@@ -41,6 +48,8 @@ const ButtonCarousel: React.FC<ChildComponentProps> = ({ setBookCategory }) => {
 			<div className="carousel-container mt-8 w-[90%] mx-auto">
 				<Slider {...settings}>
 					{categoryConfig.map((category, index) => {
+						const isActive =
+							selectedCategory?.title === category.title;
 						return (
 							<div className="text-center p-2" key={index}>
 								<button
@@ -49,13 +58,14 @@ const ButtonCarousel: React.FC<ChildComponentProps> = ({ setBookCategory }) => {
 									}}
 									key={index}
 									className={`
-										py-2 rounded-md w-full
+										py-2 w-full my-1
 										transition-all
 										focus:outline-none
+										${isToggled ? "text-white" : "text-gray-800"}
 										${
-											isToggled
-												? "bg-gray-800 text-white hover:bg-gray-700 hover:text-gray-200 "
-												: "bg-gray-300 text-gray-800 hover:bg-gray-200 hover:text-gray-900"
+											isActive
+												? "border-b-2 border-blue-500" // Add bottom border for active state
+												: "hover:border-b-2 hover:border-gray-500"
 										}
 									  `}
 								>
@@ -70,3 +80,15 @@ const ButtonCarousel: React.FC<ChildComponentProps> = ({ setBookCategory }) => {
 	);
 };
 export default ButtonCarousel;
+
+/* 
+className={`
+										py-2 rounded-md w-full
+										transition-all
+										focus:outline-none
+										${
+											isToggled
+												? "bg-gray-800 text-white hover:bg-gray-700 hover:text-gray-200 "
+												: "bg-gray-300 text-gray-800 hover:bg-gray-200 hover:text-gray-900"
+										}
+									  `} */

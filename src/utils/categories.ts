@@ -4,6 +4,7 @@ export interface Category {
 }
 export const categoryConfig: Category[] = [
 	{ title: "Popular", query: "book" },
+	{ title: "New Releases", query: "new+releases" },
 	{ title: "Award-Winning", query: "award+winning" },
 	{ title: "Top Rated", query: "top+rated" },
 	{ title: "Must Read", query: "must+read" },

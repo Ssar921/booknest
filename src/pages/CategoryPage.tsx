@@ -27,7 +27,7 @@ const CategoryPage: React.FC = () => {
 			try {
 				const startIndex = (currentPage - 1) * booksPerPage; // Calculate the startIndex for pagination
 				const response = await fetch(
-					`https://www.googleapis.com/books/v1/volumes?q=${categoryId}&startIndex=${startIndex}&maxResults=${booksPerPage}&fields=items(id,volumeInfo(title,authors,imageLinks/thumbnail)),totalItems`
+					`https://www.googleapis.com/books/v1/volumes?q=subject:${categoryId}&startIndex=${startIndex}&maxResults=${booksPerPage}&fields=items(id,volumeInfo(title,authors,imageLinks/thumbnail)),totalItems`
 				);
 				const data = await response.json();
 
@@ -61,7 +61,7 @@ const CategoryPage: React.FC = () => {
 
 	return (
 		<div
-			className={`category-page w-full px-6 mx-auto py-8 ${
+			className={`category-page w-full px-2 sm:px-6 mx-auto py-8 ${
 				isToggled ? "bg-gray-900 text-white" : "bg-white"
 			}`}
 		>

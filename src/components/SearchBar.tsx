@@ -74,7 +74,7 @@ const SearchBar = () => {
 						value={query}
 						onChange={handleInputChange}
 						placeholder="Search for books, authors, genres..."
-						className={`w-full p-3 border-2 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full backdrop-blur-sm
+						className={`w-full p-3 border-2 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg backdrop-blur-sm
         ${
 			isToggled
 				? "border-gray-700 bg-gray-800 text-white"

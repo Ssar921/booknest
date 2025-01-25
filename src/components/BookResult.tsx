@@ -14,47 +14,42 @@ const BookResult: React.FC<BookProps> = ({ book }) => {
 	};
 
 	return (
-		<div
-			className={`flex flex-col sm:w-[22%] w-[45%] items-start rounded-lg justify-between text-center mx-2 my-4 border border-gray-300 shadow-lg overflow-hidden transform group transition-transform duration-300 ${
-				isToggled ? "bg-gray-800 text-white" : "bg-white text-gray-900"
-			}`}
+		<Link
+			to={`/book/${book.id}`}
+			className="w-[45%] sm:w-[20%] min-w-200px h-[250px] mx-2 my-4 "
 		>
-			{/* Book Image */}
-			<div className="relative w-full h-[220px]">
-				<img
-					src={book.volumeInfo.imageLinks?.thumbnail || placeholder}
-					alt={book.volumeInfo.title}
-					className="w-full h-full object-cover rounded-t-lg transition-all duration-300 transform group-hover:scale-105"
-				/>
-			</div>
-
-			{/* Book Information (Title & Author) */}
-			<div className="px-4 py-3 w-full flex flex-col justify-between">
-				{/* Title */}
-				<h4 className="text-lg font-semibold text-left mb-2 truncate">
-					{truncateTitle(book.volumeInfo.title)}
-				</h4>
-
-				{/* Author(s) */}
-				<p className="text-sm text-gray-600 text-left truncate">
-					{book.volumeInfo.authors
-						? book.volumeInfo.authors.join(", ")
-						: "Unknown Author"}
-				</p>
-			</div>
-
-			{/* View Details Button */}
-			<Link
-				to={`/book/${book.id}`}
-				className={`text-xs font-semibold rounded-md py-2 px-4 mt-3 block w-full text-center transition ease-in-out duration-300 ${
+			<div
+				className={`flex flex-col w-full h-full items-start rounded-lg justify-between text-center shadow-lg overflow-hidden transform group transition-transform duration-300 ${
 					isToggled
-						? "bg-blue-300 hover:bg-blue-400 text-white"
-						: "bg-gray-300 hover:bg-gray-400 text-gray-800"
-				}`}
+						? "bg-gray-800 text-white"
+						: "bg-white text-gray-900"
+				} hover:shadow-none`}
 			>
-				View Details
-			</Link>
-		</div>
+				{/* Book Image */}
+				<div className="relative w-full h-[60%]">
+					<img
+						src={
+							book.volumeInfo.imageLinks?.thumbnail || placeholder
+						}
+						alt={book.volumeInfo.title}
+						className="w-full h-full object-cover rounded-t-lg transition-all duration-300 transform group-hover:scale-105"
+					/>
+				</div>
+				{/* Book Information (Title & Author) */}
+				<div className="px-4 py-3 w-full flex flex-col justify-between">
+					{/* Author(s) */}
+					<p className="text-sm text-gray-600 text-left truncate">
+						{book.volumeInfo.authors
+							? book.volumeInfo.authors.join(", ")
+							: "Unknown Author"}
+					</p>
+					{/* Title */}
+					<h4 className="text-lg font-semibold text-left my-2 truncate font-serif">
+						{truncateTitle(book.volumeInfo.title)}
+					</h4>
+				</div>
+			</div>
+		</Link>
 	);
 };
 export default BookResult;
