@@ -8,6 +8,7 @@ import BookPage from "./pages/BookPage";
 import AuthPage from "./pages/AuthPage";
 import CategoryPage from "./pages/CategoryPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import BookDetailsPage from "./pages/BookDetailsPage";
 
 const App: React.FC = () => {
 	return (
@@ -17,7 +18,10 @@ const App: React.FC = () => {
 					<Routes>
 						<Route path="/" element={<MainLayout />}>
 							<Route index element={<HomePage />} />
-							<Route path="/book/:id" element={<BookPage />} />
+							<Route
+								path="/book/:id"
+								element={<BookDetailsPage />}
+							/>
 							<Route
 								path="/register"
 								element={<AuthPage mode={"register"} />}
