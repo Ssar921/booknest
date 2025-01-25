@@ -48,9 +48,9 @@ const CategoryPage: React.FC = () => {
 	const totalPages = Math.ceil(totalBooks / booksPerPage);
 	const category = categoryConfig.find((cat) => cat.query === categoryId);
 	const categoryTitle = category ? category.title : categoryId;
-	const renderSkeletons = () => {
+	const renderSkeletons = (index: number) => {
 		return (
-			<div className="carousel-item p-4">
+			<div className="carousel-item p-4" key={index}>
 				<div className="flex flex-col items-center justify-center">
 					<Skeleton width={180} height={270} />
 					<Skeleton width={180} height={20} />
@@ -89,7 +89,7 @@ const CategoryPage: React.FC = () => {
 				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
 					{Array(booksPerPage)
 						.fill(null)
-						.map((_) => renderSkeletons())}
+						.map((_, index) => renderSkeletons(index))}
 				</div>
 			) : (
 				<div className="flex justify-center flex-wrap">

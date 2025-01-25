@@ -4,11 +4,13 @@ import { useAuth } from "../context/AuthContext"; // Assuming you have a context
 import { db } from "../firebase"; // Your firebase config
 import { doc, getDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { getBooksById } from "../hooks/getBooksById";
 
 const UserProfilePage: React.FC = () => {
 	const { user } = useAuth(); // Get the current user from auth context
 	const [profile, setProfile] = useState<any>(null); // User profile data
 	const [loading, setLoading] = useState(true);
+	const [favoriteBooks, setFavoriteBooks] = useState<any[]>([]);
 
 	useEffect(() => {
 		const fetchUserProfile = async () => {
@@ -33,8 +35,25 @@ const UserProfilePage: React.FC = () => {
 			}
 		};
 
+		const fetchFavoriteBooks = async () => {
+			if (user && profile) {
+				try {
+					const favorites = profile?.favorites || []; // Get the favorites array from the profile
+
+					if (favorites.length > 0) {
+						// Fetch book details for each bookId in favorites
+						const booksData = await getBooksById(favorites);
+						setFavoriteBooks(booksData);
+					}
+				} catch (error) {
+					toast.error("Error fetching favorite books.");
+				}
+			}
+		};
+
+		fetchFavoriteBooks();
 		fetchUserProfile();
-	}, [user]);
+	}, [user, profile]);
 
 	if (loading) {
 		return (
@@ -112,6 +131,24 @@ const UserProfilePage: React.FC = () => {
 						) : (
 							<span className="italic text-gray-500">
 								No liked categories
+							</span>
+						)}
+					</div>
+				</div>
+
+				{/* Favorite Books */}
+				<div className="space-y-4">
+					<p className="text-center text-gray-600 text-lg">
+						Favorite Books
+					</p>
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+						{favoriteBooks.length > 0 ? (
+							favoriteBooks.map((book, index) => (
+								<p key={index}>{book?.title}</p>
+							))
+						) : (
+							<span className="italic text-gray-500 text-center">
+								No favorite books
 							</span>
 						)}
 					</div>
