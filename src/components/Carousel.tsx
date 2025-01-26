@@ -3,6 +3,7 @@ import { Book } from "../types"; // Define your Book type elsewhere if you have 
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import CarouselBook from "./CarouselBook";
 import Skeleton from "react-loading-skeleton";
+import CustomArrow from "./CustomArrow";
 
 interface CarouselProps {
 	title: string;
@@ -24,6 +25,8 @@ const Carousel: React.FC<CarouselProps> = ({
 		speed: 500,
 		slidesToShow: 4,
 		slidesToScroll: 1,
+		prevArrow: <CustomArrow direction="prev" onClick={() => {}} />,
+		nextArrow: <CustomArrow direction="next" onClick={() => {}} />,
 		responsive: [
 			{
 				breakpoint: 1024,
@@ -38,7 +41,7 @@ const Carousel: React.FC<CarouselProps> = ({
 				settings: {
 					slidesToShow: 1,
 					slidesToScroll: 1,
-					rows: 4,
+					rows: 1,
 				},
 			},
 		],
@@ -59,14 +62,14 @@ const Carousel: React.FC<CarouselProps> = ({
 	};
 
 	return (
-		<div className="carousel-container mt-8 w-[90%] mx-auto py-4">
+		<div className="carousel-container mt-8 w-[90%] mx-auto py-4 relative">
 			{/* Title and View All Button */}
 			<div className="flex justify-between items-center mb-4">
-				<h2 className="text-2xl font-semibold">{title}</h2>
+				<h2 className="text-2xl font-bold font-serif">{title}</h2>
 				{categoryLink && (
 					<Link
 						to={categoryLink}
-						className=" bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mr-2 mb-2 cursor-pointer hover:bg-blue-200 transition ease-in-out duration-300"
+						className=" bg-themeColor text-secondary-light px-3 py-1 rounded-full text-xs font-semibold mr-2 mb-2 cursor-pointer hover:bg-secondary-dark transition ease-in-out duration-300"
 					>
 						View All
 					</Link>

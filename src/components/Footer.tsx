@@ -12,7 +12,7 @@ const Footer = () => {
 	const { user, logout } = useAuth(); // Access user and logout from AuthContext
 
 	return (
-		<div className="fixed bottom-0 sm:bottom-5 w-full sm:rounded-full md:w-9/12 mx-auto flex justify-between items-center px-6 p-3 transition-all duration-300 bg-themeColor shadow-md md:left-1/2 md:-translate-x-1/2 text-white">
+		<div className="fixed bottom-0 w-full rounded-tl-lg rounded-tr-lg md:w-9/12 mx-auto flex justify-between items-center px-6 py-2 transition-all duration-300 bg-themeColor shadow-md md:left-1/2 md:-translate-x-1/2 text-white">
 			{/* Home Icon */}
 			<Link
 				to="/"

@@ -97,8 +97,8 @@ const BookDetailsPage: React.FC = () => {
 		<div
 			className={`min-h-screen pb-5 ${
 				isToggled
-					? "text-gray-300 bg-gray-900"
-					: "text-black bg-gray-200"
+					? "text-gray-300 bg-background-dark"
+					: "text-black bg-background-light"
 			}`}
 		>
 			{/* Blue Header */}
@@ -113,13 +113,7 @@ const BookDetailsPage: React.FC = () => {
 			</div>
 
 			{/* Book Details */}
-			<div
-				className={`mt-20 px-6 md:px-20 mx-auto ${
-					isToggled
-						? "text-white bg-gray-900"
-						: "text-black bg-gray-200"
-				}`}
-			>
+			<div className={`mt-20 px-6 md:px-20 mx-auto `}>
 				{/* Title and Author */}
 				<h1 className="text-2xl font-extrabold text-center font-serif">
 					{title || <Skeleton />}

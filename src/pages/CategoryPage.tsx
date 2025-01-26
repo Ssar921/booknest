@@ -6,7 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import { categoryConfig } from "../utils/categories";
 import { Link } from "react-router-dom";
 import { useToggleContext } from "../context/ToggleContext";
-
+import { GrFormPrevious } from "react-icons/gr";
 import BookResult from "../components/BookResult";
 import CarouselBook from "../components/CarouselBook";
 const CategoryPage: React.FC = () => {
@@ -61,30 +61,27 @@ const CategoryPage: React.FC = () => {
 
 	return (
 		<div
-			className={`category-page w-full px-2 sm:px-6 mx-auto py-8 ${
+			className={`category-page w-full mx-auto ${
 				isToggled ? "bg-gray-900 text-white" : "bg-white"
 			}`}
 		>
-			<div className="mb-4">
-				<Link
-					to="/"
-					className={`${
-						isToggled
-							? "text-blue-300 hover:text-blue-400"
-							: "text-blue-600 hover:text-blue-800"
-					} text-lg font-semibold`}
+			<div className="bg-themeColor flex justify-between pb-4 px-6 text-white">
+				<div className="w-1/3">
+					<Link
+						to="/"
+						className="font-bold text-3xl hover:text-secondary-dark"
+					>
+						<GrFormPrevious />
+					</Link>
+				</div>
+				<h1
+					className={`text-3xl font-bold font-serif text-center w-1/3 text-secondary-dark`}
 				>
-					&larr; Back to Home
-				</Link>
-			</div>
-			<h1
-				className={`text-3xl font-bold mb-4 ${
-					isToggled ? "text-gray-300" : "text-gray-900"
-				}`}
-			>
-				{categoryTitle} Books
-			</h1>
+					{categoryTitle} Books
+				</h1>
 
+				<div className="w-1/3"></div>
+			</div>
 			{loading ? (
 				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
 					{Array(booksPerPage)
