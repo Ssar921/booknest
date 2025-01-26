@@ -78,7 +78,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
-							className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
 						/>
 					</div>
 
@@ -96,7 +96,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required
-							className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
 						/>
 					</div>
 
@@ -118,7 +118,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 										setUsername(e.target.value)
 									}
 									required
-									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
 								/>
 							</div>
 
@@ -137,7 +137,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 										setFirstname(e.target.value)
 									}
 									required
-									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
 								/>
 							</div>
 
@@ -156,7 +156,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 										setLastname(e.target.value)
 									}
 									required
-									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+									className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
 								/>
 							</div>
 						</>
@@ -171,7 +171,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 					<button
 						type="submit"
 						disabled={loading}
-						className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 disabled:opacity-50 hover:bg-indigo-700 transition-colors duration-300"
+						className="w-full py-2 px-4 bg-themeColor text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-themeColor focus:ring-opacity-50 disabled:opacity-50 hover:bg-secondary-dark transition-colors duration-300"
 					>
 						{loading
 							? mode === "login"

@@ -4,7 +4,6 @@ import { ToggleProvider } from "./context/ToggleContext";
 import HomePage from "./pages/HomePage";
 import MainLayout from "./layouts/MainLayout";
 import NotFoundPage from "./pages/NotFoundPage";
-import BookPage from "./pages/BookPage";
 import AuthPage from "./pages/AuthPage";
 import CategoryPage from "./pages/CategoryPage";
 import UserProfilePage from "./pages/UserProfilePage";

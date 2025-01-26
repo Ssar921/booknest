@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaSearch } from "react-icons/fa";
 import { useToggleContext } from "../context/ToggleContext";
 
 const SearchBar = () => {
@@ -20,7 +20,7 @@ const SearchBar = () => {
 		setLoading(true);
 		try {
 			const response = await fetch(
-				`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&maxResults=5`
+				`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&maxResults=5&langRestrict=en`
 			);
 			const data = await response.json();
 			setSuggestions(data.items || []);
@@ -66,7 +66,7 @@ const SearchBar = () => {
 
 	return (
 		<>
-			<div className="relative flex justify-center px-8 py-4 w-full">
+			<div className="relative flex justify-center px-8 py-4 w-full bg-themeColor">
 				{/* Search Bar */}
 				<div className="w-[95%] sm:w-[50%] relative">
 					<input
@@ -74,12 +74,17 @@ const SearchBar = () => {
 						value={query}
 						onChange={handleInputChange}
 						placeholder="Search for books, authors, genres..."
-						className={`w-full p-3 border-2 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg backdrop-blur-sm
-        ${
-			isToggled
-				? "border-gray-700 bg-gray-800 text-white"
-				: "border-gray-300 bg-white text-gray-900"
-		}`}
+						className={`w-full pl-10 pr-3 py-3 border-2 shadow-md focus:outline-none focus:ring-2 focus:ring-themeColor rounded-3xl backdrop-blur-lg bg-white bg-opacity-10 ${
+							isToggled ? "text-white" : "text-gray-900"
+						}`}
+					/>
+
+					{/* Magnifying Glass Icon */}
+					<FaSearch
+						className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${
+							isToggled ? "text-white" : "text-gray-800"
+						}`}
+						size={20}
 					/>
 
 					{/* Clear Button */}

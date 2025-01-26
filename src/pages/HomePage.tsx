@@ -4,7 +4,6 @@ import CategoryCarousel from "../components/CategoryCarousel";
 import { categoryConfig, Category } from "../utils/categories";
 import ButtonCarousel from "../components/ButtonCarousel";
 import { useState } from "react";
-import Footer from "../components/Footer";
 
 const HomePage: React.FC = () => {
 	const { isToggled } = useToggleContext();
@@ -29,7 +28,6 @@ const HomePage: React.FC = () => {
 				query={bookCategory.query}
 				categoryLink={`/category/${bookCategory.query}`}
 			/>
-			<Footer />
 		</div>
 	);
 };

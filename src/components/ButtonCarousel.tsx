@@ -45,36 +45,38 @@ const ButtonCarousel: React.FC<ChildComponentProps> = ({ setBookCategory }) => {
 
 	return (
 		<>
-			<div className="carousel-container mt-8 w-[90%] mx-auto">
-				<Slider {...settings}>
-					{categoryConfig.map((category, index) => {
-						const isActive =
-							selectedCategory?.title === category.title;
-						return (
-							<div className="text-center p-2" key={index}>
-								<button
-									onClick={() => {
-										handleCategoryChange(category);
-									}}
-									key={index}
-									className={`
+			<div className="carousel-container pt-8 w-full mx-auto bg-themeColor">
+				<div className="w-[85%] sm:w-[90%] mx-auto">
+					<Slider {...settings}>
+						{categoryConfig.map((category, index) => {
+							const isActive =
+								selectedCategory?.title === category.title;
+							return (
+								<div className="text-center p-2" key={index}>
+									<button
+										onClick={() => {
+											handleCategoryChange(category);
+										}}
+										key={index}
+										className={`
 										py-2 w-full my-1
 										transition-all
 										focus:outline-none
-										${isToggled ? "text-white" : "text-gray-800"}
+										text-white
 										${
 											isActive
-												? "border-b-2 border-blue-500" // Add bottom border for active state
-												: "hover:border-b-2 hover:border-gray-500"
+												? "border-b-2 border-gray-300" // Add bottom border for active state
+												: "hover:border-b-2 border-white"
 										}
 									  `}
-								>
-									{category.title}
-								</button>
-							</div>
-						);
-					})}
-				</Slider>
+									>
+										{category.title}
+									</button>
+								</div>
+							);
+						})}
+					</Slider>
+				</div>
 			</div>
 		</>
 	);
