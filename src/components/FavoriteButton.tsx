@@ -84,7 +84,7 @@ const FavoriteButton = ({ bookId }: { bookId: string }) => {
 					: isFavorited
 					? "bg-pink-600 text-white"
 					: "text-pink-600 border border-pink-600"
-			} rounded-lg text-sm font-semibold py-2 px-4 flex items-center space-x-2 transition-all duration-200 hover:bg-pink-100`}
+			} rounded-lg text-sm mx-auto my-1 font-semibold py-2 px-4 flex items-center space-x-2 transition-all duration-200 hover:bg-pink-100`}
 		>
 			{/* Loading Spinner */}
 			{loading ? (

@@ -8,4 +8,7 @@ export interface Book {
 		};
 		publishedDate: string;
 	};
+	searchInfo: {
+		textSnippet: string;
+	};
 }

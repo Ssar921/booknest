@@ -9,7 +9,7 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 	const { isToggled } = useToggleContext();
 	const truncateTitle = (title: string) => {
 		const words = title.split(" ");
-		return words.slice(0, 3).join(" ") + (words.length > 3 ? "..." : "");
+		return words.slice(0, 3).join(" ") + (words.length > 3 ? " ..." : "");
 	};
 
 	return (

@@ -47,8 +47,8 @@ const Carousel: React.FC<CarouselProps> = ({
 	const renderSkeletons = (index: number) => {
 		return (
 			<div className="carousel-item p-4" key={index}>
-				<div className="flex">
-					<Skeleton width={120} height={180} />
+				<div className="flex items-center">
+					<Skeleton width={75} height={90} />
 					<div className="flex flex-col ml-4">
 						<Skeleton width={180} height={20} />
 						<Skeleton width={180} height={20} />

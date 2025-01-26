@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import placeholder from "../assets/images/book-placeholder.png";
+import placeholder from "../assets/images/book-placeholder.jpg";
 import { useToggleContext } from "../context/ToggleContext";
 import FavoriteButton from "../components/FavoriteButton";
 import { FaEye } from "react-icons/fa";
@@ -154,7 +154,7 @@ const BookDetailsPage: React.FC = () => {
 
 				{/* Description */}
 				<p className=" mt-6 leading-relaxed text-center">
-					{description}
+					{description ? description : "No description to show"}
 				</p>
 
 				{/* CTA Buttons */}
