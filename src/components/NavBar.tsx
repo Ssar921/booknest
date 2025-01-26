@@ -25,15 +25,15 @@ const Navbar: React.FC = () => {
 			<nav
 				className={`flex items-center justify-between p-4 shadow-lg transition-all ${
 					isToggled
-						? "bg-gray-900 text-white"
-						: "bg-white text-gray-900"
+						? "bg-background-dark text-text-dark"
+						: "bg-background-light text-text-light"
 				}`}
 			>
 				<div className="flex items-center space-x-4">
 					<Link
 						to="/"
-						className={`text-xl font-medium transition-all ${
-							isToggled ? "text-white" : "text-gray-900"
+						className={`text-3xl font-bold transition-all font-serif ${
+							isToggled ? "text-text-dark" : "text-text-light"
 						}`}
 					>
 						BookNest
@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
 				<button
 					onClick={toggleMobileMenu}
 					className={`sm:hidden text-2xl transition-all ${
-						isToggled ? "text-white" : "text-gray-600"
+						isToggled ? "text-text-dark" : "text-text-light"
 					}`}
 				>
 					{isMobileMenuOpen ? <FaTimes /> : <FaBars />}
@@ -59,8 +59,8 @@ const Navbar: React.FC = () => {
 								to="/register"
 								className={`px-4 py-2 rounded transition-all ${
 									isToggled
-										? "bg-blue-500 text-white"
-										: "bg-blue-600 text-white"
+										? "bg-button-signupDark text-white"
+										: "bg-button-signupLight text-white"
 								}`}
 							>
 								Sign Up
@@ -69,8 +69,8 @@ const Navbar: React.FC = () => {
 								to="/login"
 								className={`px-4 py-2 rounded transition-all ${
 									isToggled
-										? "bg-blue-500 text-white"
-										: "bg-blue-600 text-white"
+										? "bg-button-signupDark text-white"
+										: "bg-button-signupLight text-white"
 								}`}
 							>
 								Login
@@ -83,8 +83,8 @@ const Navbar: React.FC = () => {
 								onClick={logout}
 								className={`px-4 py-2 rounded transition-all ${
 									isToggled
-										? "bg-red-500 text-white"
-										: "bg-red-600 text-white"
+										? "bg-button-logoutDark text-white"
+										: "bg-button-logoutLight text-white"
 								}`}
 							>
 								Logout
@@ -94,8 +94,8 @@ const Navbar: React.FC = () => {
 									to="/profile"
 									className={`text-lg transition-all ${
 										isToggled
-											? "text-white"
-											: "text-gray-900"
+											? "text-text-dark"
+											: "text-text-light"
 									}`}
 								>
 									<FaUser />
@@ -114,16 +114,14 @@ const Navbar: React.FC = () => {
 			{isMobileMenuOpen && (
 				<div
 					className={`sm:hidden flex flex-col items-center space-y-4 p-6 transition-all ${
-						isToggled
-							? "bg-gray-800 text-white"
-							: "bg-gray-100 text-gray-900"
+						isToggled ? "dark-mode-basic" : "light-mode-basic"
 					}`}
 				>
 					{/* Show mobile buttons based on user's login status */}
 					<button
 						onClick={toggleHandler}
 						className={`w-full text-center text-xl transition-all ${
-							isToggled ? "text-white" : "text-gray-900"
+							isToggled ? "text-text-dark" : "text-text-light"
 						}`}
 					>
 						{isToggled ? <FaSun /> : <FaMoon />}
@@ -135,8 +133,8 @@ const Navbar: React.FC = () => {
 								to="/register"
 								className={`w-full px-4 py-2 text-center rounded transition-all ${
 									isToggled
-										? "bg-blue-500 text-white"
-										: "bg-blue-600 text-white"
+										? "bg-button-signupDark text-white"
+										: "bg-button-signupLight text-white"
 								}`}
 							>
 								Sign Up
@@ -145,8 +143,8 @@ const Navbar: React.FC = () => {
 								to="/login"
 								className={`w-full px-4 py-2 text-center rounded transition-all ${
 									isToggled
-										? "bg-blue-500 text-white"
-										: "bg-blue-600 text-white"
+										? "bg-button-signupDark text-white"
+										: "bg-button-signupLight text-white"
 								}`}
 							>
 								Login
@@ -158,8 +156,8 @@ const Navbar: React.FC = () => {
 								onClick={logout}
 								className={`w-full px-4 py-2 text-center rounded transition-all ${
 									isToggled
-										? "bg-red-500 text-white"
-										: "bg-red-600 text-white"
+										? "bg-button-logoutDark text-text-dark"
+										: "bg-button-logoutLight text-text-light"
 								}`}
 							>
 								Logout

@@ -102,7 +102,7 @@ const BookDetailsPage: React.FC = () => {
 			}`}
 		>
 			{/* Blue Header */}
-			<div className="bg-blue-500 h-40 relative">
+			<div className="bg-themeColor h-40 relative">
 				<div className="absolute inset-x-0 -bottom-16 mx-auto w-32 h-48 shadow-lg rounded-lg overflow-hidden">
 					<img
 						src={imageLinks?.thumbnail || placeholder}

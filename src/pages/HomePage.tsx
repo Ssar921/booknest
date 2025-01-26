@@ -15,7 +15,9 @@ const HomePage: React.FC = () => {
 	return (
 		<div
 			className={`min-h-screen flex-col ${
-				isToggled ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+				isToggled
+					? "bg-background-dark text-text-dark"
+					: "bg-background-light text-text-light"
 			}`}
 		>
 			<SearchBar />
