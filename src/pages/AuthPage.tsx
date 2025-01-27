@@ -1,9 +1,9 @@
-// src/components/AuthPage.tsx
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useToggleContext } from "../context/ToggleContext";
+import { useEffect } from "react";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface AuthPageProps {
 	mode: "login" | "register";
@@ -11,11 +11,15 @@ interface AuthPageProps {
 
 const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 	const { isToggled } = useToggleContext();
+	const { user } = useAuth(); // Accessing the current user from AuthContext
 	const navigate = useNavigate();
 
-	const handleSuccess = () => {
-		navigate("/"); // Redirect after successful login/registration
-	};
+	// Check if the user is already logged in and redirect them to their profile
+	useEffect(() => {
+		if (user) {
+			navigate("/profile"); // Redirect to profile if logged in
+		}
+	}, [user, navigate]); // Dependency on user, so it runs when the user changes
 
 	return (
 		<div
@@ -37,11 +41,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 				>
 					{mode === "login" ? "Login" : "Register"}
 				</h2>
-				{mode === "login" ? (
-					<LoginForm onSuccess={handleSuccess} />
-				) : (
-					<RegisterForm onSuccess={handleSuccess} />
-				)}
+				{mode === "login" ? <LoginForm /> : <RegisterForm />}
 			</div>
 		</div>
 	);

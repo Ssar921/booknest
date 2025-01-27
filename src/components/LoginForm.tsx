@@ -1,13 +1,9 @@
-// src/components/LoginForm.tsx
 import React, { useState } from "react";
-import { toast } from "react-toastify";
-import { useAuth } from "../context/AuthContext"; // Your Auth context
+import { useAuth } from "../context/AuthContext";
+import { ClipLoader } from "react-spinners";
+import { MdError } from "react-icons/md";
 
-interface LoginFormProps {
-	onSuccess: () => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
+const LoginForm: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string | null>(null);
@@ -19,6 +15,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
 		setLoading(true);
 		setError(null);
 
+		// Simple validation before attempting login
 		if (!email || !password) {
 			setError("Please fill in both fields.");
 			setLoading(false);
@@ -26,12 +23,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
 		}
 
 		try {
-			await login(email, password);
-			toast.success("Login successful!");
-			onSuccess(); // Notify parent component to navigate
+			await login(email, password); // Proceed with login
 		} catch (err: any) {
-			toast.error(`Error: ${err.message}`);
-			setError(err.message);
+			// Granular error handling
+			if (err.message.includes("auth/invalid-credential")) {
+				setError("Invalid credentials, please try again.");
+			} else {
+				setError("An unexpected error occurred. Please try again.");
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -40,7 +39,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
 	return (
 		<form className="space-y-4" onSubmit={handleSubmit}>
 			{/* Email Input */}
-			<div>
+			<div className="relative">
 				<label
 					htmlFor="email"
 					className="block text-md font-medium text-themeColor"
@@ -53,12 +52,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					required
-					className="mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
+					className={`mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm ${
+						error && !email ? "border-red-500" : "border-gray-300"
+					}`}
 				/>
+				{error && !email && (
+					<div className="absolute right-3 top-2 text-red-500">
+						<MdError />
+					</div>
+				)}
 			</div>
 
 			{/* Password Input */}
-			<div>
+			<div className="relative">
 				<label
 					htmlFor="password"
 					className="block text-md font-medium text-themeColor"
@@ -71,12 +77,25 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 					required
-					className="mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
+					className={`mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm ${
+						error && !password
+							? "border-red-500"
+							: "border-gray-300"
+					}`}
 				/>
+				{error && !password && (
+					<div className="absolute right-3 top-2 text-red-500">
+						<MdError />
+					</div>
+				)}
 			</div>
 
 			{/* Error Message */}
-			{error && <p className="text-sm text-red-500 mt-2">{error}</p>}
+			{error && (
+				<p className="text-sm text-red-500 mt-2" aria-live="assertive">
+					{error}
+				</p>
+			)}
 
 			{/* Submit Button */}
 			<button
@@ -84,7 +103,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
 				disabled={loading}
 				className="w-full py-2 px-4 bg-themeColor text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-themeColor focus:ring-opacity-50 disabled:opacity-50 hover:bg-secondary-dark transition-colors duration-300"
 			>
-				{loading ? "Logging in..." : "Login"}
+				{loading ? <ClipLoader size={24} color="#ffffff" /> : "Login"}
 			</button>
 		</form>
 	);

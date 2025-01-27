@@ -1,13 +1,8 @@
-// src/components/RegisterForm.tsx
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext"; // Your Auth context
 
-interface RegisterFormProps {
-	onSuccess: () => void;
-}
-
-const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
+const RegisterForm: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
@@ -31,7 +26,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
 		try {
 			await signup(email, password, username, firstname, lastname);
 			toast.success("Registration successful!");
-			onSuccess(); // Notify parent component to navigate
 		} catch (err: any) {
 			toast.error(`Error: ${err.message}`);
 			setError(err.message);
@@ -82,7 +76,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
 			<div>
 				<label
 					htmlFor="username"
-					className="block text-sm font-medium text-gray-700"
+					className="block text-md font-medium text-themeColor"
 				>
 					Username
 				</label>
@@ -99,7 +93,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
 			<div>
 				<label
 					htmlFor="firstname"
-					className="block text-sm font-medium text-gray-700"
+					className="block text-md font-medium text-themeColor"
 				>
 					First Name
 				</label>
@@ -116,7 +110,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
 			<div>
 				<label
 					htmlFor="lastname"
-					className="block text-sm font-medium text-gray-700"
+					className="block text-md font-medium text-themeColor"
 				>
 					Last Name
 				</label>
