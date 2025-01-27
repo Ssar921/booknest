@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTimes, FaSearch } from "react-icons/fa";
 import { useToggleContext } from "../context/ToggleContext";
 
@@ -129,6 +129,12 @@ const SearchBar = () => {
 								</li>
 							))
 						)}
+						<Link
+							to={`search/${query}`}
+							className={`p-2 bg-themeColor text-center font-serif text-white rounded-md w-full block border-b border-gray-200 hover:bg-secondary-dark`}
+						>
+							See More Results →
+						</Link>
 					</ul>
 				)}
 			</div>

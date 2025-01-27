@@ -8,6 +8,7 @@ import AuthPage from "./pages/AuthPage";
 import CategoryPage from "./pages/CategoryPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import BookDetailsPage from "./pages/BookDetailsPage";
+import SearchResultsPage from "./pages/SearchResultsPage";
 
 const App: React.FC = () => {
 	return (
@@ -36,6 +37,10 @@ const App: React.FC = () => {
 							<Route
 								path="/category/:categoryId"
 								element={<CategoryPage />}
+							/>
+							<Route
+								path="/search/:query"
+								element={<SearchResultsPage />}
 							/>
 							<Route path="*" element={<NotFoundPage />} />
 						</Route>
