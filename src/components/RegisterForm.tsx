@@ -34,14 +34,13 @@ const RegisterForm: React.FC = () => {
 		}
 	};
 
+	const inputClass = `mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-[10px] shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm`;
+	const labelClass = "block text-md font-medium text-themeColor";
 	return (
 		<form className="space-y-4" onSubmit={handleSubmit}>
 			{/* Email Input */}
 			<div>
-				<label
-					htmlFor="email"
-					className="block text-md font-medium text-themeColor"
-				>
+				<label htmlFor="email" className={labelClass}>
 					Email
 				</label>
 				<input
@@ -50,16 +49,13 @@ const RegisterForm: React.FC = () => {
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					required
-					className="mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
+					className={inputClass}
 				/>
 			</div>
 
 			{/* Password Input */}
 			<div>
-				<label
-					htmlFor="password"
-					className="block text-md font-medium text-themeColor"
-				>
+				<label htmlFor="password" className={labelClass}>
 					Password
 				</label>
 				<input
@@ -68,16 +64,13 @@ const RegisterForm: React.FC = () => {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 					required
-					className="mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
+					className={inputClass}
 				/>
 			</div>
 
 			{/* Conditional fields for Register */}
 			<div>
-				<label
-					htmlFor="username"
-					className="block text-md font-medium text-themeColor"
-				>
+				<label htmlFor="username" className={labelClass}>
 					Username
 				</label>
 				<input
@@ -86,15 +79,12 @@ const RegisterForm: React.FC = () => {
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
 					required
-					className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
+					className={inputClass}
 				/>
 			</div>
 
 			<div>
-				<label
-					htmlFor="firstname"
-					className="block text-md font-medium text-themeColor"
-				>
+				<label htmlFor="firstname" className={labelClass}>
 					First Name
 				</label>
 				<input
@@ -103,15 +93,12 @@ const RegisterForm: React.FC = () => {
 					value={firstname}
 					onChange={(e) => setFirstname(e.target.value)}
 					required
-					className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
+					className={inputClass}
 				/>
 			</div>
 
 			<div>
-				<label
-					htmlFor="lastname"
-					className="block text-md font-medium text-themeColor"
-				>
+				<label htmlFor="lastname" className={labelClass}>
 					Last Name
 				</label>
 				<input
@@ -120,7 +107,7 @@ const RegisterForm: React.FC = () => {
 					value={lastname}
 					onChange={(e) => setLastname(e.target.value)}
 					required
-					className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm"
+					className={inputClass}
 				/>
 			</div>
 

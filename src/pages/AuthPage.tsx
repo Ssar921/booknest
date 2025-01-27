@@ -23,7 +23,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
 
 	return (
 		<div
-			className={`flex items-center justify-center min-h-screen ${
+			className={`flex items-center justify-center sm:min-h-screen ${
 				isToggled ? "bg-background-dark" : "bg-background-light"
 			}`}
 		>

@@ -36,14 +36,15 @@ const LoginForm: React.FC = () => {
 		}
 	};
 
+	// Common classes
+	const inputClass = `mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-[10px] shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm`;
+	const labelClass = "block text-md font-medium text-themeColor";
+
 	return (
 		<form className="space-y-4" onSubmit={handleSubmit}>
 			{/* Email Input */}
 			<div className="relative">
-				<label
-					htmlFor="email"
-					className="block text-md font-medium text-themeColor"
-				>
+				<label htmlFor="email" className={labelClass}>
 					Email
 				</label>
 				<input
@@ -52,9 +53,7 @@ const LoginForm: React.FC = () => {
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					required
-					className={`mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm ${
-						error && !email ? "border-red-500" : "border-gray-300"
-					}`}
+					className={inputClass}
 				/>
 				{error && !email && (
 					<div className="absolute right-3 top-2 text-red-500">
@@ -65,10 +64,7 @@ const LoginForm: React.FC = () => {
 
 			{/* Password Input */}
 			<div className="relative">
-				<label
-					htmlFor="password"
-					className="block text-md font-medium text-themeColor"
-				>
+				<label htmlFor="password" className={labelClass}>
 					Password
 				</label>
 				<input
@@ -77,11 +73,7 @@ const LoginForm: React.FC = () => {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 					required
-					className={`mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-md shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm ${
-						error && !password
-							? "border-red-500"
-							: "border-gray-300"
-					}`}
+					className={inputClass}
 				/>
 				{error && !password && (
 					<div className="absolute right-3 top-2 text-red-500">

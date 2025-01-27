@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import placeholder from "../assets/images/book-placeholder.jpg";
 import { useToggleContext } from "../context/ToggleContext";
@@ -89,7 +89,6 @@ const BookDetailsPage: React.FC = () => {
 		publisher,
 		pageCount,
 		imageLinks,
-		categories,
 		previewLink,
 	} = book.volumeInfo;
 
@@ -118,12 +117,18 @@ const BookDetailsPage: React.FC = () => {
 				<h1 className="text-2xl font-extrabold text-center font-serif">
 					{title || <Skeleton />}
 				</h1>
-				<p className="text-gray-600 text-center mt-2">
+				<p className="text-gray-600 text-center mt-2 mx-auto w-[90%] sm:w-[40%]">
 					{authors?.join(", ")}
 				</p>
 
 				{/* Book Info */}
-				<div className="flex justify-between space-x-4 mt-6 mx-auto w-[90%] sm:w-[40%]">
+				<div
+					className={`flex justify-between space-x-4 my-2 mx-auto w-[90%] sm:w-[40%] ${
+						isToggled
+							? " bg-primary-dark text-text-dark shadow-md shadow-black"
+							: " bg-primary-light text-text-light shadow-md shadow-gray-400"
+					}  p-1 rounded-lg shadow-lg`}
+				>
 					{[
 						{ label: "Pages", value: pageCount },
 						{ label: "Publisher", value: publisher.split(" ")[0] },
@@ -131,38 +136,51 @@ const BookDetailsPage: React.FC = () => {
 					].map((item, index) => (
 						<div
 							key={index}
-							className={`flex flex-col justify-between text-center ${
-								isToggled ? "bg-gray-800" : "bg-gray-100"
-							} p-2 rounded-lg shadow-lg w-1/3 sm:w-1/4 h-24`}
+							className={`flex flex-col justify-between text-center w-1/3 sm:w-1/4 h-24`}
 						>
-							<p className="text-gray-600 text-sm border-b border-gray-400 flex items-center justify-center h-1/2">
+							<p className="text-themeColor text-sm font-semibold border-b border-gray-400 flex items-center justify-center h-1/2">
 								{item.label}
 							</p>
-							<p className="text-black text-lg font-semibold flex items-center justify-center h-1/2">
+							<p className="text-secondary-dark text-lg font-semibold flex items-center justify-center h-1/2">
 								{item.value}
 							</p>
 						</div>
 					))}
 				</div>
-				<FavoriteButton bookId={book?.id} />
-
-				{/* Description */}
-				<p className=" mt-6 leading-relaxed text-center">
-					{description ? description : "No description to show"}
-				</p>
-
 				{/* CTA Buttons */}
-				<div className="flex justify-center mt-8 space-x-4">
+				<div className="flex justify-center my-4 mx-auto w-[90%] sm:w-[40%]">
+					<FavoriteButton bookId={book?.id} />
+
 					<a
 						href={previewLink}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="flex items-center px-6 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600"
+						className="inline-flex items-center justify-center w-full max-w-xs px-5 py-2 border border-gray-300 rounded-lg text-gray-800 bg-transparent hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-themeColor focus:ring-opacity-50"
 					>
 						<FaEye className="mr-2" />
-						Preview
+						<span className="font-medium">Preview</span>
 					</a>
 				</div>
+				{/* Description */}
+				<div className="mt-6 leading-relaxed text-center">
+					{description && !showFullDescription
+						? `${description.substring(0, 200)}...` // Shortened version (200 characters)
+						: description}
+				</div>
+
+				{/* Show/Hide Full Description Button */}
+				{description && description.length > 200 && (
+					<div className="text-center mt-4">
+						<button
+							onClick={() =>
+								setShowFullDescription(!showFullDescription)
+							}
+							className="text-themeColor font-semibold hover:underline"
+						>
+							{showFullDescription ? "Show Less" : "Read More"}
+						</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);
