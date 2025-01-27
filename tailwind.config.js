@@ -8,29 +8,22 @@ export default {
 				serif: ["Bodoni Moda", "serif"],
 			},
 			colors: {
-				// Define the colors for both light and dark modes
+				themeColor: "#46745d", // Muted forest green
 				background: {
-					light: "#f0f8ff", // Light background color
-					dark: "#181818", // Dark background color
+					light: "#F3F5F1", // Soft olive tint
+					dark: "#2E3B44", // Soft dark gray
 				},
 				text: {
 					light: "#000000", // Light text color
 					dark: "#f5f5f5", // Dark text color
 				},
-				themeColor: "#4C8C8A", // Dusty blue
 				primary: {
-					light: "#FFDD57", // Primary color for light mode
-					dark: "#FF5722", // Primary color for dark mode
+					light: "#F6F8F7", // Light Fog
+					dark: "#3C4F59", // Muted Midnight blue
 				},
 				secondary: {
 					light: "#F0F4F8", // Secondary color for light mode
-					dark: "#2C3E50", // Secondary color for dark mode
-				},
-				button: {
-					signupLight: "#0061f2", // Signup button color for light mode
-					signupDark: "#0050c5", // Signup button color for dark mode
-					logoutLight: "#ff4e00", // Logout button color for light mode
-					logoutDark: "#e03e00", // Logout button color for dark mode
+					dark: "#2E3B44", // Secondary color for dark mode
 				},
 			},
 		},

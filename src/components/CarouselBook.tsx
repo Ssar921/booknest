@@ -15,12 +15,11 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 	return (
 		<Link to={`/book/${book.id}`} className="w-full sm:w-[21vw] m-1">
 			<div
-				key={book.id}
 				className={`carousel-item w-full sm:w-[21vw] min-w-[220px] m-1 p-2 rounded-lg transition-all duration-300
 				${
 					isToggled
-						? "border-gray-700 bg-gray-800 text-white shadow-md shadow-black"
-						: "border-gray-300 bg-white text-gray-900 shadow-md shadow-gray-400"
+						? " bg-primary-dark text-text-dark shadow-md shadow-black"
+						: " bg-primary-light text-text-light shadow-md shadow-gray-400"
 				} 
 				hover:shadow-none`}
 			>
@@ -39,7 +38,7 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 
 					{/* <!-- Info Section --> */}
 					<div className="flex flex-col justify-between items-start">
-						<small className="text-gray-700 font-semibold">
+						<small className="text-secondary-dark font-semibold">
 							{book.volumeInfo.publishedDate &&
 								book.volumeInfo.publishedDate.split("-")[0]}
 						</small>

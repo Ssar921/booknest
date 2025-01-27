@@ -107,13 +107,11 @@ const SearchBar = () => {
 				{/* Suggestions Dropdown */}
 				{suggestions.length > 0 && (
 					<ul
-						className={`absolute top-[85%] w-[95%] sm:w-[45%] left-1/2 transform -translate-x-1/2
-      ${
-			isToggled
-				? "bg-gray-800 text-white border-gray-700"
-				: "bg-white text-black border-gray-300"
-		} 
-      shadow-lg z-10 rounded-lg`}
+						className={`absolute top-[85%] w-[95%] sm:w-[45%] left-1/2 transform -translate-x-1/2 ${
+							isToggled
+								? "bg-primary-dark text-text-dark "
+								: "bg-primary-light text-text-light"
+						} shadow-lg z-10 rounded-lg`}
 					>
 						{loading ? (
 							<li className="p-2 text-gray-500">Loading...</li>
