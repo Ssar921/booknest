@@ -1,68 +1,61 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Book } from "../types"; // Assuming you have the Book type defined
-import Pagination from "../components/Pagination"; // A separate Pagination component
-import Skeleton from "react-loading-skeleton";
+import React, { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { categoryConfig } from "../utils/categories";
-import { Link } from "react-router-dom";
 import { useToggleContext } from "../context/ToggleContext";
 import { GrFormPrevious } from "react-icons/gr";
+import Pagination from "../components/Pagination";
+import Skeleton from "react-loading-skeleton";
 import BookResult from "../components/BookResult";
-import CarouselBook from "../components/CarouselBook";
+import useFetchCategoryBooks from "../hooks/FetchCategoryBooks";
+
 const CategoryPage: React.FC = () => {
 	const { isToggled } = useToggleContext();
+	const { categoryId } = useParams<{ categoryId: string }>();
+	const navigate = useNavigate(); // Hook to navigate programmatically
 
-	const { categoryId } = useParams<{ categoryId: string }>(); // Get categoryId from URL
-	const [books, setBooks] = useState<Book[]>([]);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [totalBooks, setTotalBooks] = useState(0); // Total number of books in the category
-	const [loading, setLoading] = useState(true);
-
-	// Google Books API pagination parameters
 	const booksPerPage = 15;
 
+	// Redirect if no categoryId is found or if the category doesn't exist
 	useEffect(() => {
-		const fetchBooks = async () => {
-			setLoading(true);
-			try {
-				const startIndex = (currentPage - 1) * booksPerPage; // Calculate the startIndex for pagination
-				const response = await fetch(
-					`https://www.googleapis.com/books/v1/volumes?q=subject:${categoryId}&startIndex=${startIndex}&maxResults=${booksPerPage}&fields=items(id,volumeInfo(title,authors,imageLinks/thumbnail)),totalItems`
-				);
-				const data = await response.json();
+		if (
+			!categoryId ||
+			!categoryConfig.some((cat) => cat.query === categoryId)
+		) {
+			navigate("/404"); // Redirect to 404 page
+		}
+	}, [categoryId, navigate]);
 
-				// Update the state with the books and total number of books
-				setBooks(data.items || []);
-				setTotalBooks(data.totalItems);
-			} catch (error) {
-				console.error("Error fetching books:", error);
-			} finally {
-				setLoading(false);
-			}
-		};
+	// Use the custom hook
+	const { books, totalBooks, loading, error } = useFetchCategoryBooks(
+		categoryId || "",
+		currentPage,
+		booksPerPage
+	);
 
-		fetchBooks();
-	}, [categoryId, currentPage]);
-
-	// Calculate the total number of pages based on total books and books per page
 	const totalPages = Math.ceil(totalBooks / booksPerPage);
 	const category = categoryConfig.find((cat) => cat.query === categoryId);
 	const categoryTitle = category ? category.title : categoryId;
-	const renderSkeletons = (index: number) => {
-		return (
-			<div className="carousel-item p-4" key={index}>
-				<div className="flex flex-col items-center justify-center">
-					<Skeleton width={180} height={270} />
-					<Skeleton width={180} height={20} />
+
+	const renderSkeletons = () => {
+		return Array(booksPerPage)
+			.fill(null)
+			.map((_, index) => (
+				<div className="carousel-item p-4" key={index}>
+					<div className="flex flex-col items-center justify-center">
+						<Skeleton width={200} height={270} />
+						<Skeleton width={200} height={20} />
+					</div>
 				</div>
-			</div>
-		);
+			));
 	};
 
 	return (
 		<div
-			className={`category-page w-full mx-auto ${
-				isToggled ? "bg-gray-900 text-white" : "bg-white"
+			className={`category-page w-full mx-auto pb-10 ${
+				isToggled
+					? "bg-background-dark text-text-dark"
+					: "bg-background-light text-text-light"
 			}`}
 		>
 			<div className="bg-themeColor flex justify-between pb-4 px-6 text-white">
@@ -74,33 +67,30 @@ const CategoryPage: React.FC = () => {
 						<GrFormPrevious />
 					</Link>
 				</div>
-				<h1
-					className={`text-3xl font-bold font-serif text-center w-1/3 text-secondary-dark`}
-				>
+				<h1 className="text-3xl font-bold font-serif text-center w-1/3 text-secondary-dark">
 					{categoryTitle} Books
 				</h1>
-
 				<div className="w-1/3"></div>
 			</div>
+
 			{loading ? (
 				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-					{Array(booksPerPage)
-						.fill(null)
-						.map((_, index) => renderSkeletons(index))}
+					{renderSkeletons()}
 				</div>
+			) : error ? (
+				<div className="text-red-500 text-center">{error}</div> // Show error if any
 			) : (
 				<div className="flex justify-center flex-wrap">
 					{books.map((book) => (
 						<BookResult book={book} key={book.id} />
-						// <CarouselBook book={book} />
 					))}
 				</div>
 			)}
-			{/* Pagination */}
+
 			<Pagination
 				currentPage={currentPage}
 				totalPages={totalPages}
-				onPageChange={(page) => setCurrentPage(page)}
+				onPageChange={setCurrentPage}
 			/>
 		</div>
 	);

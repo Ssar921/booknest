@@ -1,5 +1,3 @@
-import React from "react";
-
 interface PaginationProps {
 	currentPage: number;
 	totalPages: number;
@@ -14,15 +12,15 @@ const Pagination: React.FC<PaginationProps> = ({
 	const pages = [...Array(totalPages).keys()].map((x) => x + 1);
 
 	return (
-		<div className="pagination flex flex-wrap justify-center gap-2 mt-4 w-[90%]">
+		<div className="pagination flex flex-wrap justify-center gap-2 my-4 mx-auto w-[90%]">
 			{pages.map((page) => (
 				<button
 					key={page}
 					onClick={() => onPageChange(page)}
 					className={`px-4 py-2 rounded-md border ${
 						page === currentPage
-							? "bg-blue-600 text-white"
-							: "bg-white text-blue-600"
+							? "bg-themeColor text-white"
+							: "bg-white text-themeColor"
 					}`}
 				>
 					{page}

@@ -100,7 +100,7 @@ const BookDetailsPage: React.FC = () => {
 					: "text-black bg-background-light"
 			}`}
 		>
-			{/* Blue Header */}
+			{/* Header */}
 			<div className="bg-themeColor h-40 relative">
 				<div className="absolute inset-x-0 -bottom-16 mx-auto w-32 h-48 shadow-lg rounded-lg overflow-hidden">
 					<img
@@ -112,7 +112,7 @@ const BookDetailsPage: React.FC = () => {
 			</div>
 
 			{/* Book Details */}
-			<div className={`mt-20 px-6 md:px-20 mx-auto `}>
+			<div className={`mt-20 px-6 md:px-20 mx-auto`}>
 				{/* Title and Author */}
 				<h1 className="text-2xl font-extrabold text-center font-serif">
 					{title || <Skeleton />}
@@ -181,6 +181,10 @@ const BookDetailsPage: React.FC = () => {
 						</button>
 					</div>
 				)}
+
+				<div className="mt-6 leading-relaxed text-center">
+					{!description && <p>No Description To Show</p>}
+				</div>
 			</div>
 		</div>
 	);

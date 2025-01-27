@@ -1,16 +1,21 @@
-// src/components/UserProfilePage.tsx
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext"; // Assuming you have a context to fetch user data
 import { db } from "../firebase"; // Your firebase config
 import { doc, getDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { getBooksById } from "../hooks/getBooksById";
+import { useNavigate, Link } from "react-router-dom";
+import { ClipLoader } from "react-spinners"; // Added for the loader
+import CarouselBook from "../components/CarouselBook";
+import { useToggleContext } from "../context/ToggleContext";
 
 const UserProfilePage: React.FC = () => {
+	const { isToggled } = useToggleContext();
 	const { user } = useAuth(); // Get the current user from auth context
 	const [profile, setProfile] = useState<any>(null); // User profile data
 	const [loading, setLoading] = useState(true);
 	const [favoriteBooks, setFavoriteBooks] = useState<any[]>([]);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchUserProfile = async () => {
@@ -22,7 +27,10 @@ const UserProfilePage: React.FC = () => {
 					if (userSnapshot.exists()) {
 						setProfile(userSnapshot.data());
 					} else {
-						toast.error("No profile data found.");
+						navigate("/login");
+						toast.error(
+							"You must be logged in to view this profile."
+						);
 					}
 				} catch (error) {
 					toast.error("Error fetching profile data.");
@@ -30,7 +38,8 @@ const UserProfilePage: React.FC = () => {
 					setLoading(false);
 				}
 			} else {
-				toast.error("User not authenticated.");
+				navigate("/login");
+				toast.error("You must be logged in to view this profile.");
 				setLoading(false);
 			}
 		};
@@ -58,9 +67,7 @@ const UserProfilePage: React.FC = () => {
 	if (loading) {
 		return (
 			<div className="flex justify-center items-center min-h-screen">
-				<div className="text-xl text-gray-600">
-					Loading your profile...
-				</div>
+				<ClipLoader color="#3498db" loading={loading} size={50} />
 			</div>
 		);
 	}
@@ -84,56 +91,47 @@ const UserProfilePage: React.FC = () => {
 	}
 
 	return (
-		<div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-100 to-purple-200">
-			<div className="max-w-xl w-full p-8 bg-white rounded-xl shadow-lg space-y-6">
+		<div
+			className={`min-h-screen pb-5 ${
+				user ? "bg-background-light" : "bg-background-dark"
+			}`}
+		>
+			{/* Green Cover Banner */}
+			<div className="bg-themeColor h-40 relative">
 				{/* Profile Picture */}
-				<div className="flex justify-center">
-					<div className="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-semibold">
+				<div className="absolute inset-x-0 bottom-[-35%] mx-auto overflow-hidden">
+					<div className="mx-auto inset-x-0 w-32 h-32 rounded-full bg-themeColor border-2 text-white flex items-center justify-center text-4xl font-semibold">
 						{profile.username?.charAt(0)?.toUpperCase()}
 					</div>
 				</div>
+			</div>
 
-				{/* User Info */}
+			{/* Profile Card */}
+			<div className="max-w-xl w-full p-8 space-y-6 mx-auto mt-10">
+				{/* Profile Info */}
 				<div className="text-center space-y-2">
-					<h1 className="text-3xl font-bold text-gray-800">
+					<h1 className="text-3xl font-extrabold text-gray-800 font-serif">
 						{profile.username}
 					</h1>
 					<p className="text-gray-600 text-lg">
 						{profile.firstname} {profile.lastname}
 					</p>
-					<p className="text-indigo-600 text-sm">{user.email}</p>
+					<p className="text-themeColor text-sm">{user.email}</p>
 				</div>
 
-				{/* Bio/Description */}
-				<div className="text-center">
-					<p className="text-gray-700">
-						{profile.bio || "This user hasn't set up a bio yet."}
+				<div
+					className={`flex-col justify-center space-x-4 my-2 mx-auto w-[90%] sm:w-[40%] h-24 ${
+						isToggled
+							? " bg-primary-dark text-text-dark shadow-md shadow-black"
+							: " bg-primary-light text-text-light shadow-md shadow-gray-400"
+					}  p-1 rounded-lg shadow-lg`}
+				>
+					<p className="text-themeColor text-sm font-semibold border-b border-gray-400 flex items-center justify-center h-1/2">
+						Joined On
 					</p>
-				</div>
-
-				{/* Liked Categories */}
-				<div className="space-y-1">
-					<p className="text-center text-gray-600 text-sm">
-						Liked Categories
+					<p className="text-secondary-dark text-lg font-semibold flex items-center justify-center h-1/2">
+						{profile.joined?.toDate().toLocaleDateString() ?? "N/A"}
 					</p>
-					<div className="flex justify-center gap-2 flex-wrap">
-						{profile.likedcategories?.length > 0 ? (
-							profile.likedcategories.map(
-								(category: string, index: number) => (
-									<span
-										key={index}
-										className="text-xs px-4 py-1 bg-indigo-600 text-white rounded-full"
-									>
-										{category}
-									</span>
-								)
-							)
-						) : (
-							<span className="italic text-gray-500">
-								No liked categories
-							</span>
-						)}
-					</div>
 				</div>
 
 				{/* Favorite Books */}
@@ -144,7 +142,7 @@ const UserProfilePage: React.FC = () => {
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 						{favoriteBooks.length > 0 ? (
 							favoriteBooks.map((book, index) => (
-								<p key={index}>{book?.title}</p>
+								<CarouselBook book={book} />
 							))
 						) : (
 							<span className="italic text-gray-500 text-center">
@@ -154,11 +152,10 @@ const UserProfilePage: React.FC = () => {
 					</div>
 				</div>
 
-				{/* Joined Date */}
-				<div className="text-center text-sm text-gray-500">
-					<p>
-						Joined on{" "}
-						{profile.joined?.toDate().toLocaleDateString() ?? "N/A"}
+				{/* Bio/Description */}
+				<div className="text-center mt-6">
+					<p className="text-gray-700">
+						{profile.bio || "This user hasn't set up a bio yet."}
 					</p>
 				</div>
 
@@ -166,7 +163,7 @@ const UserProfilePage: React.FC = () => {
 				<div className="mt-6 text-center">
 					<button
 						onClick={() => console.log("Navigate to edit profile")}
-						className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md focus:outline-none hover:bg-indigo-700 transition-colors duration-300"
+						className="w-full py-2 px-4 bg-themeColor text-white font-semibold rounded-md shadow-md focus:outline-none hover:bg-secondary-dark transition-colors duration-300"
 					>
 						Edit Profile
 					</button>

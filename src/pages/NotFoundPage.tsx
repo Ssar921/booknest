@@ -2,7 +2,7 @@ import { FaExclamationTriangle } from "react-icons/fa"; // Importing an icon fro
 
 const NotFoundPage: React.FC = () => {
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+		<div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-themeColor via-green-900 to-secondary-dark">
 			<div className="text-center p-6 bg-white rounded-lg shadow-lg max-w-md w-full">
 				<FaExclamationTriangle className="text-5xl text-red-500 mb-4 mx-auto" />
 				<h1 className="text-3xl font-semibold text-gray-800">

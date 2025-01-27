@@ -2,6 +2,7 @@ import { Book } from "../types";
 import placeholder from "../assets/images/book-placeholder.jpg";
 import { useToggleContext } from "../context/ToggleContext";
 import { Link } from "react-router-dom";
+
 interface BookProps {
 	book: Book;
 }
@@ -16,14 +17,14 @@ const BookResult: React.FC<BookProps> = ({ book }) => {
 	return (
 		<Link
 			to={`/book/${book.id}`}
-			className="w-[45%] sm:w-[20%] min-w-200px h-[250px] mx-2 my-4 "
+			className="w-[45%] sm:w-[15%] min-w-200px h-[250px] sm:m-4 mx-2 my-4 "
 		>
 			<div
 				className={`flex flex-col w-full h-full items-start rounded-lg justify-between text-center shadow-lg overflow-hidden transform group transition-transform duration-300 ${
 					isToggled
-						? "bg-gray-800 text-white"
-						: "bg-white text-gray-900"
-				} hover:shadow-none`}
+						? " bg-primary-dark text-text-dark shadow-md shadow-black"
+						: " bg-primary-light text-text-light shadow-md shadow-gray-400"
+				}  hover:shadow-none`}
 			>
 				{/* Book Image */}
 				<div className="relative w-full h-[60%]">
@@ -38,7 +39,7 @@ const BookResult: React.FC<BookProps> = ({ book }) => {
 				{/* Book Information (Title & Author) */}
 				<div className="px-4 py-3 w-full flex flex-col justify-between">
 					{/* Author(s) */}
-					<p className="text-sm text-gray-600 text-left truncate">
+					<p className="text-sm text-secondary-dark font-semibold text-left truncate">
 						{book.volumeInfo.authors
 							? book.volumeInfo.authors.join(", ")
 							: "Unknown Author"}

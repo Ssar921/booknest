@@ -15,17 +15,19 @@ export const getBooksById = async (bookIds: string[]) => {
 			}
 
 			const data = await response.json();
-			const bookData = data.volumeInfo;
+
+			// const bookData = data.volumeInfo;
 
 			// Push the relevant book details to the array
-			books.push({
-				bookId,
-				title: bookData.title,
-				authors: bookData.authors || ["Unknown Author"],
-				imageUrl:
-					bookData.imageLinks?.thumbnail || "default-image-url.jpg",
-				description: bookData.description || "No description available",
-			});
+			// books.push({
+			// 	bookId,
+			// 	title: bookData.title,
+			// 	authors: bookData.authors || ["Unknown Author"],
+			// 	imageUrl:
+			// 		bookData.imageLinks?.thumbnail || "default-image-url.jpg",
+			// 	description: bookData.description || "No description available",
+			// });
+			books.push(data);
 		} catch (error) {
 			console.error("Error fetching book details:", error);
 		}
