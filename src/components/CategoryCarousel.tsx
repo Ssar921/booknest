@@ -1,5 +1,6 @@
 import Carousel from "./Carousel";
 import useFetchBooks from "../hooks/useFetchBooks";
+import BookGrid from "./BookGrid";
 
 interface CategoryCarouselProps {
 	categoryTitle: string;
@@ -32,7 +33,13 @@ const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
 	}
 
 	return (
-		<Carousel
+		// <Carousel
+		// 	title={categoryTitle}
+		// 	books={books}
+		// 	categoryLink={categoryLink}
+		// 	isLoading={loading}
+		// />
+		<BookGrid
 			title={categoryTitle}
 			books={books}
 			categoryLink={categoryLink}

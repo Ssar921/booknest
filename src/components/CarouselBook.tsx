@@ -13,9 +13,12 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 	};
 
 	return (
-		<Link to={`/book/${book.id}`} className="w-full sm:w-[21vw] m-1">
+		<Link
+			to={`/book/${book.id}`}
+			className="w-full sm:w-[21vw] min-w-[250px] m-2"
+		>
 			<div
-				className={`carousel-item w-full sm:w-[21vw] min-w-[220px] m-1 p-2 rounded-lg transition-all duration-300
+				className={`carousel-item w-full p-2 rounded-lg transition-all duration-300
 				${
 					isToggled
 						? " bg-primary-dark text-text-dark shadow-md shadow-black"
@@ -58,7 +61,8 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 								? `${book.volumeInfo.authors[0]} + ${
 										book.volumeInfo.authors.length - 1
 								  } more`
-								: book.volumeInfo.authors?.[0] || ""}
+								: book.volumeInfo.authors?.[0]?.slice(0, 20) ||
+								  ""}
 						</p>
 					</div>
 				</div>
