@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { categoryConfig } from "../utils/categories";
 import { useToggleContext } from "../context/ToggleContext";
-import { GrFormPrevious } from "react-icons/gr";
 import Pagination from "../components/Pagination";
 import Skeleton from "react-loading-skeleton";
 import BookResult from "../components/BookResult";
@@ -58,19 +57,10 @@ const CategoryPage: React.FC = () => {
 					: "bg-background-light text-text-light"
 			}`}
 		>
-			<div className="bg-themeColor flex justify-between pb-4 px-6 text-white">
-				<div className="w-1/3">
-					<Link
-						to="/"
-						className="font-bold text-3xl hover:text-secondary-dark"
-					>
-						<GrFormPrevious />
-					</Link>
-				</div>
+			<div className="bg-themeColor flex justify-center pb-4 px-6 text-white">
 				<h1 className="text-3xl font-bold font-serif text-center w-1/3 text-secondary-dark">
 					{categoryTitle} Books
 				</h1>
-				<div className="w-1/3"></div>
 			</div>
 
 			{loading ? (

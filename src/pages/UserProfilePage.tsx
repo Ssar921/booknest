@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { getBooksById } from "../hooks/getBooksById";
 import { useNavigate, Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners"; // Added for the loader
-import CarouselBook from "../components/CarouselBook";
 import { useToggleContext } from "../context/ToggleContext";
+import ProfileCarousel from "../components/ProfileCarousel";
 
 const UserProfilePage: React.FC = () => {
 	const { isToggled } = useToggleContext();
@@ -21,7 +21,7 @@ const UserProfilePage: React.FC = () => {
 		const fetchUserProfile = async () => {
 			if (user) {
 				try {
-					const userDoc = doc(db, "users", user.uid); // Assuming 'users' is your collection
+					const userDoc = doc(db, "users", user.uid);
 					const userSnapshot = await getDoc(userDoc);
 
 					if (userSnapshot.exists()) {
@@ -44,13 +44,19 @@ const UserProfilePage: React.FC = () => {
 			}
 		};
 
-		const fetchFavoriteBooks = async () => {
-			if (user && profile) {
-				try {
-					const favorites = profile?.favorites || []; // Get the favorites array from the profile
+		if (user && !profile) {
+			// Fetch only if the profile is not already fetched
+			fetchUserProfile();
+		}
+	}, [user]); // Only trigger when `user` changes
 
+	useEffect(() => {
+		const fetchFavoriteBooks = async () => {
+			if (profile && profile.favorites) {
+				try {
+					const favorites = profile?.favorites || [];
 					if (favorites.length > 0) {
-						// Fetch book details for each bookId in favorites
+						// Fetch book details for each bookId in favorites (but only once)
 						const booksData = await getBooksById(favorites);
 						setFavoriteBooks(booksData);
 					}
@@ -60,9 +66,11 @@ const UserProfilePage: React.FC = () => {
 			}
 		};
 
-		fetchFavoriteBooks();
-		fetchUserProfile();
-	}, [user, profile]);
+		if (profile && profile.favorites) {
+			// Only fetch favorite books when `profile` is set
+			fetchFavoriteBooks();
+		}
+	}, [profile]); // Only trigger when `profile` changes
 
 	if (loading) {
 		return (
@@ -135,28 +143,22 @@ const UserProfilePage: React.FC = () => {
 				</div>
 
 				{/* Favorite Books */}
-				<div className="space-y-4">
+				<div className="space-y-4 w-full">
 					<p className="text-center text-gray-600 text-lg">
 						Favorite Books
 					</p>
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+					<div className="flex">
 						{favoriteBooks.length > 0 ? (
-							favoriteBooks.map((book, index) => (
-								<CarouselBook book={book} />
-							))
+							<ProfileCarousel
+								books={favoriteBooks}
+								isLoading={loading}
+							/>
 						) : (
 							<span className="italic text-gray-500 text-center">
 								No favorite books
 							</span>
 						)}
 					</div>
-				</div>
-
-				{/* Bio/Description */}
-				<div className="text-center mt-6">
-					<p className="text-gray-700">
-						{profile.bio || "This user hasn't set up a bio yet."}
-					</p>
 				</div>
 
 				{/* Edit Profile Button */}

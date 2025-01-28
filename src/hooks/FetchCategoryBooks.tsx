@@ -1,5 +1,3 @@
-// hooks/useFetchCategoryBooks.ts
-
 import { useState, useEffect } from "react";
 import { Book } from "../types";
 

@@ -92,6 +92,7 @@ const BookDetailsPage: React.FC = () => {
 		previewLink,
 	} = book.volumeInfo;
 
+	const truncatedDescription = description.substring(0, 200);
 	return (
 		<div
 			className={`min-h-screen pb-5 ${
@@ -161,11 +162,22 @@ const BookDetailsPage: React.FC = () => {
 						<span className="font-medium">Preview</span>
 					</a>
 				</div>
+
 				{/* Description */}
 				<div className="mt-6 leading-relaxed text-center">
-					{description && !showFullDescription
-						? `${description.substring(0, 200)}...` // Shortened version (200 characters)
-						: description}
+					{description && !showFullDescription ? (
+						// Render the truncated HTML content and add ellipsis at the end
+						<div
+							dangerouslySetInnerHTML={{
+								__html: `${truncatedDescription}...`,
+							}}
+						/>
+					) : (
+						// Render the full description as HTML
+						<div
+							dangerouslySetInnerHTML={{ __html: description }}
+						/>
+					)}
 				</div>
 
 				{/* Show/Hide Full Description Button */}
