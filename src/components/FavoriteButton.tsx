@@ -12,7 +12,7 @@ import { toast } from "react-toastify"; // react-toastify for notifications
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai"; // react-icons for heart icons
 import { FaSpinner } from "react-icons/fa"; // Loading spinner icon
 
-const FavoriteButton = ({ bookId }: { bookId: string }) => {
+const FavoriteButton = ({ bookId, page }: { bookId: string; page: string }) => {
 	const { user } = useAuth();
 	const [isFavorited, setIsFavorited] = useState(false);
 	const [loading, setLoading] = useState(false); // Track loading state
@@ -74,19 +74,51 @@ const FavoriteButton = ({ bookId }: { bookId: string }) => {
 		checkIfFavorited();
 	}, [user, bookId]);
 
+	if (page === "carousel") {
+		return (
+			<button
+				onClick={handleFavorite}
+				disabled={loading}
+				className={`${
+					loading
+						? "bg-gray-300 cursor-not-allowed opacity-50"
+						: isFavorited
+						? "bg-themeColor text-white"
+						: "text-themeColor border border-themeColor"
+				} inline-flex items-center justify-center w-full max-w-xs px-5 py-1 border rounded-b-lg text-sm font-semibold space-x-2 transition-all duration-200 hover:bg-secondary-dark focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50`}
+			>
+				{loading ? (
+					<FaSpinner className="animate-spin text-white" />
+				) : isFavorited ? (
+					<AiFillHeart className="text-white" />
+				) : (
+					<AiOutlineHeart className="text-themeColot" />
+				)}
+
+				<span>
+					{loading
+						? "Loading..."
+						: isFavorited
+						? "Remove from Favorites"
+						: "Add to Favorites"}
+				</span>
+			</button>
+		);
+	}
+
+	// If the page is not "profile", render the button for the "book" page
 	return (
 		<button
 			onClick={handleFavorite}
-			disabled={loading} // Disable button while loading
+			disabled={loading}
 			className={`${
 				loading
-					? "bg-gray-300 cursor-not-allowed opacity-50" // Disabled state
+					? "bg-gray-300 cursor-not-allowed opacity-50"
 					: isFavorited
 					? "bg-pink-600 text-white"
 					: "text-pink-600 border border-pink-600"
-			} inline-flex items-center justify-center w-full max-w-xs px-5 py-2 border rounded-lg text-sm font-semibold space-x-2 transition-all duration-200 hover:bg-pink-100 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-50 mx-2`}
+			} inline-flex items-center justify-center w-full max-w-xs px-5 py-2 border rounded-lg text-sm font-semibold space-x-2 transition-all duration-200 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-50 mx-2`}
 		>
-			{/* Loading Spinner */}
 			{loading ? (
 				<FaSpinner className="animate-spin text-white" />
 			) : isFavorited ? (
@@ -95,7 +127,6 @@ const FavoriteButton = ({ bookId }: { bookId: string }) => {
 				<AiOutlineHeart className="text-pink-600" />
 			)}
 
-			{/* Button Text */}
 			<span>
 				{loading
 					? "Loading..."

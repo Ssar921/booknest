@@ -144,31 +144,24 @@ const UserProfilePage: React.FC = () => {
 
 				{/* Favorite Books */}
 				<div className="space-y-4 w-full">
-					<p className="text-center text-gray-600 text-lg">
-						Favorite Books
-					</p>
 					<div className="flex">
-						{favoriteBooks.length > 0 ? (
+						{favoriteBooks.length > 0 && (
 							<ProfileCarousel
 								books={favoriteBooks}
 								isLoading={loading}
 							/>
-						) : (
-							<span className="italic text-gray-500 text-center">
-								No favorite books
-							</span>
 						)}
 					</div>
 				</div>
 
 				{/* Edit Profile Button */}
 				<div className="mt-6 text-center">
-					<button
-						onClick={() => console.log("Navigate to edit profile")}
+					<Link
+						to="/edit"
 						className="w-full py-2 px-4 bg-themeColor text-white font-semibold rounded-md shadow-md focus:outline-none hover:bg-secondary-dark transition-colors duration-300"
 					>
 						Edit Profile
-					</button>
+					</Link>
 				</div>
 			</div>
 		</div>

@@ -15,13 +15,15 @@ const ProfileCarousel: React.FC<ProfileCarouselProps> = ({
 }) => {
 	const settings = {
 		dots: false,
-		infinite: true,
+		infinite: false,
 		rows: 1,
 		speed: 500,
-		slidesToShow: 1.5,
+		slidesToShow: 1,
 		slidesToScroll: 1,
 		prevArrow: <CustomArrow direction="prev" onClick={() => {}} />,
 		nextArrow: <CustomArrow direction="next" onClick={() => {}} />,
+		centerMode: true, // Enable center mode
+		centerPadding: "20px",
 		responsive: [
 			{
 				breakpoint: 1024,
@@ -57,13 +59,11 @@ const ProfileCarousel: React.FC<ProfileCarouselProps> = ({
 	};
 
 	return (
-		<div className="carousel-container mt-8 w-full mx-auto py-4 relative">
+		<div className="carousel-container mt-2 w-full mx-auto py-2 relative">
 			{/* Title and View All Button */}
-			<div className="flex justify-between items-center mb-4">
-				<h2 className="text-2xl font-bold font-serif">
-					Your Favorites
-				</h2>
-			</div>
+			<h2 className="text-2xl font-bold font-serif text-center">
+				Your Favorites
+			</h2>
 
 			{/* ProfileCarousel with books */}
 			<Slider {...settings}>
@@ -72,7 +72,10 @@ const ProfileCarousel: React.FC<ProfileCarouselProps> = ({
 							.fill(null)
 							.map((_, index) => renderSkeletons(index)) // Show skeleton for each book
 					: books?.map((book) => (
-							<div className="mx-1" key={book.id}>
+							<div
+								className="slick-slide mx-2 px-3"
+								key={book.id}
+							>
 								<CarouselBook book={book} />
 							</div>
 					  ))}

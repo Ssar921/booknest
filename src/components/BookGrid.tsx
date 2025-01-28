@@ -38,9 +38,9 @@ const BookGrid: React.FC<BookGridProps> = ({
 				{categoryLink && (
 					<Link
 						to={categoryLink}
-						className=" bg-themeColor text-secondary-light px-3 py-1 rounded-full text-xs font-semibold mr-2 mb-2 cursor-pointer hover:bg-secondary-dark transition ease-in-out duration-300"
+						className=" bg-themeColor text-secondary-light px-4 py-1 rounded-md text-md font-semibold mr-2 mb-2 cursor-pointer hover:bg-secondary-dark transition ease-in-out duration-300"
 					>
-						View All
+						View All →
 					</Link>
 				)}
 			</div>

@@ -150,7 +150,7 @@ const BookDetailsPage: React.FC = () => {
 				</div>
 				{/* CTA Buttons */}
 				<div className="flex justify-center my-4 mx-auto w-[90%] sm:w-[40%]">
-					<FavoriteButton bookId={book?.id} />
+					<FavoriteButton bookId={book?.id} page="book" />
 
 					<a
 						href={previewLink}
