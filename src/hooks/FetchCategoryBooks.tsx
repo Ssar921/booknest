@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
 import { Book } from "../types";
+import { useState, useEffect } from "react";
 
 const FetchCategoryBooks = (
 	categoryId: string,
 	currentPage: number,
 	booksPerPage: number
 ) => {
+	const [loading, setLoading] = useState(true);
 	const [books, setBooks] = useState<Book[]>([]);
 	const [totalBooks, setTotalBooks] = useState(0);
-	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {

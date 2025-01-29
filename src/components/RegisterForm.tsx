@@ -1,16 +1,16 @@
-import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { useAuth } from "../context/AuthContext"; // Your Auth context
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const RegisterForm: React.FC = () => {
+	const { signup } = useAuth();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
 	const [firstname, setFirstname] = useState("");
 	const [lastname, setLastname] = useState("");
-	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
-	const { signup } = useAuth(); // Using auth context
+	const [error, setError] = useState<string | null>(null);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -48,21 +48,6 @@ const RegisterForm: React.FC = () => {
 					type="email"
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
-					required
-					className={inputClass}
-				/>
-			</div>
-
-			{/* Password Input */}
-			<div>
-				<label htmlFor="password" className={labelClass}>
-					Password
-				</label>
-				<input
-					id="password"
-					type="password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
 					required
 					className={inputClass}
 				/>
@@ -106,6 +91,21 @@ const RegisterForm: React.FC = () => {
 					type="text"
 					value={lastname}
 					onChange={(e) => setLastname(e.target.value)}
+					required
+					className={inputClass}
+				/>
+			</div>
+
+			{/* Password Input */}
+			<div>
+				<label htmlFor="password" className={labelClass}>
+					Password
+				</label>
+				<input
+					id="password"
+					type="password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
 					required
 					className={inputClass}
 				/>
