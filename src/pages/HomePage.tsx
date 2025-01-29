@@ -1,9 +1,9 @@
+import { useState } from "react";
 import SearchBar from "../components/SearchBar";
+import ButtonCarousel from "../components/ButtonCarousel";
 import { useToggleContext } from "../context/ToggleContext";
 import CategoryCarousel from "../components/CategoryCarousel";
 import { categoryConfig, Category } from "../utils/categories";
-import ButtonCarousel from "../components/ButtonCarousel";
-import { useState } from "react";
 
 const HomePage: React.FC = () => {
 	const { isToggled } = useToggleContext();

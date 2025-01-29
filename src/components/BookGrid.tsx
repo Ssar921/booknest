@@ -1,7 +1,7 @@
-import CarouselBook from "./CarouselBook";
 import { Book } from "../types";
-import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
+import CarouselBook from "./CarouselBook";
+import Skeleton from "react-loading-skeleton";
 
 interface BookGridProps {
 	title: string;
@@ -16,29 +16,26 @@ const BookGrid: React.FC<BookGridProps> = ({
 	categoryLink,
 	isLoading,
 }) => {
+	// Function to render loading skeletons
 	const renderSkeletons = (index: number) => {
 		return (
-			<div className="carousel-item p-4" key={index}>
-				<div className="flex items-center">
-					<Skeleton width={75} height={90} />
-					<div className="flex flex-col ml-4">
-						<Skeleton width={180} height={20} />
-						<Skeleton width={180} height={20} />
-					</div>
-				</div>
+			<div className="p-4 flex items-center" key={index}>
+				<Skeleton width="22vw" height="20vh" key={index} />
 			</div>
 		);
 	};
 
 	return (
-		<div className="carousel-container mt-8 w-[90%] mx-auto py-4 relative">
+		<div className="mt-1 w-[90%] mx-auto py-4 relative">
 			{/* Title and View All Button */}
-			<div className="flex justify-between items-center mb-4">
-				<h2 className="text-2xl font-bold font-serif">{title}</h2>
+			<div className="flex flex-col w-full justify-center items-center mb-4">
+				<h2 className="text-2xl font-bold text-center font-serif">
+					{title}
+				</h2>
 				{categoryLink && (
 					<Link
 						to={categoryLink}
-						className=" bg-themeColor text-secondary-light px-4 py-1 rounded-md text-md font-semibold mr-2 mb-2 cursor-pointer hover:bg-secondary-dark transition ease-in-out duration-300"
+						className=" bg-themeColor text-secondary-light px-4 py-1 rounded-md text-md font-semibold mx-auto my-2 cursor-pointer hover:bg-secondary-dark transition ease-in-out duration-300"
 					>
 						View All →
 					</Link>

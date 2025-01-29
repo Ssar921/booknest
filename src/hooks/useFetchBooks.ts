@@ -1,7 +1,5 @@
-// src/hooks/useFetchBooks.ts
-import { useState, useEffect, useCallback } from "react";
 import { Book } from "../types";
-import { toast } from "react-toastify";
+import { useState, useEffect, useCallback } from "react";
 
 const useFetchBooks = (query: string) => {
 	const [books, setBooks] = useState<Book[]>([]);
@@ -30,7 +28,6 @@ const useFetchBooks = (query: string) => {
 				"Something went wrong while fetching books. Please try again later."
 			);
 			setLoading(false);
-			toast.error("Failed to fetch books. Please try again later.");
 		}
 	}, [query]);
 

@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom";
 import { Book } from "../types";
-import placeholder from "../assets/images/book-placeholder.jpg";
-import { useToggleContext } from "../context/ToggleContext";
+import { Link } from "react-router-dom";
 import FavoriteButton from "./FavoriteButton";
+import { useToggleContext } from "../context/ToggleContext";
+import placeholder from "../assets/images/book-placeholder.jpg";
 
 interface CarouselBookProps {
 	book: Book;
 }
+
 const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 	const { isToggled } = useToggleContext();
+	// Shorten title
 	const truncateTitle = (title: string) => {
 		const words = title.split(" ");
 		return words.slice(0, 3).join(" ") + (words.length > 3 ? " ..." : "");
@@ -16,16 +18,14 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 
 	return (
 		<div
-			className={`flex-col w-full sm:w-[22vw] min-w-[250px] m-2 rounded-lg ${
+			className={`flex-col w-full sm:w-[22vw] min-w-[250px] m-2 rounded-lg hover:shadow-none ${
 				isToggled
 					? " bg-primary-dark text-text-dark shadow-md shadow-black"
 					: " bg-primary-light text-text-light shadow-md shadow-gray-400"
-			} hover:shadow-none`}
+			}`}
 		>
 			<Link to={`/book/${book.id}`}>
-				<div
-					className={`carousel-item w-full p-2 rounded-t-lg transition-all duration-300`}
-				>
+				<div className="w-full p-2 rounded-t-lg transition-all duration-300">
 					<div className="flex">
 						{/* <!-- Image Section --> */}
 						<div className="flex-shrink-0 w-[75px] h-[90px] mr-4">
@@ -35,12 +35,13 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 									placeholder
 								}
 								alt={book.volumeInfo.title}
-								className="w-full h-full object-cover rounded-lg transition-all duration-300 transform group-hover:scale-105"
+								className="w-full h-full object-cover rounded-lg"
 							/>
 						</div>
 
 						{/* <!-- Info Section --> */}
 						<div className="flex flex-col justify-between items-start">
+							{/* Year */}
 							<small className="text-secondary-dark font-semibold">
 								{book.volumeInfo.publishedDate &&
 									book.volumeInfo.publishedDate.split("-")[0]}
@@ -50,7 +51,7 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 								{truncateTitle(book.volumeInfo.title)}
 							</h4>
 
-							{/* <!-- Author and Year --> */}
+							{/* <!-- Author --> */}
 							<p
 								className={`text-sm mt-1 ${
 									isToggled

@@ -19,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 // Context type defined
 interface AuthContextType {
 	user: User | null;
-	isLoading: boolean;
 	login: (email: string, password: string) => Promise<void>;
 	logout: () => Promise<void>;
 	signup: (
@@ -53,14 +52,12 @@ interface AuthProviderProps {
 // Create the provider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	const [user, setUser] = useState<User | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		// Firebase listener for auth state changes
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setUser(user); // Set the user object or null if logged out
-			setIsLoading(false);
 		});
 
 		return () => unsubscribe(); // Clean up the listener on unmount
@@ -119,9 +116,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	};
 
 	return (
-		<AuthContext.Provider
-			value={{ user, isLoading, login, logout, signup }}
-		>
+		<AuthContext.Provider value={{ user, login, logout, signup }}>
 			{children}
 		</AuthContext.Provider>
 	);

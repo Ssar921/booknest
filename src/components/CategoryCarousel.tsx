@@ -1,30 +1,29 @@
-import Carousel from "./Carousel";
-import useFetchBooks from "../hooks/useFetchBooks";
 import BookGrid from "./BookGrid";
+import useFetchBooks from "../hooks/useFetchBooks";
 
 interface CategoryCarouselProps {
-	categoryTitle: string;
 	query: string;
 	categoryLink: string;
+	categoryTitle: string;
 }
 
 const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
-	categoryTitle,
 	query,
 	categoryLink,
+	categoryTitle,
 }) => {
 	const { books, loading, error, retryFetch } = useFetchBooks(query);
 
 	if (error) {
 		return (
 			<div className="error-message text-center p-4 flex-col">
-				<h2 className="text-xl font-semibold text-red-600">
-					{categoryTitle}
+				<h2 className="text-xl font-semibold text-red-600 font-serif">
+					Error
 				</h2>
 				<p className="text-gray-600 mt-2">{error}</p>
 				<button
 					onClick={retryFetch}
-					className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-all"
+					className="mt-4 px-6 py-1 bg-themeColor text-white rounded-md hover:bg-secondary-dark"
 				>
 					Retry
 				</button>
@@ -33,12 +32,6 @@ const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
 	}
 
 	return (
-		// <Carousel
-		// 	title={categoryTitle}
-		// 	books={books}
-		// 	categoryLink={categoryLink}
-		// 	isLoading={loading}
-		// />
 		<BookGrid
 			title={categoryTitle}
 			books={books}

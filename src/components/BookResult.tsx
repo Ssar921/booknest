@@ -1,8 +1,8 @@
 import { Book } from "../types";
-import placeholder from "../assets/images/book-placeholder.jpg";
-import { useToggleContext } from "../context/ToggleContext";
 import { Link } from "react-router-dom";
 import FavoriteButton from "./FavoriteButton";
+import { useToggleContext } from "../context/ToggleContext";
+import placeholder from "../assets/images/book-placeholder.jpg";
 
 interface BookProps {
 	book: Book;
@@ -10,6 +10,7 @@ interface BookProps {
 
 const BookResult: React.FC<BookProps> = ({ book }) => {
 	const { isToggled } = useToggleContext();
+	// Shorten Title
 	const truncateTitle = (title: string) => {
 		const words = title.split(" ");
 		return words.slice(0, 3).join(" ") + (words.length > 3 ? "..." : "");

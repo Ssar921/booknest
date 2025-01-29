@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { db } from "../firebase"; // your Firestore instance
+import React, { useState, useEffect } from "react";
+import { db } from "../firebase";
 import {
 	doc,
 	updateDoc,
@@ -7,15 +7,20 @@ import {
 	arrayRemove,
 	getDoc,
 } from "firebase/firestore";
-import { useAuth } from "../context/AuthContext"; // Custom hook for auth
-import { toast } from "react-toastify"; // react-toastify for notifications
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai"; // react-icons for heart icons
-import { FaSpinner } from "react-icons/fa"; // Loading spinner icon
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { FaSpinner } from "react-icons/fa";
 
-const FavoriteButton = ({ bookId, page }: { bookId: string; page: string }) => {
+interface FavoriteButtonProps {
+	bookId: string;
+	page: string;
+}
+
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ bookId, page }) => {
 	const { user } = useAuth();
+	const [loading, setLoading] = useState(false);
 	const [isFavorited, setIsFavorited] = useState(false);
-	const [loading, setLoading] = useState(false); // Track loading state
 
 	// Check if the book is in the user's favorites array
 	const checkIfFavorited = async () => {
@@ -66,7 +71,7 @@ const FavoriteButton = ({ bookId, page }: { bookId: string; page: string }) => {
 			console.error("Error updating favorites:", error);
 			toast.error("Failed to update favorite. Please try again.");
 		} finally {
-			setLoading(false); // Stop loading after operation is complete
+			setLoading(false);
 		}
 	};
 
