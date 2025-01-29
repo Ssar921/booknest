@@ -1,4 +1,3 @@
-// src/context/AuthContext.tsx
 import {
 	createContext,
 	useState,
@@ -11,13 +10,13 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	signOut,
-} from "../firebase"; // <-- Add signOut import here
+	db,
+} from "../firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
-import { db } from "../firebase"; // Firestore instance
+import { useNavigate } from "react-router-dom";
 
-// Define the type for the context
+// Context type defined
 interface AuthContextType {
 	user: User | null;
 	isLoading: boolean;
@@ -37,12 +36,24 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 	undefined
 );
 
+// Custom hook to access the AuthContext
+export const useAuth = () => {
+	const context = useContext(AuthContext);
+	// Error message if context is accessed outside of auth
+	if (!context) {
+		throw new Error("useAuth must be used within an AuthProvider");
+	}
+	return context;
+};
+
+interface AuthProviderProps {
+	children: ReactNode;
+}
+
 // Create the provider component
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({
-	children,
-}) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	const [user, setUser] = useState<User | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -100,7 +111,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 	// Handle logout
 	const logout = async () => {
 		try {
-			await signOut(auth); // This is where the signOut function is used
+			await signOut(auth); // Sign user out
 			navigate("/"); // Redirect after logout
 		} catch (error: any) {
 			throw new Error(error.message);
@@ -114,15 +125,4 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 			{children}
 		</AuthContext.Provider>
 	);
-};
-
-// Custom hook to access the AuthContext
-export const useAuth = () => {
-	const context = useContext(AuthContext);
-
-	if (!context) {
-		throw new Error("useAuth must be used within an AuthProvider");
-	}
-
-	return context;
 };
