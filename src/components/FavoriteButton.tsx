@@ -85,7 +85,7 @@ const FavoriteButton = ({ bookId, page }: { bookId: string; page: string }) => {
 						: isFavorited
 						? "bg-themeColor text-white"
 						: "text-themeColor border border-themeColor"
-				} inline-flex items-center justify-center w-full max-w-xs px-5 py-1 border rounded-b-lg text-sm font-semibold space-x-2 transition-all duration-200 hover:bg-secondary-dark focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50
+				} inline-flex items-center justify-center w-full px-5 py-1 border rounded-b-lg text-sm font-semibold space-x-2 transition-all duration-200 hover:bg-secondary-dark focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50
 				`}
 			>
 				{loading ? (

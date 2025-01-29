@@ -17,16 +17,14 @@ const BookResult: React.FC<BookProps> = ({ book }) => {
 
 	return (
 		<div
-			className={`flex-col w-[45%] sm:w-[15%] min-w-[250px] shadow-lg h-[250px] sm:m-8 mx-2 my-4 rounded-t-lg ${
+			className={`flex-col w-[45%] sm:w-[15%] min-w-[250px] shadow-lg h-[280px] sm:m-8 mx-2 my-4 rounded-t-lg ${
 				isToggled
 					? " bg-primary-dark text-text-dark shadow-lg shadow-black"
 					: " bg-primary-light text-text-light shadow-lg shadow-gray-400"
 			}  hover:shadow-none`}
 		>
 			<Link to={`/book/${book.id}`}>
-				<div
-					className={`flex flex-col w-full h-full items-start justify-between text-center overflow-hidden transform group transition-transform duration-300`}
-				>
+				<div className="flex flex-col w-full h-[90%] items-start justify-between text-center overflow-hidden transform group transition-transform duration-300">
 					{/* Book Image */}
 					<div className="relative w-full h-[60%]">
 						<img

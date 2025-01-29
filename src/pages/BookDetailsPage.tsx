@@ -92,7 +92,10 @@ const BookDetailsPage: React.FC = () => {
 		previewLink,
 	} = book.volumeInfo;
 
-	const truncatedDescription = description.substring(0, 200);
+	let truncatedDescription = "";
+	if (description) {
+		truncatedDescription = description.substring(0, 200);
+	}
 	return (
 		<div
 			className={`min-h-screen pb-5 ${

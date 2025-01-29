@@ -28,18 +28,5 @@ export default {
 			},
 		},
 	},
-	plugins: [
-		function ({ addComponents, theme }) {
-			addComponents({
-				".dark-mode-basic": {
-					backgroundColor: theme("colors.background.dark"),
-					color: theme("colors.text.dark"),
-				},
-				".light-mode-basic": {
-					backgroundColor: theme("colors.background.light"),
-					color: theme("colors.text.light"),
-				},
-			});
-		},
-	],
+	plugins: [],
 };
