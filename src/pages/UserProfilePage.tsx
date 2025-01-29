@@ -153,16 +153,6 @@ const UserProfilePage: React.FC = () => {
 						)}
 					</div>
 				</div>
-
-				{/* Edit Profile Button */}
-				<div className="mt-6 text-center">
-					<Link
-						to="/edit"
-						className="w-full py-2 px-4 bg-themeColor text-white font-semibold rounded-md shadow-md focus:outline-none hover:bg-secondary-dark transition-colors duration-300"
-					>
-						Edit Profile
-					</Link>
-				</div>
 			</div>
 		</div>
 	);

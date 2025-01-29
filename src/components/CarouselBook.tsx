@@ -15,16 +15,16 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 	};
 
 	return (
-		<div className="flex-col w-full sm:w-[22vw] min-w-[250px] m-2">
+		<div
+			className={`flex-col w-full sm:w-[22vw] min-w-[250px] m-2 rounded-lg ${
+				isToggled
+					? " bg-primary-dark text-text-dark shadow-md shadow-black"
+					: " bg-primary-light text-text-light shadow-md shadow-gray-400"
+			} hover:shadow-none`}
+		>
 			<Link to={`/book/${book.id}`}>
 				<div
-					className={`carousel-item w-full p-2 rounded-t-lg transition-all duration-300
-				${
-					isToggled
-						? " bg-primary-dark text-text-dark shadow-md shadow-black"
-						: " bg-primary-light text-text-light shadow-md shadow-gray-400"
-				} 
-				hover:shadow-none`}
+					className={`carousel-item w-full p-2 rounded-t-lg transition-all duration-300`}
 				>
 					<div className="flex">
 						{/* <!-- Image Section --> */}

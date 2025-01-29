@@ -2,6 +2,7 @@ import { Book } from "../types";
 import placeholder from "../assets/images/book-placeholder.jpg";
 import { useToggleContext } from "../context/ToggleContext";
 import { Link } from "react-router-dom";
+import FavoriteButton from "./FavoriteButton";
 
 interface BookProps {
 	book: Book;
@@ -15,42 +16,45 @@ const BookResult: React.FC<BookProps> = ({ book }) => {
 	};
 
 	return (
-		<Link
-			to={`/book/${book.id}`}
-			className="w-[45%] sm:w-[15%] min-w-200px h-[250px] sm:m-4 mx-2 my-4 "
+		<div
+			className={`flex-col w-[45%] sm:w-[15%] min-w-[250px] shadow-lg h-[250px] sm:m-8 mx-2 my-4 rounded-t-lg ${
+				isToggled
+					? " bg-primary-dark text-text-dark shadow-lg shadow-black"
+					: " bg-primary-light text-text-light shadow-lg shadow-gray-400"
+			}  hover:shadow-none`}
 		>
-			<div
-				className={`flex flex-col w-full h-full items-start rounded-lg justify-between text-center shadow-lg overflow-hidden transform group transition-transform duration-300 ${
-					isToggled
-						? " bg-primary-dark text-text-dark shadow-md shadow-black"
-						: " bg-primary-light text-text-light shadow-md shadow-gray-400"
-				}  hover:shadow-none`}
-			>
-				{/* Book Image */}
-				<div className="relative w-full h-[60%]">
-					<img
-						src={
-							book.volumeInfo.imageLinks?.thumbnail || placeholder
-						}
-						alt={book.volumeInfo.title}
-						className="w-full h-full object-cover rounded-t-lg transition-all duration-300 transform group-hover:scale-105"
-					/>
+			<Link to={`/book/${book.id}`}>
+				<div
+					className={`flex flex-col w-full h-full items-start justify-between text-center overflow-hidden transform group transition-transform duration-300`}
+				>
+					{/* Book Image */}
+					<div className="relative w-full h-[60%]">
+						<img
+							src={
+								book.volumeInfo.imageLinks?.thumbnail ||
+								placeholder
+							}
+							alt={book.volumeInfo.title}
+							className="w-full h-full object-cover rounded-t-lg transition-all duration-300 transform group-hover:scale-105"
+						/>
+					</div>
+					{/* Book Information (Title & Author) */}
+					<div className="px-4 py-3 w-full flex flex-col justify-between">
+						{/* Author(s) */}
+						<p className="text-sm text-secondary-dark font-semibold text-left truncate">
+							{book.volumeInfo.authors
+								? book.volumeInfo.authors.join(", ")
+								: "Unknown Author"}
+						</p>
+						{/* Title */}
+						<h4 className="text-lg font-semibold text-left my-2 truncate font-serif">
+							{truncateTitle(book.volumeInfo.title)}
+						</h4>
+					</div>
 				</div>
-				{/* Book Information (Title & Author) */}
-				<div className="px-4 py-3 w-full flex flex-col justify-between">
-					{/* Author(s) */}
-					<p className="text-sm text-secondary-dark font-semibold text-left truncate">
-						{book.volumeInfo.authors
-							? book.volumeInfo.authors.join(", ")
-							: "Unknown Author"}
-					</p>
-					{/* Title */}
-					<h4 className="text-lg font-semibold text-left my-2 truncate font-serif">
-						{truncateTitle(book.volumeInfo.title)}
-					</h4>
-				</div>
-			</div>
-		</Link>
+			</Link>
+			<FavoriteButton bookId={book?.id} page="carousel" />
+		</div>
 	);
 };
 export default BookResult;
