@@ -1,8 +1,8 @@
-import Slider from "react-slick";
 import { Book } from "../types";
+import Slider from "react-slick";
+import CustomArrow from "./CustomArrow";
 import CarouselBook from "./CarouselBook";
 import Skeleton from "react-loading-skeleton";
-import CustomArrow from "./CustomArrow";
 
 interface ProfileCarouselProps {
 	books: Book[];
@@ -14,7 +14,6 @@ const ProfileCarousel: React.FC<ProfileCarouselProps> = ({
 	isLoading,
 }) => {
 	const settings = {
-		dots: false,
 		infinite: true,
 		speed: 500,
 		slidesToShow: 1,
@@ -25,16 +24,11 @@ const ProfileCarousel: React.FC<ProfileCarouselProps> = ({
 		centerPadding: "20px",
 	};
 
+	// Function to render loading skeletons
 	const renderSkeletons = (index: number) => {
 		return (
-			<div className="carousel-item p-4" key={index}>
-				<div className="flex items-center">
-					<Skeleton width={75} height={90} />
-					<div className="flex flex-col ml-4">
-						<Skeleton width={180} height={20} />
-						<Skeleton width={180} height={20} />
-					</div>
-				</div>
+			<div className="p-4 flex items-center" key={index}>
+				<Skeleton width="22vw" height="20vh" key={index} />
 			</div>
 		);
 	};

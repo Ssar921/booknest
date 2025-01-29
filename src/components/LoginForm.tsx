@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { ClipLoader } from "react-spinners";
+import { useState } from "react";
 import { MdError } from "react-icons/md";
+import { ClipLoader } from "react-spinners";
+import { useAuth } from "../context/AuthContext";
 
 const LoginForm: React.FC = () => {
+	const { login } = useAuth();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
-	const { login } = useAuth(); // Using auth context
+	const [error, setError] = useState<string | null>(null);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();

@@ -1,12 +1,12 @@
-import React from "react";
 import {
 	IoChevronBackCircleSharp,
 	IoChevronForwardCircleSharp,
 } from "react-icons/io5";
-// Define types for the component props
+
+// Component props
 interface CustomArrowProps {
-	direction: "prev" | "next"; // direction can either be "prev" or "next"
-	onClick: () => void; // onClick function that takes no parameters and returns void
+	direction: "prev" | "next";
+	onClick: () => void;
 }
 
 const CustomArrow: React.FC<CustomArrowProps> = ({ direction, onClick }) => {

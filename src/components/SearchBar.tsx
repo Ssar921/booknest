@@ -130,7 +130,7 @@ const SearchBar = () => {
 							))
 						)}
 						<Link
-							to={`search/${query}`}
+							to={`/search/${query}`}
 							className={`p-2 bg-themeColor text-center font-serif text-white rounded-md w-full block border-b border-gray-200 hover:bg-secondary-dark`}
 						>
 							See More Results →

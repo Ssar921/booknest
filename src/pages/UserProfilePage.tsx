@@ -144,6 +144,7 @@ const UserProfilePage: React.FC = () => {
 
 				{/* Favorite Books */}
 				<div className="space-y-4 w-full">
+					{/* ADD LOADING SKELETON CONDITION */}
 					<div className="flex">
 						{favoriteBooks.length > 0 && (
 							<ProfileCarousel

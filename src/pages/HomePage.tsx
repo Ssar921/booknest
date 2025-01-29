@@ -20,9 +20,7 @@ const HomePage: React.FC = () => {
 			}`}
 		>
 			<SearchBar />
-
 			<ButtonCarousel setBookCategory={setBookCategory} />
-
 			<CategoryCarousel
 				categoryTitle={`${bookCategory.title} Books`}
 				query={bookCategory.query}

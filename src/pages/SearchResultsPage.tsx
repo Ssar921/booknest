@@ -1,9 +1,9 @@
-import useSearchSuggestions from "../hooks/useSearchSuggestions";
-import { useParams, Link } from "react-router-dom";
-import { useToggleContext } from "../context/ToggleContext";
-import { GrFormPrevious } from "react-icons/gr";
+import { useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import SearchBar from "../components/SearchBar";
 import BookResult from "../components/BookResult";
+import { useToggleContext } from "../context/ToggleContext";
+import useSearchSuggestions from "../hooks/useSearchSuggestions";
 
 const SearchResultsPage: React.FC = () => {
 	const { isToggled } = useToggleContext();
@@ -37,20 +37,12 @@ const SearchResultsPage: React.FC = () => {
 					: "bg-background-light text-text-light"
 			}`}
 		>
-			<div className="bg-themeColor flex justify-between pb-4 px-6 text-white">
-				<div className="w-1/3">
-					<Link
-						to="/"
-						className="font-bold text-3xl hover:text-secondary-dark"
-					>
-						<GrFormPrevious />
-					</Link>
-				</div>
-				<h1 className="text-3xl font-bold font-serif text-center w-1/3 text-secondary-dark">
+			<div className="bg-themeColor flex flex-col justify-center pb-4 px-6 text-white">
+				<h1 className="text-3xl font-bold font-serif text-center mx-auto text-secondary-dark">
 					Search results for:{" "}
 					<b className="text-secondary-light">{searchQuery}</b>
 				</h1>
-				<div className="w-1/3"></div>
+				<SearchBar />
 			</div>
 			{loading ? (
 				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
