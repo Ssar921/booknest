@@ -1,18 +1,18 @@
-import { useToggleContext } from "../context/ToggleContext";
 import { useEffect } from "react";
-import LoginForm from "../components/LoginForm";
-import RegisterForm from "../components/RegisterForm";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import LoginForm from "../components/LoginForm";
+import { useAuth } from "../context/AuthContext";
+import RegisterForm from "../components/RegisterForm";
+import { useToggleContext } from "../context/ToggleContext";
 
 interface AuthPageProps {
 	mode: "login" | "register";
 }
 
 const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
-	const { isToggled } = useToggleContext();
-	const { user } = useAuth(); // Accessing the current user from AuthContext
+	const { user } = useAuth();
 	const navigate = useNavigate();
+	const { isToggled } = useToggleContext();
 
 	// Check if the user is already logged in and redirect them to their profile
 	useEffect(() => {

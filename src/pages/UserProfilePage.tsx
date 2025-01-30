@@ -4,7 +4,7 @@ import { db } from "../firebase"; // Your firebase config
 import { doc, getDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { getBooksById } from "../hooks/getBooksById";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners"; // Added for the loader
 import { useToggleContext } from "../context/ToggleContext";
 import ProfileCarousel from "../components/ProfileCarousel";

@@ -73,7 +73,7 @@ const SearchBar = () => {
 						type="text"
 						value={query}
 						onChange={handleInputChange}
-						placeholder="Search for books, authors, genres..."
+						placeholder="Search for books..."
 						className={`w-full pl-10 pr-3 py-3 shadow-md focus:outline-none focus:ring-2 focus:ring-themeColor rounded-3xl backdrop-blur-lg bg-secondary-dark/40 border border-white/20  ${
 							isToggled ? "text-white" : "text-gray-900"
 						}`}

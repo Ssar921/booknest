@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
 import {
 	doc,
@@ -7,10 +6,11 @@ import {
 	arrayRemove,
 	getDoc,
 } from "firebase/firestore";
-import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaSpinner } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 interface FavoriteButtonProps {
 	bookId: string;

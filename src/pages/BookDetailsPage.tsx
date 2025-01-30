@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
-import placeholder from "../assets/images/book-placeholder.jpg";
-import { useToggleContext } from "../context/ToggleContext";
-import FavoriteButton from "../components/FavoriteButton";
 import { FaEye } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { FadeLoader } from "react-spinners";
 import Skeleton from "react-loading-skeleton";
-
+import FavoriteButton from "../components/FavoriteButton";
+import { useToggleContext } from "../context/ToggleContext";
+import placeholder from "../assets/images/book-placeholder.jpg";
+import { getBooksById } from "../hooks/getBooksById";
 // Interface to type the book data.
 interface BookData {
 	id: string;
@@ -37,11 +37,12 @@ const BookDetailsPage: React.FC = () => {
 		const fetchBookDetails = async () => {
 			try {
 				if (id) {
-					const response = await fetch(
-						`https://www.googleapis.com/books/v1/volumes/${id}`
-					);
-					const data = await response.json();
-
+					const booksData = await getBooksById([id]);
+					// const response = await fetch(
+					// 	`https://www.googleapis.com/books/v1/volumes/${id}`
+					// );
+					// const data = await response.json();
+					const data = booksData[0];
 					if (data.error || !data.volumeInfo) {
 						throw new Error(
 							"Invalid Book ID or missing book information"
@@ -67,7 +68,7 @@ const BookDetailsPage: React.FC = () => {
 	if (loading) {
 		return (
 			<div className="flex justify-center items-center h-screen">
-				<ClipLoader color="#3498db" loading={loading} size={50} />
+				<FadeLoader color="#46745d" loading={loading} />
 			</div>
 		);
 	}
