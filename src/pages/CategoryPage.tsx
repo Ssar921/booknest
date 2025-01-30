@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { categoryConfig } from "../utils/categories";
-import { useToggleContext } from "../context/ToggleContext";
-import Pagination from "../components/Pagination";
+import { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import BookResult from "../components/BookResult";
+import Pagination from "../components/Pagination";
+import { categoryConfig } from "../utils/categories";
+import { useParams, useNavigate } from "react-router-dom";
+import { useToggleContext } from "../context/ToggleContext";
 import useFetchCategoryBooks from "../hooks/FetchCategoryBooks";
 
 const CategoryPage: React.FC = () => {
 	const { isToggled } = useToggleContext();
 	const { categoryId } = useParams<{ categoryId: string }>();
-	const navigate = useNavigate(); // Hook to navigate programmatically
+	const navigate = useNavigate();
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const booksPerPage = 15;
@@ -25,7 +25,7 @@ const CategoryPage: React.FC = () => {
 		}
 	}, [categoryId, navigate]);
 
-	// Use the custom hook
+	// Use the custom hook to get books
 	const { books, totalBooks, loading, error } = useFetchCategoryBooks(
 		categoryId || "",
 		currentPage,
@@ -42,8 +42,8 @@ const CategoryPage: React.FC = () => {
 			.map((_, index) => (
 				<div className="carousel-item p-4" key={index}>
 					<div className="flex flex-col items-center justify-center">
-						<Skeleton width={200} height={270} />
-						<Skeleton width={200} height={20} />
+						<Skeleton width={250} height={270} />
+						<Skeleton width={250} height={20} />
 					</div>
 				</div>
 			));
@@ -51,7 +51,7 @@ const CategoryPage: React.FC = () => {
 
 	return (
 		<div
-			className={`category-page w-full mx-auto pb-10 ${
+			className={`w-full mx-auto pb-10 ${
 				isToggled
 					? "bg-background-dark text-text-dark"
 					: "bg-background-light text-text-light"
@@ -68,7 +68,14 @@ const CategoryPage: React.FC = () => {
 					{renderSkeletons()}
 				</div>
 			) : error ? (
-				<div className="text-red-500 text-center">{error}</div> // Show error if any
+				// Show error if any
+				<div
+					className={`text-red-500 text-center font-serif pt-[20vh] min-h-[90vh] ${
+						isToggled ? "bg-background-dark" : "bg-background-light"
+					}`}
+				>
+					{error}
+				</div>
 			) : (
 				<div className="flex justify-center flex-wrap">
 					{books.map((book) => (

@@ -3,10 +3,10 @@ import { FaEye } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { FadeLoader } from "react-spinners";
 import Skeleton from "react-loading-skeleton";
+import { getBooksById } from "../hooks/getBooksById";
 import FavoriteButton from "../components/FavoriteButton";
 import { useToggleContext } from "../context/ToggleContext";
 import placeholder from "../assets/images/book-placeholder.jpg";
-import { getBooksById } from "../hooks/getBooksById";
 // Interface to type the book data.
 interface BookData {
 	id: string;
@@ -67,7 +67,8 @@ const BookDetailsPage: React.FC = () => {
 	// Loader if data is still being fetched.
 	if (loading) {
 		return (
-			<div className="flex justify-center items-center h-screen">
+			<div className="flex flex-wrap justify-center items-start h-screen">
+				<div className="bg-themeColor h-40 w-full"></div>
 				<FadeLoader color="#46745d" loading={loading} />
 			</div>
 		);
@@ -76,8 +77,10 @@ const BookDetailsPage: React.FC = () => {
 	// If no book found.
 	if (!book) {
 		return (
-			<div className="text-center text-xl text-red-500">
-				Book not found!
+			<div className="text-center bg-themeColor pt-5 h-40 text-red-500">
+				<h1 className="font-serif font-bold text-4xl">
+					Book Not Found
+				</h1>
 			</div>
 		);
 	}

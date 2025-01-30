@@ -22,8 +22,8 @@ const SearchResultsPage: React.FC = () => {
 			.map((_, index) => (
 				<div className="carousel-item p-4" key={index}>
 					<div className="flex flex-col items-center justify-center">
-						<Skeleton width={200} height={270} />
-						<Skeleton width={200} height={20} />
+						<Skeleton width={250} height={270} />
+						<Skeleton width={250} height={20} />
 					</div>
 				</div>
 			));
@@ -31,7 +31,7 @@ const SearchResultsPage: React.FC = () => {
 
 	return (
 		<div
-			className={`category-page w-full mx-auto pb-10 ${
+			className={`w-full mx-auto pb-10 ${
 				isToggled
 					? "bg-background-dark text-text-dark"
 					: "bg-background-light text-text-light"

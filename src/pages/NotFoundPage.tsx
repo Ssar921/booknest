@@ -1,4 +1,4 @@
-import { FaExclamationTriangle } from "react-icons/fa"; // Importing an icon from React Icons
+import { FaExclamationTriangle } from "react-icons/fa";
 
 const NotFoundPage: React.FC = () => {
 	return (
