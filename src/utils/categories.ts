@@ -4,10 +4,11 @@ export interface Category {
 }
 export const categoryConfig: Category[] = [
 	{ title: "Popular", query: "book" },
-	{ title: "New Releases", query: "new+releases" },
-	{ title: "Award-Winning", query: "award+winning" },
-	{ title: "Top Rated", query: "top+rated" },
-	{ title: "Must Read", query: "must+read" },
+	{ title: "Health Related", query: "health" },
+	{ title: "Contemporary", query: "contemporary" },
+	{ title: "Top Rated", query: "high" },
+	{ title: "Sports", query: "sports" },
+	{ title: "Literature", query: "literature" },
 	{ title: "Fiction", query: "fiction" },
 	{ title: "Fantasy", query: "fantasy" },
 	{ title: "Mystery", query: "mystery" },
@@ -17,9 +18,9 @@ export const categoryConfig: Category[] = [
 	{ title: "Biography", query: "biography" },
 	{ title: "Self Help", query: "self+help" },
 	{ title: "Children's", query: "children" },
-	{ title: "Young Adult", query: "young+adult" },
+	{ title: "Juvenile Fiction", query: "juvenile+fiction" },
 	{ title: "Horror", query: "horror" },
-	{ title: "Non Fiction", query: "non+fiction" },
+	{ title: "Non Fiction", query: "nonfiction" },
 	{ title: "Poetry", query: "poetry" },
 	{ title: "Adventure", query: "adventure" },
 ];
