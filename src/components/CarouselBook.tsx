@@ -1,6 +1,5 @@
 import { Book } from "../types";
 import { Link } from "react-router-dom";
-import FavoriteButton from "./FavoriteButton";
 import { useToggleContext } from "../context/ToggleContext";
 import placeholder from "../assets/images/book-placeholder.jpg";
 
@@ -73,7 +72,6 @@ const CarouselBook: React.FC<CarouselBookProps> = ({ book }) => {
 					</div>
 				</div>
 			</Link>
-			<FavoriteButton bookId={book?.id} page="carousel" />
 		</div>
 	);
 };

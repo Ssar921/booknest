@@ -14,10 +14,9 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 interface FavoriteButtonProps {
 	bookId: string;
-	page: string;
 }
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ bookId, page }) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ bookId }) => {
 	const { user } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const [isFavorited, setIsFavorited] = useState(false);
@@ -79,40 +78,6 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ bookId, page }) => {
 		checkIfFavorited();
 	}, [user, bookId]);
 
-	if (page === "carousel") {
-		return (
-			<button
-				onClick={handleFavorite}
-				disabled={loading}
-				className={`${
-					loading
-						? "bg-gray-300 cursor-not-allowed opacity-50"
-						: isFavorited
-						? "bg-themeColor text-white"
-						: "text-themeColor border border-themeColor"
-				} inline-flex items-center justify-center w-full px-5 py-1 border rounded-b-lg text-sm font-semibold space-x-2 transition-all duration-200 hover:bg-secondary-dark focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50
-				`}
-			>
-				{loading ? (
-					<FaSpinner className="animate-spin text-white" />
-				) : isFavorited ? (
-					<AiFillHeart className="text-white" />
-				) : (
-					<AiOutlineHeart className="text-themeColot" />
-				)}
-
-				<span>
-					{loading
-						? "Loading..."
-						: isFavorited
-						? "Remove from Favorites"
-						: "Add to Favorites"}
-				</span>
-			</button>
-		);
-	}
-
-	// If the page is not "profile", render the button for the "book" page
 	return (
 		<button
 			onClick={handleFavorite}
