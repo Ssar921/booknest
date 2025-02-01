@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
-import BookResult from "../components/BookResult";
 import Pagination from "../components/Pagination";
 import { categoryConfig } from "../utils/categories";
+import CarouselBook from "../components/CarouselBook";
 import { useParams, useNavigate } from "react-router-dom";
 import { useToggleContext } from "../context/ToggleContext";
 import useFetchCategoryBooks from "../hooks/FetchCategoryBooks";
@@ -79,7 +79,7 @@ const CategoryPage: React.FC = () => {
 			) : (
 				<div className="flex justify-center flex-wrap">
 					{books.map((book) => (
-						<BookResult book={book} key={book.id} />
+						<CarouselBook book={book} key={book.id} />
 					))}
 				</div>
 			)}
