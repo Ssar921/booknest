@@ -8,12 +8,12 @@ import { useToggleContext } from "../context/ToggleContext";
 import useFetchCategoryBooks from "../hooks/FetchCategoryBooks";
 
 const CategoryPage: React.FC = () => {
+	const navigate = useNavigate();
 	const { isToggled } = useToggleContext();
 	const { categoryId } = useParams<{ categoryId: string }>();
-	const navigate = useNavigate();
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const booksPerPage = 15;
+	const booksPerPage = 16;
 
 	// Redirect if no categoryId is found or if the category doesn't exist
 	useEffect(() => {
@@ -40,11 +40,8 @@ const CategoryPage: React.FC = () => {
 		return Array(booksPerPage)
 			.fill(null)
 			.map((_, index) => (
-				<div className="carousel-item p-4" key={index}>
-					<div className="flex flex-col items-center justify-center">
-						<Skeleton width={250} height={270} />
-						<Skeleton width={250} height={20} />
-					</div>
+				<div className="p-4 flex items-center" key={index}>
+					<Skeleton width="22vw" height="20vh" key={index} />
 				</div>
 			));
 	};

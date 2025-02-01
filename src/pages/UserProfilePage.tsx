@@ -5,7 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { getBooksById } from "../hooks/getBooksById";
 import { useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners"; // Added for the loader
+import { FadeLoader } from "react-spinners"; // Added for the loader
 import { useToggleContext } from "../context/ToggleContext";
 import ProfileCarousel from "../components/ProfileCarousel";
 
@@ -74,8 +74,9 @@ const UserProfilePage: React.FC = () => {
 
 	if (loading) {
 		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<ClipLoader color="#3498db" loading={loading} size={50} />
+			<div className="flex flex-wrap justify-center items-start h-screen">
+				<div className="bg-themeColor h-40 w-full"></div>
+				<FadeLoader color="#46745d" loading={loading} />
 			</div>
 		);
 	}
