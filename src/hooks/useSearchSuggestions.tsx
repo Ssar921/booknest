@@ -17,7 +17,7 @@ const useSearchSuggestions = (query: string, limit: number = 5) => {
 			setError(null);
 			try {
 				const response = await fetch(
-					`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${limit}&langRestrict=en`
+					`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${limit}&langRestrict=en&fields=items(id,volumeInfo(title,authors,imageLinks/thumbnail,publishedDate))`
 				);
 				const data = await response.json();
 				setSuggestions(data.items || []);
