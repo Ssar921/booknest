@@ -9,7 +9,6 @@ const SearchSuggestions = (
 ) => {
 	const [loading, setLoading] = useState(true);
 	const [books, setBooks] = useState<Book[]>([]);
-	const [totalBooks, setTotalBooks] = useState(0);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -28,7 +27,6 @@ const SearchSuggestions = (
 				);
 				const data = await response.json();
 				setBooks(data.items || []);
-				setTotalBooks(data.totalItems);
 			} catch (err) {
 				setError("Error fetching suggestions.");
 				console.error("Error fetching search suggestions:", err);
@@ -39,7 +37,7 @@ const SearchSuggestions = (
 
 		fetchSuggestions();
 	}, [query, currentPage, booksPerPage]);
-	return { books, totalBooks, loading, error };
+	return { books, loading, error };
 };
 
 export default SearchSuggestions;
