@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { categoryConfig } from "../utils/categories";
 import { useParams, useNavigate } from "react-router-dom";
-import useFetchCategoryBooks from "../hooks/FetchCategoryBooks";
+import FetchCategoryBooks from "../hooks/FetchCategoryBooks";
 import BookResults from "../components/BookResults";
 import Pagination from "../components/Pagination";
 
@@ -23,7 +23,7 @@ const CategoryPage: React.FC = () => {
 	}, [categoryId, navigate]);
 
 	// Use the custom hook to get books
-	const { books, totalBooks, loading, error } = useFetchCategoryBooks(
+	const { books, totalBooks, loading, error } = FetchCategoryBooks(
 		categoryId || "",
 		currentPage,
 		booksPerPage

@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext"; // Assuming you have a context to fetch user data
-import { db } from "../firebase"; // Your firebase config
-import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import { toast } from "react-toastify";
-import { getBooksById } from "../hooks/getBooksById";
+import { useEffect, useState } from "react";
+import { FadeLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
-import { FadeLoader } from "react-spinners"; // Added for the loader
-import { useToggleContext } from "../context/ToggleContext";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from "../context/AuthContext";
+import { getBooksById } from "../hooks/getBooksById";
 import ProfileCarousel from "../components/ProfileCarousel";
+import { useToggleContext } from "../context/ToggleContext";
+import useFavoriteBooks from "../hooks/USEFavoriteBooks";
 
 const UserProfilePage: React.FC = () => {
-	const { isToggled } = useToggleContext();
-	const { user } = useAuth(); // Get the current user from auth context
-	const [profile, setProfile] = useState<any>(null); // User profile data
-	const [loading, setLoading] = useState(true);
-	const [favoriteBooks, setFavoriteBooks] = useState<any[]>([]);
+	const { user } = useAuth();
 	const navigate = useNavigate();
+	const { isToggled } = useToggleContext();
+	const [loading, setLoading] = useState(true);
+	const [profile, setProfile] = useState<any>(null);
+	// const [favoriteBooks, setFavoriteBooks] = useState<any[]>([]);
 
 	useEffect(() => {
 		const fetchUserProfile = async () => {
@@ -50,27 +51,31 @@ const UserProfilePage: React.FC = () => {
 		}
 	}, [user]); // Only trigger when `user` changes
 
-	useEffect(() => {
-		const fetchFavoriteBooks = async () => {
-			if (profile && profile.favorites) {
-				try {
-					const favorites = profile?.favorites || [];
-					if (favorites.length > 0) {
-						// Fetch book details for each bookId in favorites (but only once)
-						const booksData = await getBooksById(favorites);
-						setFavoriteBooks(booksData);
-					}
-				} catch (error) {
-					toast.error("Error fetching favorite books.");
-				}
-			}
-		};
+	// useEffect(() => {
+	// 	const fetchFavoriteBooks = async () => {
+	// 		if (profile && profile.favorites) {
+	// 			try {
+	// 				const favorites = profile?.favorites || [];
+	// 				if (favorites.length > 0) {
+	// 					// Fetch book details for each bookId in favorites (but only once)
+	// 					const booksData = await getBooksById(favorites);
+	// 					setFavoriteBooks(booksData);
+	// 				}
+	// 			} catch (error) {
+	// 				toast.error("Error fetching favorite books.");
+	// 			}
+	// 		}
+	// 	};
 
-		if (profile && profile.favorites) {
-			// Only fetch favorite books when `profile` is set
-			fetchFavoriteBooks();
-		}
-	}, [profile]); // Only trigger when `profile` changes
+	// 	if (profile && profile.favorites) {
+	// 		// Only fetch favorite books when `profile` is set
+	// 		fetchFavoriteBooks();
+	// 	}
+	// }, [profile]); // Only trigger when `profile` changes
+
+	const { favoriteBooks, loading: favoriteBooksLoading } = useFavoriteBooks(
+		profile?.favorites
+	);
 
 	if (loading) {
 		return (
@@ -102,7 +107,7 @@ const UserProfilePage: React.FC = () => {
 	return (
 		<div
 			className={`min-h-screen pb-5 ${
-				user ? "bg-background-light" : "bg-background-dark"
+				isToggled ? "bg-background-dark" : "bg-background-light"
 			}`}
 		>
 			{/* Green Cover Banner */}
@@ -116,7 +121,7 @@ const UserProfilePage: React.FC = () => {
 			</div>
 
 			{/* Profile Card */}
-			<div className="max-w-xl w-full p-8 space-y-6 mx-auto mt-10">
+			<div className="max-w-xl w-full p-8 space-y-2 mx-auto mt-10">
 				{/* Profile Info */}
 				<div className="text-center space-y-2">
 					<h1 className="text-3xl font-extrabold text-gray-800 font-serif">
@@ -129,7 +134,7 @@ const UserProfilePage: React.FC = () => {
 				</div>
 
 				<div
-					className={`flex-col justify-center space-x-4 my-2 mx-auto w-[90%] sm:w-[40%] h-24 ${
+					className={`flex-col justify-center space-x-4 my-1 mx-auto w-[90%] sm:w-[40%] h-20 ${
 						isToggled
 							? " bg-primary-dark text-text-dark shadow-md shadow-black"
 							: " bg-primary-light text-text-light shadow-md shadow-gray-400"
@@ -145,7 +150,6 @@ const UserProfilePage: React.FC = () => {
 
 				{/* Favorite Books */}
 				<div className="space-y-4 w-full">
-					{/* ADD LOADING SKELETON CONDITION */}
 					<div className="flex">
 						{favoriteBooks.length > 0 && (
 							<ProfileCarousel

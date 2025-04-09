@@ -18,14 +18,15 @@ const FetchCategoryBooks = (
 			try {
 				const startIndex = (currentPage - 1) * booksPerPage;
 				const response = await fetch(
-					`https://www.googleapis.com/books/v1/volumes?q=subject:${categoryId}&startIndex=${startIndex}&maxResults=${booksPerPage}&fields=items(id,volumeInfo(title,authors,imageLinks/thumbnail)),totalItems`
+					`https://www.googleapis.com/books/v1/volumes?q=subject:${categoryId}&startIndex=${startIndex}&maxResults=${booksPerPage}&fields=items(id,volumeInfo(title,authors,imageLinks/thumbnail))`
 				);
 				if (!response.ok) {
 					throw new Error("Failed to fetch books");
 				}
 				const data = await response.json();
+				console.log(data);
 				setBooks(data.items || []);
-				setTotalBooks(data.totalItems);
+				setTotalBooks(160);
 			} catch (error: any) {
 				setError(error.message || "An unexpected error occurred");
 			} finally {

@@ -20,7 +20,7 @@ const ProfileCarousel: React.FC<ProfileCarouselProps> = ({
 		slidesToScroll: 1,
 		prevArrow: <CustomArrow direction="prev" onClick={() => {}} />,
 		nextArrow: <CustomArrow direction="next" onClick={() => {}} />,
-		centerMode: true,
+		centerMode: false,
 		centerPadding: "20px",
 	};
 
