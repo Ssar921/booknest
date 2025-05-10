@@ -5,8 +5,6 @@ import { useToggleContext } from "../context/ToggleContext";
 import CategoryCarousel from "../components/CategoryCarousel";
 import { categoryConfig, Category } from "../utils/categories";
 
-// import SupTable from "../components/supTable";
-
 const HomePage: React.FC = () => {
 	const { isToggled } = useToggleContext();
 	const [bookCategory, setBookCategory] = useState<Category>(
@@ -23,7 +21,6 @@ const HomePage: React.FC = () => {
 		>
 			<SearchBar />
 			<ButtonCarousel setBookCategory={setBookCategory} />
-			{/* <SupTable /> */}
 			<CategoryCarousel
 				categoryTitle={`${bookCategory.title} Books`}
 				query={bookCategory.query}

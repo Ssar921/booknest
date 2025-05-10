@@ -4,11 +4,9 @@ import { useParams } from "react-router-dom";
 import { FadeLoader } from "react-spinners";
 import Skeleton from "react-loading-skeleton";
 import { getBooksById } from "../hooks/getBooksById";
-import AddFavorites from "../components/AddFavorites";
 import FavoriteButton from "../components/FavoriteButton";
 import { useToggleContext } from "../context/ToggleContext";
 import placeholder from "../assets/images/book-placeholder.jpg";
-import BookComments from "../components/BookComments";
 // Interface to type the book data.
 interface BookData {
 	id: string;
@@ -171,9 +169,6 @@ const BookDetailsPage: React.FC = () => {
 						<span className="font-medium">Preview</span>
 					</a>
 				</div>
-
-				{/* <AddFavorites bookId={book?.id} /> */}
-				<BookComments bookId={book?.id} />
 
 				{/* Description */}
 				<div className="mt-6 leading-relaxed text-center">
