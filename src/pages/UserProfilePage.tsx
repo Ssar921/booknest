@@ -5,10 +5,10 @@ import { FadeLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
-import { getBooksById } from "../hooks/getBooksById";
 import ProfileCarousel from "../components/ProfileCarousel";
 import { useToggleContext } from "../context/ToggleContext";
-import useFavoriteBooks from "../hooks/USEFavoriteBooks";
+// import useFavoriteBooks from "../hooks/USEFavoriteBooks";
+import useFavoriteBooks from "../hooks/useFavoriteBooks";
 
 const UserProfilePage: React.FC = () => {
 	const { user } = useAuth();
