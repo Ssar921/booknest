@@ -5,7 +5,6 @@ import MainLayout from "./layouts/MainLayout";
 import NotFoundPage from "./pages/NotFoundPage";
 import AuthPage from "./pages/AuthPage";
 import CategoryPage from "./pages/CategoryPage";
-import UserProfilePage from "./pages/UserProfilePage";
 import BookDetailsPage from "./pages/BookDetailsPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import ForgotPasswordPage from "./components/auth/ForgotPasswordPage";
