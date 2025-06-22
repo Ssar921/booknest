@@ -19,7 +19,7 @@ export default function VerifyEmailPrompt({ email }: Props) {
 		const createProfileIfNotExists = async () => {
 			if (!user || profileCreated.current) return;
 
-			const { data, error } = await supabase
+			const { data } = await supabase
 				.from("profiles")
 				.select("id")
 				.eq("id", user.id)

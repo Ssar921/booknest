@@ -15,7 +15,6 @@ export default function ForgotPassword({ onEmailSent }: Props) {
 	const [email, setEmail] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [message, setMessage] = useState("");
-	const [sent, setSent] = useState(false);
 	const [cooldown, setCooldown] = useState(0);
 	const navigate = useNavigate();
 
@@ -88,7 +87,6 @@ export default function ForgotPassword({ onEmailSent }: Props) {
 				setMessage("Error sending reset link. Try again.");
 			}
 		} else {
-			setSent(true);
 			setMessage("Password reset link sent. Check your inbox.");
 			setCooldown(COOLDOWN_SECONDS);
 			localStorage.setItem(STORAGE_KEY, Date.now().toString());

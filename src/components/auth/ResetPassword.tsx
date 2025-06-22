@@ -53,7 +53,6 @@ export default function ResetPassword({ onSuccess }: Props) {
 	const inputClass = `mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-[10px] shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm`;
 
 	const passwordField = (
-		type: string,
 		value: string,
 		onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 		placeholder: string
@@ -80,13 +79,11 @@ export default function ResetPassword({ onSuccess }: Props) {
 	return (
 		<form onSubmit={handleReset} className="space-y-4">
 			{passwordField(
-				"password",
 				newPassword,
 				(e) => setNewPassword(e.target.value),
 				"New Password"
 			)}
 			{passwordField(
-				"password",
 				confirmPassword,
 				(e) => setConfirmPassword(e.target.value),
 				"Confirm Password"
