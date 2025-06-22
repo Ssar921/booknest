@@ -1,25 +1,28 @@
 # BookNest - AI Enhanced Book Browsing
 
-Booknest is a react typescript app that allows users to browse, filter and search books using the Google Books API.
+BookNest is a full-stack app for fast, intelligent book discovery — built with React/TypeScript and powered by Google Books API.
 
 ### Current features include:
 
--   Book browsing by categories
--   Book search
--   Add books to favorites
--   View book details
+-   Search and filter thousands of books
+-   Explore genre-based categories
+-   Save favorites to view anytime
+-   See detailed summaries, authors, and metadata
 
 ### Upcoming features
 
--   AI chat generated suggestions
--   AI based personalized book selections
+-   AI chatbot to facilitate finding books catered to your preferences
+-   Smart suggestions based on your reading preferences and past favorites
+-   AI generated book summaries
 -   Reading/Wish List
--   Book ratings and comments
+-   Community powered book ratings and reviews
 
 ### Stack & Frameworks
 
 -   React
 -   Typescript
--   Supabase (auth and postgresql)
+-   Supabase (Auth and Postgresql)
 -   Google books API
 -   Tailwind
+
+> Designed for readers who want intelligent discovery, not endless scrolling.
