@@ -5,7 +5,6 @@ import { FadeLoader } from "react-spinners";
 import Skeleton from "react-loading-skeleton";
 import { getBooksById } from "../hooks/getBooksById";
 import AddFavorites from "../components/AddFavorites";
-import FavoriteButton from "../components/FavoriteButton";
 import { useToggleContext } from "../context/ToggleContext";
 import placeholder from "../assets/images/book-placeholder.jpg";
 import BookComments from "../components/BookComments";
@@ -159,7 +158,7 @@ const BookDetailsPage: React.FC = () => {
 				</div>
 				{/* CTA Buttons */}
 				<div className="flex justify-center my-4 mx-auto w-[90%] sm:w-[40%]">
-					<FavoriteButton bookId={book?.id} />
+					{/* <FavoriteButton bookId={book?.id} /> */}
 
 					<a
 						href={previewLink}

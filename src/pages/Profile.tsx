@@ -31,7 +31,7 @@ const Profile = () => {
 				const { data, error } = await supabase
 					.from("favorites")
 					.select("*")
-					.eq("user_id", user.id);
+					.eq("id", user.id);
 				if (data) {
 					console.log(data);
 					setFavorites(data);

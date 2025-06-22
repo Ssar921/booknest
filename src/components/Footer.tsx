@@ -6,10 +6,10 @@ import {
 	FaSignOutAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useSupabase } from "../context/SupabaseContext";
 
 const Footer = () => {
-	const { user, logout } = useAuth();
+	const { user, signOut } = useSupabase();
 	const linkClassOne =
 		"flex items-center space-x-2 hover:text-secondary-dark transition-all duration-300";
 	const linkClassInner = "hidden md:block";
@@ -33,7 +33,7 @@ const Footer = () => {
 
 					{/* Logout Icon */}
 					<button
-						onClick={logout}
+						onClick={signOut}
 						className="flex items-center space-x-2 text-red-500"
 					>
 						<FaSignOutAlt size={iconSize} />

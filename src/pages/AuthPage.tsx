@@ -1,25 +1,24 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginForm from "../components/LoginForm";
-import { useAuth } from "../context/AuthContext";
-import RegisterForm from "../components/RegisterForm";
+import { useSupabase } from "../context/SupabaseContext";
 import { useToggleContext } from "../context/ToggleContext";
+import RegisterForm from "../components/auth/RegisterForm";
+import LoginForm from "../components/auth/LoginForm";
 
 interface AuthPageProps {
 	mode: "login" | "register";
 }
 
 const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
-	const { user } = useAuth();
+	const { user } = useSupabase();
 	const navigate = useNavigate();
 	const { isToggled } = useToggleContext();
 
-	// Check if the user is already logged in and redirect them to their profile
 	useEffect(() => {
 		if (user) {
-			navigate("/profile"); // Redirect to profile if logged in
+			navigate("/profile");
 		}
-	}, [user, navigate]); // Dependency on user, so it runs when the user changes
+	}, [user, navigate]);
 
 	return (
 		<div
