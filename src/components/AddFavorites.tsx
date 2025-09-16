@@ -103,22 +103,22 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ bookId }) => {
 					: isFavorited
 					? "bg-pink-600 text-white"
 					: "text-pink-600 border border-pink-600"
-			} inline-flex items-center justify-center w-full max-w-xs px-5 py-2 border rounded-lg text-sm font-semibold space-x-2 transition-all duration-200 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-50 mx-2`}
+			} inline-flex items-center justify-center px-5 py-2 border rounded-lg text-sm font-semibold space-x-2 transition-all duration-200 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-50 mx-2`}
 		>
 			{loading ? (
 				<FaSpinner className="animate-spin text-white" />
 			) : isFavorited ? (
-				<AiFillHeart className="text-white" />
+				<AiFillHeart className="text-white" size={20} />
 			) : (
-				<AiOutlineHeart className="text-pink-600" />
+				<AiOutlineHeart className="text-pink-600" size={20} />
 			)}
-			<span>
+			{/* <span>
 				{loading
 					? "Loading..."
 					: isFavorited
 					? "Remove from Favorites"
 					: "Add to Favorites"}
-			</span>
+			</span> */}
 		</button>
 	);
 };
