@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient";
 import VerifyEmailPrompt from "./VerifyEmailPrompt";
+import { ClipLoader } from "react-spinners";
 
-const inputClass = `mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-[10px] shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm`;
-const labelClass = "block text-md font-medium text-themeColor";
+const inputClass = `mt-1 block w-full px-3 py-2 bg-transparent border-b text-sm border-b-gray-300 focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm text-secondary-dark`;
 
 export default function RegisterForm() {
 	const [email, setEmail] = useState("");
@@ -42,9 +42,6 @@ export default function RegisterForm() {
 	return (
 		<form onSubmit={handleSubmit} className="space-y-4 ">
 			<div>
-				<label htmlFor="email" className={labelClass}>
-					Email
-				</label>
 				<input
 					id="email"
 					type="email"
@@ -57,9 +54,6 @@ export default function RegisterForm() {
 			</div>
 
 			<div>
-				<label htmlFor="password" className={labelClass}>
-					Password
-				</label>
 				<input
 					id="password"
 					type="password"
@@ -78,7 +72,7 @@ export default function RegisterForm() {
 				disabled={loading}
 				className="w-full py-2 px-4 bg-themeColor text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-themeColor focus:ring-opacity-50 disabled:opacity-50 hover:bg-secondary-dark transition-colors duration-300"
 			>
-				{loading ? "Registering..." : "Register"}
+				{loading ? <ClipLoader size={24} color="#fff" /> : "Register"}
 			</button>
 			<small className="w-full flex items-center justify-center py-1">
 				Already have an account?

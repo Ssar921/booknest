@@ -2,9 +2,10 @@ import { useState } from "react";
 import { MdError } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 import { useSupabase } from "../../context/SupabaseContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
+	const navigate = useNavigate();
 	const { signIn } = useSupabase();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -24,8 +25,11 @@ export default function LoginForm() {
 
 		try {
 			await signIn(email, password);
+			console.log("login page");
+			navigate("/");
 		} catch (err: any) {
-			if (err.message.includes("auth/invalid-credential")) {
+			console.log(err.message);
+			if (err.message.includes("Invalid login credentials")) {
 				setError("Invalid credentials, please try again.");
 			} else {
 				setError("An unexpected error occurred. Please try again.");
@@ -35,20 +39,17 @@ export default function LoginForm() {
 		}
 	};
 
-	const inputClass = `mt-1 block w-full px-3 py-2 backdrop-blur-lg bg-white/60 border rounded-[10px] shadow-sm focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm`;
-	const labelClass = "block text-md font-medium text-themeColor";
+	const inputClass = `mt-1 block w-full px-3 py-2 bg-transparent border-b text-sm border-b-gray-300 focus:outline-none focus:ring-themeColor focus:border-themeColor sm:text-sm text-secondary-dark`;
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-4">
 			<div className="relative">
-				<label htmlFor="email" className={labelClass}>
-					Email
-				</label>
 				<input
 					id="email"
 					type="email"
 					required
 					value={email}
+					placeholder="Email"
 					onChange={(e) => setEmail(e.target.value)}
 					className={inputClass}
 				/>
@@ -60,14 +61,12 @@ export default function LoginForm() {
 			</div>
 
 			<div className="relative">
-				<label htmlFor="password" className={labelClass}>
-					Password
-				</label>
 				<input
 					id="password"
 					type="password"
 					required
 					value={password}
+					placeholder="Password"
 					onChange={(e) => setPassword(e.target.value)}
 					className={inputClass}
 				/>

@@ -83,10 +83,13 @@ export default function VerifyEmailPrompt({ email }: Props) {
 
 	return (
 		<div className="text-center space-y-4">
-			<h2 className="text-lg font-semibold">Verify Your Email</h2>
-			<p>
-				A verification link has been sent to <strong>{email}</strong>.
+			{/* <h2 className="text-lg font-semibold">Verify Your Email</h2> */}
+			<p className="text-secondary-dark">
+				A verification link has been sent to{" "}
+				<strong className="text-black font-medium">{email}</strong>.
 				<br />
+			</p>
+			<p className="text-sm text-secondary-dark">
 				Please check your inbox.
 			</p>
 			<button

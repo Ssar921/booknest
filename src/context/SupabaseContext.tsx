@@ -7,7 +7,6 @@ import {
 } from "react";
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabaseClient";
-import { useNavigate } from "react-router-dom";
 
 interface Profile {
 	id: string; // uuid (matches auth.users.id)
@@ -49,8 +48,6 @@ export const SupabaseProvider = ({ children }: { children: ReactNode }) => {
 	const [loading, setLoading] = useState(true);
 	const [profile, setProfile] = useState<Profile | null>(null);
 
-	const navigate = useNavigate();
-
 	useEffect(() => {
 		const initSession = async () => {
 			const { data } = await supabase.auth.getSession();
@@ -76,11 +73,11 @@ export const SupabaseProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	const signIn = async (email: string, password: string) => {
-		// return await supabase.auth.signInWithPassword({ email, password });
-		try {
-			await supabase.auth.signInWithPassword({ email, password });
-			navigate("/"); // Redirect after successful login
-		} catch (error: any) {
+		const { error } = await supabase.auth.signInWithPassword({
+			email,
+			password,
+		});
+		if (error) {
 			throw new Error(error.message);
 		}
 	};

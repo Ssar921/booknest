@@ -1,0 +1,19 @@
+-------------------
+FUNCTIONAL
+-------------------
+page title on tab
+preview image click
+preview link more info
+search bar update on type (should update when user stops typing)
+
+
+----------------
+UI
+----------------
+user didnt like header space
+favorites list
+favorite button in footer
+replace footer 
+categories in list
+profile info in profile only
+
