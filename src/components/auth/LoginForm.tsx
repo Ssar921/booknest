@@ -78,7 +78,10 @@ export default function LoginForm() {
 			</div>
 
 			{error && (
-				<p className="text-sm text-red-500 mt-2" aria-live="assertive">
+				<p
+					className="text-xs text-red-500 mt-1 text-center"
+					aria-live="assertive"
+				>
 					{error}
 				</p>
 			)}

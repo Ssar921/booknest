@@ -8,6 +8,7 @@ import { getBooksById } from "../hooks/getBooksById";
 import { useToggleContext } from "../context/ToggleContext";
 import placeholder from "../assets/images/book-placeholder.jpg";
 import BookComments from "../components/BookComments";
+import FavoriteButton from "../components/AddFavorites";
 // Interface to type the book data.
 interface BookData {
 	id: string;
@@ -158,7 +159,7 @@ const BookDetailsPage: React.FC = () => {
 				</div>
 				{/* CTA Buttons */}
 				<div className="flex justify-center my-4 mx-auto w-[90%] sm:w-[40%]">
-					{/* <FavoriteButton bookId={book?.id} /> */}
+					<FavoriteButton bookId={book?.id} />
 
 					<a
 						href={previewLink}

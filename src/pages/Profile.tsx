@@ -1,14 +1,20 @@
-// src/pages/Profile.tsx
 import { useEffect, useState } from "react";
 import { useSupabase } from "../context/SupabaseContext";
 import { supabase } from "../lib/supabaseClient";
+import ProfileHeader from "../components/profile/ProfileHeader";
+import { FadeLoader } from "react-spinners";
+import { getBooksById } from "../hooks/getBooksById";
+import ProfileCarousel from "../components/ProfileCarousel";
 
 const Profile = () => {
-	const { user, signOut } = useSupabase();
+	const { user } = useSupabase();
 	const [profileData, setProfileData] = useState<any>(null);
 	const [favorites, setFavorites] = useState<any[]>([]);
 	const [loadingProfile, setLoadingProfile] = useState<boolean>(true);
 	const [loadingFavorites, setLoadingFavorites] = useState<boolean>(true);
+	const [books, setBooks] = useState<any[]>([]); // State to store the book details
+	const [loadingBooks, setLoadingBooks] = useState<boolean>(false); // State to track loading books
+
 	useEffect(() => {
 		if (user) {
 			// Fetch profile data
@@ -20,6 +26,7 @@ const Profile = () => {
 					.single(); // Assuming user has one profile
 				if (data) {
 					setProfileData(data);
+					console.log(data);
 				} else {
 					console.error(error);
 				}
@@ -28,10 +35,11 @@ const Profile = () => {
 
 			// Fetch favorites data
 			const fetchFavorites = async () => {
+				console.log(user.id);
 				const { data, error } = await supabase
 					.from("favorites")
 					.select("*")
-					.eq("id", user.id);
+					.eq("user_id", user.id);
 				if (data) {
 					console.log(data);
 					setFavorites(data);
@@ -46,6 +54,24 @@ const Profile = () => {
 		}
 	}, [user]);
 
+	useEffect(() => {
+		if (favorites.length > 0) {
+			// Extracting book IDs from the favorites
+			const bookIds = favorites.map((favorite) => favorite.book_id);
+			const fetchBooks = async () => {
+				setLoadingBooks(true);
+				const booksData = await getBooksById(bookIds);
+				setBooks(booksData);
+				console.log(books);
+				setLoadingBooks(false);
+			};
+			fetchBooks();
+		}
+	}, [favorites]);
+	const fullName = `${profileData?.first_name ?? ""} ${
+		profileData?.last_name ?? ""
+	}`.trim();
+
 	if (!user) {
 		return (
 			<div className="flex justify-center items-center h-screen">
@@ -55,88 +81,29 @@ const Profile = () => {
 	}
 
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-			<div className="bg-white p-6 rounded-xl shadow-md w-full max-w-md">
-				<h2 className="text-2xl font-bold mb-4 text-center">
-					User Profile
-				</h2>
-
-				<div className="space-y-4 text-gray-800">
-					<div>
-						<span className="font-semibold">Email:</span>
-						<p>{user.email}</p>
-					</div>
-
-					<div>
-						<span className="font-semibold">User ID:</span>
-						<p className="break-words">{user.id}</p>
-					</div>
-
-					<div>
-						<span className="font-semibold">Created At:</span>
-						<p>
-							{new Date(user.created_at || "").toLocaleString()}
-						</p>
-					</div>
-
-					{loadingProfile ? (
-						<p>Loading profile data...</p>
-					) : (
-						<div>
-							<h3 className="mt-6 text-xl font-semibold">
-								Profile Info
-							</h3>
-							{profileData ? (
-								<>
-									<div>
-										<span className="font-semibold">
-											First Name:
-										</span>
-										<p>{profileData.first_name}</p>
-									</div>
-									<div>
-										<span className="font-semibold">
-											Last Name:
-										</span>
-										<p>{profileData.last_name}</p>
-									</div>
-								</>
-							) : (
-								<p>No profile data available</p>
-							)}
-						</div>
-					)}
-
-					{loadingFavorites ? (
-						<p>Loading favorites...</p>
-					) : (
-						<div>
-							<h3 className="mt-6 text-xl font-semibold">
-								Your Favorites
-							</h3>
-							{favorites.length > 0 ? (
-								<ul className="list-disc pl-6">
-									{favorites.map((favorite) => (
-										<li key={favorite.id}>
-											<p>Book ID: {favorite.book_id}</p>
-										</li>
-									))}
-								</ul>
-							) : (
-								<p>No favorites found.</p>
-							)}
-						</div>
-					)}
+		<>
+			{loadingProfile ? (
+				<div className="w-full min-h-[50vh] flex justify-center items-center">
+					<FadeLoader />
 				</div>
+			) : (
+				<div className="w-full">
+					<ProfileHeader
+						logoUrl={
+							"profile.full_url ? profile.full_url : defaultImg"
+						}
+						fullname={fullName}
+						joined_at={user.created_at}
+					/>
+				</div>
+			)}
 
-				<button
-					onClick={signOut}
-					className="mt-6 w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition"
-				>
-					Sign Out
-				</button>
-			</div>
-		</div>
+			{loadingFavorites ? (
+				<p>Loading favorites...</p>
+			) : (
+				<ProfileCarousel books={books} isLoading={loadingBooks} />
+			)}
+		</>
 	);
 };
 
