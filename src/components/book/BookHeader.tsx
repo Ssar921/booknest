@@ -18,7 +18,7 @@ const BookHeader: React.FC<BookHeaderProps> = ({
 	publisher,
 	year,
 }) => {
-	const tagStyle = "pr-2 text-sm w-max border m-2 p-2 rounded-full";
+	const tagStyle = "pr-2 text-sm w-max border m-2 p-2 rounded-full shadow-lg";
 	const strongStyle = "font-medium";
 	const { isToggled } = useToggleContext();
 
@@ -51,11 +51,11 @@ const BookHeader: React.FC<BookHeaderProps> = ({
 				</div>
 				{/* Title */}
 				<div className="flex flex-wrap lg:items-end lg:w-[90%] sm:w-full lg:p-4">
-					<h1 className="text-2xl w-screen font-extrabold font-serif text-center lg:text-left">
+					<h1 className="text-3xl text-white w-screen font-extrabold font-serif text-center lg:text-left">
 						{title}
 					</h1>
 					{/* Author */}
-					<p className="w-full text-sm text-center lg:text-left">
+					<p className="w-full text-md font-bold text-center lg:text-left">
 						{author?.join(", ")}
 					</p>
 					{/* Misc */}
@@ -86,7 +86,7 @@ const BookHeader: React.FC<BookHeaderProps> = ({
 							{year && (
 								<p>
 									<strong className={strongStyle}>
-										Published In:
+										Published:
 									</strong>{" "}
 									{year}
 								</p>
