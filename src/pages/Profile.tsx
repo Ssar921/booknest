@@ -26,7 +26,6 @@ const Profile = () => {
 					.single(); // Assuming user has one profile
 				if (data) {
 					setProfileData(data);
-					console.log(data);
 				} else {
 					console.error(error);
 				}
@@ -41,7 +40,6 @@ const Profile = () => {
 					.select("*")
 					.eq("user_id", user.id);
 				if (data) {
-					console.log(data);
 					setFavorites(data);
 				} else {
 					console.error(error);
@@ -62,7 +60,6 @@ const Profile = () => {
 				setLoadingBooks(true);
 				const booksData = await getBooksById(bookIds);
 				setBooks(booksData);
-				console.log(books);
 				setLoadingBooks(false);
 			};
 			fetchBooks();

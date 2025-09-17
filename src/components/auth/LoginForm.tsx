@@ -2,10 +2,11 @@ import { useState } from "react";
 import { MdError } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 import { useSupabase } from "../../context/SupabaseContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export default function LoginForm() {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const { signIn } = useSupabase();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -25,8 +26,8 @@ export default function LoginForm() {
 
 		try {
 			await signIn(email, password);
-			console.log("login page");
-			navigate("/");
+			const redirectTo = location.state?.from || "/";
+			navigate(redirectTo);
 		} catch (err: any) {
 			console.log(err.message);
 			if (err.message.includes("Invalid login credentials")) {

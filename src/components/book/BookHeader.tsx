@@ -1,4 +1,5 @@
 import { GiBookCover } from "react-icons/gi";
+import { useToggleContext } from "../../context/ToggleContext";
 
 interface BookHeaderProps {
 	title: string | null;
@@ -17,13 +18,23 @@ const BookHeader: React.FC<BookHeaderProps> = ({
 	publisher,
 	year,
 }) => {
-	const tagStyle = "pr-2 text-sm w-max";
+	const tagStyle = "pr-2 text-sm w-max border m-2 p-2 rounded-full";
+	const strongStyle = "font-medium";
+	const { isToggled } = useToggleContext();
+
 	return (
 		<>
-			<div className="bg-themeColor h-40 relative flex justify-start px-10">
+			<div
+				className={`${
+					isToggled
+						? "bg-[linear-gradient(to_bottom,_#46745d_60%,_#2e3b44_60%)]" // Dark Mode Gradient
+						: "bg-[linear-gradient(to_bottom,_#46745d_60%,_#f3f5f1_60%)]"
+				} 
+    relative flex lg:flex-nowrap flex-wrap justify-start lg:p-10`}
+			>
 				{/* Thumbnail */}
 				<div
-					className="mx-auto w-32 h-48 shadow-lg rounded-lg overflow-hidden b
+					className="mx-auto min-w-32 min-h-48 shadow-lg rounded-lg overflow-hidden b
                 order"
 				>
 					{thumbnail ? (
@@ -33,20 +44,26 @@ const BookHeader: React.FC<BookHeaderProps> = ({
 							className="object-cover w-full h-full"
 						/>
 					) : (
-						<GiBookCover />
+						<div className="w-32 h-48 bg-white">
+							<GiBookCover className="w-32 h-48 text-themeColor" />
+						</div>
 					)}
 				</div>
 				{/* Title */}
-				<div className="flex flex-wrap items-end w-[90%] p-4">
-					<h1 className="text-2xl w-full font-extrabold font-serif">
+				<div className="flex flex-wrap lg:items-end lg:w-[90%] sm:w-full lg:p-4">
+					<h1 className="text-2xl w-screen font-extrabold font-serif text-center lg:text-left">
 						{title}
 					</h1>
+					{/* Author */}
+					<p className="w-full text-sm text-center lg:text-left">
+						{author?.join(", ")}
+					</p>
 					{/* Misc */}
-					<div className="flex">
+					<div className="flex flex-wrap">
 						<div className={tagStyle}>
 							{pages && (
 								<p>
-									<strong className="text-white font-medium">
+									<strong className={strongStyle}>
 										Pages:
 									</strong>{" "}
 									{pages}
@@ -57,7 +74,7 @@ const BookHeader: React.FC<BookHeaderProps> = ({
 						<div className={tagStyle}>
 							{publisher && (
 								<p>
-									<strong className="text-white font-medium">
+									<strong className={strongStyle}>
 										Published By:
 									</strong>{" "}
 									{publisher}
@@ -68,7 +85,7 @@ const BookHeader: React.FC<BookHeaderProps> = ({
 						<div className={tagStyle}>
 							{year && (
 								<p>
-									<strong className="text-white font-medium">
+									<strong className={strongStyle}>
 										Published In:
 									</strong>{" "}
 									{year}
@@ -76,8 +93,6 @@ const BookHeader: React.FC<BookHeaderProps> = ({
 							)}
 						</div>
 					</div>
-					{/* Author */}
-					<p className="w-full text-sm">{author?.join(", ")}</p>
 				</div>
 			</div>
 		</>

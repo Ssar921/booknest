@@ -11,7 +11,7 @@ const BookPageButtons: React.FC<BookPageButtonsProps> = ({
 	bookId,
 }) => {
 	return (
-		<div className="flex justify-start ml-44 mt-4 w-[90%] sm:w-[40%]">
+		<div className="flex justify-end w-full px-10">
 			<FavoriteButton bookId={bookId} />
 
 			{previewLink && (

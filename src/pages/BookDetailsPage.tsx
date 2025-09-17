@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
-import { FaEye } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { FadeLoader } from "react-spinners";
 import { getBooksById } from "../hooks/getBooksById";
-// import AddFavorites from "../components/AddFavorites";
 import { useToggleContext } from "../context/ToggleContext";
 import BookComments from "../components/book/BookComments";
-import FavoriteButton from "../components/AddFavorites";
 import BookDescription from "../components/book/BookDescription";
 import BookHeader from "../components/book/BookHeader";
-import BookMisc from "../components/book/BookMisc";
 import BookPageButtons from "../components/book/BookPageButtons";
 // Interface to type the book data.
+
 interface BookData {
 	id: string;
 	volumeInfo: {
