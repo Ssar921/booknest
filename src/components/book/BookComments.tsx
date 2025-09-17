@@ -1,12 +1,13 @@
-// src/pages/Profile.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import AddComment from "./AddComment";
 
 interface CommentProps {
 	bookId: string;
 }
 const BookComments: React.FC<CommentProps> = ({ bookId }) => {
 	const [comments, setComments] = useState<any>(null);
+
 	useEffect(() => {
 		// Fetch profile data
 		const fetchComments = async () => {
@@ -16,7 +17,6 @@ const BookComments: React.FC<CommentProps> = ({ bookId }) => {
 				.eq("book_id", bookId);
 			if (data) {
 				setComments(data);
-				console.log(data);
 			} else {
 				console.error(error);
 			}
@@ -36,7 +36,7 @@ const BookComments: React.FC<CommentProps> = ({ bookId }) => {
 	}
 
 	return (
-		<div className="p-2 mx-5 lg:w-[45%] w-full rounded-lg shadow-md shadow-gray-400  text-sm">
+		<div className="relative p-2 mx-5 lg:w-[45%] w-full rounded-lg shadow-md shadow-gray-400  text-sm">
 			<div className="w-full max-h-[50vh] overflow-y-scroll custom-scrollbar p-4">
 				<h1 className="font-serif text-xl border-b mb-2">Comments</h1>
 				{comments.length > 0 ? (
@@ -67,6 +67,9 @@ const BookComments: React.FC<CommentProps> = ({ bookId }) => {
 				) : (
 					<p className="text-gray-600 text-sm">No comments yet</p>
 				)}
+			</div>
+			<div className="absolute bottom-0 left-0 w-full">
+				<AddComment bookId={bookId} />
 			</div>
 		</div>
 	);

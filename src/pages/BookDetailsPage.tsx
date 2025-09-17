@@ -117,7 +117,7 @@ const BookDetailsPage: React.FC = () => {
 			<BookPageButtons previewLink={previewLink} bookId={book.id} />
 
 			{/* Description */}
-			<div className="flex flex-wrap justify-around w-full mt-4">
+			<div className="flex flex-wrap justify-around w-full mt-4 mb-10">
 				<BookDescription description={description} />
 				<BookComments bookId={book?.id} />
 			</div>

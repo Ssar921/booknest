@@ -10,6 +10,7 @@ import SearchResultsPage from "./pages/SearchResultsPage";
 import ForgotPasswordPage from "./components/auth/ForgotPasswordPage";
 import { SupabaseProvider } from "./context/SupabaseContext";
 import Profile from "./pages/Profile";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const App: React.FC = () => {
 	return (
@@ -31,10 +32,6 @@ const App: React.FC = () => {
 								path="/login"
 								element={<AuthPage mode={"login"} />}
 							/>
-							{/* <Route
-								path="/profile"
-								element={<UserProfilePage />}
-							/> */}
 							<Route
 								path="/category/:categoryId"
 								element={<CategoryPage />}
@@ -45,7 +42,9 @@ const App: React.FC = () => {
 							/>
 							<Route path="*" element={<NotFoundPage />} />
 
-							<Route path="/profile" element={<Profile />} />
+							<Route element={<ProtectedRoute />}>
+								<Route path="/profile" element={<Profile />} />
+							</Route>
 
 							<Route
 								path="/forgot-password"
